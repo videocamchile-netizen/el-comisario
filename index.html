@@ -647,6 +647,110 @@
         }
 
         /* ========================================================
+           SECCIÓN CASO QUE CONTAR
+           ======================================================== */
+        .seccion-caso {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 80px;
+            background: linear-gradient(180deg, #080f20 0%, #050a14 100%);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            border-top: 1px solid rgba(255,180,0,0.05);
+        }
+        
+        @keyframes barridoCaso {
+            0% { transform: translateX(-100%) rotate(-3deg); opacity: 0; }
+            5% { opacity: 0.05; }
+            12% { opacity: 0.07; }
+            15% { transform: translateX(200vw) rotate(3deg); opacity: 0; }
+            100% { transform: translateX(200vw) rotate(3deg); opacity: 0; }
+        }
+        .barrido-caso {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 25%;
+            height: 120%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.01) 30%,
+                rgba(255, 180, 0, 0.04) 50%,
+                rgba(255, 255, 255, 0.01) 70%,
+                transparent 100%
+            );
+            transform: rotate(-3deg);
+            animation: barridoCaso 14s ease-in-out infinite 3s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes destelloCaso {
+            0%, 100% { opacity: 0; }
+            10% { opacity: 0.08; }
+            20% { opacity: 0; }
+        }
+        .destello-caso {
+            position: absolute;
+            width: 3px; height: 3px;
+            border-radius: 50%;
+            background: rgba(255, 200, 100, 0.4);
+            box-shadow: 0 0 6px 2px rgba(255, 200, 100, 0.1);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .destello-caso-1 { top: 30%; left: 20%; animation: destelloCaso 8s ease-in-out infinite; }
+        .destello-caso-2 { top: 60%; left: 70%; animation: destelloCaso 10s ease-in-out infinite 4s; }
+        
+        .caso-contenido {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .caso-imagen {
+            flex: 1;
+            max-width: 50%;
+        }
+        
+        .caso-imagen img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.05);
+            display: block;
+        }
+        
+        .caso-texto {
+            flex: 1;
+            max-width: 50%;
+        }
+        
+        .caso-texto h2 {
+            font-size: 3rem;
+            margin-top: 10px;
+            line-height: 1.1;
+        }
+        
+        .caso-texto h2 span {
+            color: #ffb400;
+        }
+        
+        .caso-texto p {
+            color: #a0a5b0;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            margin: 20px 0 30px 0;
+        }
+
+        /* ========================================================
            RESPONSIVE
            ======================================================== */
         @media (max-width: 900px) {
@@ -664,6 +768,11 @@
             .contenedor-carlos { width: 100%; order: 1; }
             .foto-carlos { max-width: 100%; }
             .info-carlos h3 { font-size: 1.6rem; }
+            .seccion-caso { padding: 60px 30px; }
+            .caso-contenido { flex-direction: column; gap: 30px; }
+            .caso-imagen { max-width: 100%; }
+            .caso-texto { max-width: 100%; }
+            .caso-texto h2 { font-size: 2rem; }
 
 
         }
@@ -744,7 +853,7 @@
             <p>Casos Documentados</p>
         </div>
         <div class="stat-box">
-            <h3>30</h3>
+            <h3>25</h3>
             <p>Años de Experiencia</p>
         </div>
     </section>
@@ -771,6 +880,28 @@
                 <p class="cargo">COMISARIO (R) · PDI DE CHILE</p>
                 <p class="descripcion">Con más de dos décadas al servicio de la Policía de Investigaciones, hoy pone su experiencia al servicio de la verdad y de quienes no han encontrado justicia.</p>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================
+         NUEVA SECCIÓN - CASO QUE CONTAR
+         ======================================================== -->
+    <section class="seccion-caso">
+        <!-- Efectos de luz -->
+        <div class="barrido-caso"></div>
+        <div class="destello-caso destello-caso-1"></div>
+        <div class="destello-caso destello-caso-2"></div>
+        
+        <div class="caso-contenido">
+            <div class="caso-imagen">
+                <img src="caso-que-contar?.jpg" alt="Caso que contar">
+            </div>
+            <div class="caso-texto">
+                <h4 style="color: #ffb400; letter-spacing: 2px;">— ¿TIENES UN CASO?</h4>
+                <h2>SI TIENES UNA HISTORIA<br><span>QUE CONTAR</span></h2>
+                <p>Si has sido víctima o conoces un caso que necesita ser investigado, contáctanos. En El Comisario damos voz a quienes buscan justicia.</p>
+                <a href="contacto.html" class="btn-amarillo" style="display: inline-block;">► CONTÁCTANOS</a>
             </div>
         </div>
     </section>
