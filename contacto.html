@@ -167,6 +167,26 @@
         .btn-enviar:hover { transform: scale(1.02) !important; box-shadow: 0 0 35px rgba(255,180,0,0.3); }
         .btn-enviar:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
+        /* ===== LINK DE COLABORACIÓN ===== */
+        .colaboracion {
+            margin-top: 30px; padding-top: 25px;
+            border-top: 1px solid rgba(255,180,0,0.1);
+            text-align: center; position: relative; z-index: 1;
+        }
+        .colaboracion p {
+            color: #8890a0; font-size: 12px; margin: 0 0 10px;
+            font-family: 'Courier New', monospace; letter-spacing: 1px;
+        }
+        .colaboracion a {
+            color: #ffb400; font-size: 13px; font-family: 'Courier New', monospace;
+            text-decoration: none; transition: color 0.3s, text-shadow 0.3s;
+            word-break: break-all;
+        }
+        .colaboracion a:hover {
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255,180,0,0.3);
+        }
+
         .exito { display: none; text-align: center; padding: 30px; position: relative; z-index: 1; }
         .exito .check { width: 65px; height: 65px; border-radius: 50%; background: rgba(255,180,0,0.12); border: 2px solid #ffb400; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px; color: #ffb400; }
         .exito h3 { color: #ffb400; font-size: 1.5rem; margin: 0 0 10px; font-family: 'Courier New', monospace; letter-spacing: 2px; }
@@ -306,6 +326,10 @@
                 </div>
                 <button type="submit" class="btn-enviar" id="btn-enviar">[ ENVIAR MENSAJE ]</button>
             </form>
+            <div class="colaboracion">
+                <p>// Si quieres colaborar con el canal, les dejamos el link:</p>
+                <a href="https://www.flow.cl/app/web/pagarBtnPago.php?token=ynaldgq" target="_blank">https://www.flow.cl/app/web/pagarBtnPago.php?token=ynaldgq</a>
+            </div>
             <div class="exito" id="exito">
                 <div class="check">✓</div>
                 <h3>MENSAJE ENVIADO</h3>
