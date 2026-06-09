@@ -5,692 +5,219 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - El Comisario</title>
     <style>
-        /* ========================================================
-           ESTILOS BASE
-           ======================================================== */
         * { box-sizing: border-box; }
-        body { 
-            margin: 0; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background-color: #050a14; 
-            color: white; 
-            overflow-x: hidden;
-        }
-        
-        /* ========================================================
-           BARRA DE NAVEGACIÓN
-           ======================================================== */
-        .navbar { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 20px 50px; 
-            background: linear-gradient(180deg, rgba(11,21,40,0.98) 0%, rgba(11,21,40,0.85) 100%);
-            align-items: center; 
-            border-bottom: 1px solid rgba(255,180,0,0.08);
-            position: relative;
-            z-index: 10;
-            backdrop-filter: blur(8px);
-        }
-        .navbar a { 
-            color: white; 
-            text-decoration: none; 
-            margin: 0 15px; 
-            font-size: 14px; 
-            transition: color 0.3s;
-            letter-spacing: 1px;
-        }
-        .navbar a:hover, .navbar a.activo { color: #ffb400; }
-        
-        .btn-amarillo { 
-            background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
-            color: #050a14; 
-            padding: 12px 24px; 
-            font-weight: bold; 
-            border-radius: 6px; 
-            text-decoration: none; 
-            border: none; 
-            cursor: pointer; 
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-block;
-        }
-        .btn-amarillo:hover { 
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 180, 0, 0.4);
-        }
+        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #050a14; color: white; overflow-x: hidden; }
 
-        /* ========================================================
-           HERO - CIUDAD NOCTURNA + LUCES POLICIALES
-           ======================================================== */
-        @keyframes respiracionHero {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
+        /* ===== NAVBAR ===== */
+        .navbar { display: flex; justify-content: space-between; padding: 20px 50px; background: linear-gradient(180deg, rgba(11,21,40,0.98) 0%, rgba(11,21,40,0.85) 100%); align-items: center; border-bottom: 1px solid rgba(255,180,0,0.08); position: relative; z-index: 10; backdrop-filter: blur(8px); }
+        .navbar a { color: white; text-decoration: none; margin: 0 15px; font-size: 14px; transition: color 0.3s; letter-spacing: 1px; }
+        .navbar a:hover, .navbar a.activo { color: #ffb400; }
+        .btn-amarillo { background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%); color: #050a14; padding: 12px 24px; font-weight: bold; border-radius: 6px; text-decoration: none; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; }
+        .btn-amarillo:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,180,0,0.4); }
+
+        /* ===== HERO ===== */
+        @keyframes respiro { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        @keyframes luzRoja { 0% { opacity: 0; } 25% { opacity: 0.2; } 50% { opacity: 0; } 75% { opacity: 0.2; } 100% { opacity: 0; } }
+        @keyframes luzAzul { 0% { opacity: 0.2; } 25% { opacity: 0; } 50% { opacity: 0.2; } 75% { opacity: 0; } 100% { opacity: 0.2; } }
+        @keyframes neblina { 0% { transform: translate(0,0) scale(1); opacity: 0.25; } 50% { transform: translate(-30px,15px) scale(1.1); opacity: 0.4; } 100% { transform: translate(0,0) scale(1); opacity: 0.25; } }
+        @keyframes barrido { 0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; } 6% { opacity: 0.12; } 14% { opacity: 0.15; } 18% { transform: translateX(200vw) rotate(5deg); opacity: 0; } 100% { transform: translateX(200vw) rotate(5deg); opacity: 0; } }
+        @keyframes aparecer { 0% { opacity: 0; filter: blur(12px); transform: translateY(30px); } 60% { opacity: 1; filter: blur(0); transform: translateY(0); } 100% { opacity: 1; filter: blur(0); transform: translateY(0); } }
+        @keyframes flotar1 { 0% { transform: translateY(0); } 25% { transform: translateY(-6px); } 50% { transform: translateY(-2px); } 75% { transform: translateY(-8px); } 100% { transform: translateY(0); } }
+        @keyframes flotar2 { 0% { transform: translateY(0); } 33% { transform: translateY(-4px); } 66% { transform: translateY(1px); } 100% { transform: translateY(0); } }
+
+        .hero {
+            position: relative; min-height: 55vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; overflow: hidden; padding: 80px 20px 60px;
         }
-        
-        .hero-contacto {
-            position: relative;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-            padding: 80px 20px 60px;
+        .hero-fondo {
+            position: absolute; top: -10px; left: -10px; width: 102%; height: 102%;
+            background: radial-gradient(ellipse at 50% 100%, rgba(10,20,40,0.6) 0%, transparent 70%),
+                        linear-gradient(180deg, #050a14 0%, #0a1628 40%, #0d1a30 100%);
+            animation: respiro 20s ease-in-out infinite; z-index: 0;
         }
-        
-        /* Fondo oscuro con gradiente de ciudad */
-        .fondo-contacto {
-            position: absolute;
-            top: -10px; left: -10px; width: 102%; height: 102%;
-            background: 
-                radial-gradient(ellipse at 50% 100%, rgba(10, 20, 40, 0.6) 0%, transparent 70%),
-                linear-gradient(180deg, #050a14 0%, #0a1628 40%, #0d1a30 100%);
-            animation: respiracionHero 20s ease-in-out infinite;
-            z-index: 0;
-        }
-        
-        /* Ciudad de fondo con edificios (SVG) */
-        .ciudad-fondo {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 60%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'%3E%3Cg opacity='0.15'%3E%3Crect x='0' y='180' width='60' height='220' fill='%231a2a4a'/%3E%3Crect x='70' y='120' width='45' height='280' fill='%231a2a4a'/%3E%3Crect x='125' y='200' width='55' height='200' fill='%231a2a4a'/%3E%3Crect x='190' y='90' width='40' height='310' fill='%231a2a4a'/%3E%3Crect x='240' y='160' width='65' height='240' fill='%231a2a4a'/%3E%3Crect x='315' y='70' width='35' height='330' fill='%231a2a4a'/%3E%3Crect x='360' y='140' width='50' height='260' fill='%231a2a4a'/%3E%3Crect x='420' y='100' width='70' height='300' fill='%231a2a4a'/%3E%3Crect x='500' y='180' width='45' height='220' fill='%231a2a4a'/%3E%3Crect x='555' y='60' width='55' height='340' fill='%231a2a4a'/%3E%3Crect x='620' y='130' width='40' height='270' fill='%231a2a4a'/%3E%3Crect x='670' y='170' width='60' height='230' fill='%231a2a4a'/%3E%3Crect x='740' y='80' width='50' height='320' fill='%231a2a4a'/%3E%3Crect x='800' y='150' width='65' height='250' fill='%231a2a4a'/%3E%3Crect x='875' y='110' width='40' height='290' fill='%231a2a4a'/%3E%3Crect x='925' y='190' width='55' height='210' fill='%231a2a4a'/%3E%3Crect x='990' y='70' width='45' height='330' fill='%231a2a4a'/%3E%3Crect x='1045' y='140' width='60' height='260' fill='%231a2a4a'/%3E%3Crect x='1115' y='100' width='50' height='300' fill='%231a2a4a'/%3E%3C/g%3E%3Cg opacity='0.08'%3E%3Crect x='15' y='200' width='30' height='200' fill='%23ffb400'/%3E%3Crect x='200' y='110' width='20' height='290' fill='%23ffb400'/%3E%3Crect x='330' y='90' width='25' height='310' fill='%23ffb400'/%3E%3Crect x='440' y='120' width='30' height='280' fill='%23ffb400'/%3E%3Crect x='570' y='80' width='25' height='320' fill='%23ffb400'/%3E%3Crect x='755' y='100' width='20' height='300' fill='%23ffb400'/%3E%3Crect x='1005' y='90' width='25' height='310' fill='%23ffb400'/%3E%3C/g%3E%3C/svg%3E");
-            background-repeat: repeat-x;
-            background-size: 1200px 400px;
-            background-position: bottom center;
-            z-index: 1;
-            pointer-events: none;
+        .ciudad {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 55%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'%3E%3Cg opacity='0.12'%3E%3Crect x='0' y='180' width='60' height='220' fill='%231a2a4a'/%3E%3Crect x='70' y='120' width='45' height='280' fill='%231a2a4a'/%3E%3Crect x='125' y='200' width='55' height='200' fill='%231a2a4a'/%3E%3Crect x='190' y='90' width='40' height='310' fill='%231a2a4a'/%3E%3Crect x='240' y='160' width='65' height='240' fill='%231a2a4a'/%3E%3Crect x='315' y='70' width='35' height='330' fill='%231a2a4a'/%3E%3Crect x='360' y='140' width='50' height='260' fill='%231a2a4a'/%3E%3Crect x='420' y='100' width='70' height='300' fill='%231a2a4a'/%3E%3Crect x='500' y='180' width='45' height='220' fill='%231a2a4a'/%3E%3Crect x='555' y='60' width='55' height='340' fill='%231a2a4a'/%3E%3Crect x='620' y='130' width='40' height='270' fill='%231a2a4a'/%3E%3Crect x='670' y='170' width='60' height='230' fill='%231a2a4a'/%3E%3Crect x='740' y='80' width='50' height='320' fill='%231a2a4a'/%3E%3Crect x='800' y='150' width='65' height='250' fill='%231a2a4a'/%3E%3Crect x='875' y='110' width='40' height='290' fill='%231a2a4a'/%3E%3Crect x='925' y='190' width='55' height='210' fill='%231a2a4a'/%3E%3Crect x='990' y='70' width='45' height='330' fill='%231a2a4a'/%3E%3Crect x='1045' y='140' width='60' height='260' fill='%231a2a4a'/%3E%3Crect x='1115' y='100' width='50' height='300' fill='%231a2a4a'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat-x; background-size: 1200px 400px; background-position: bottom center;
+            z-index: 1; pointer-events: none;
             mask-image: linear-gradient(to bottom, transparent 10%, black 40%, black 100%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 10%, black 40%, black 100%);
         }
-        
-        /* Luces de policía - rojo */
-        @keyframes luzPoliciaRoja {
-            0% { opacity: 0; transform: rotate(0deg) scale(1); }
-            25% { opacity: 0.12; transform: rotate(5deg) scale(1.05); }
-            50% { opacity: 0; transform: rotate(0deg) scale(1); }
-            75% { opacity: 0.12; transform: rotate(-5deg) scale(1.05); }
-            100% { opacity: 0; transform: rotate(0deg) scale(1); }
-        }
         .luz-roja {
-            position: absolute;
-            top: -20%;
-            left: 10%;
-            width: 80%;
-            height: 140%;
-            background: radial-gradient(ellipse at 30% 50%, rgba(255,0,0,0.08) 0%, transparent 60%);
-            animation: luzPoliciaRoja 4s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-            mix-blend-mode: screen;
-        }
-        
-        /* Luces de policía - azul */
-        @keyframes luzPoliciaAzul {
-            0% { opacity: 0.12; transform: rotate(0deg) scale(1.05); }
-            25% { opacity: 0; transform: rotate(-5deg) scale(1); }
-            50% { opacity: 0.12; transform: rotate(0deg) scale(1.05); }
-            75% { opacity: 0; transform: rotate(5deg) scale(1); }
-            100% { opacity: 0.12; transform: rotate(0deg) scale(1.05); }
+            position: absolute; top: -20%; left: 5%; width: 90%; height: 140%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(255,0,0,0.15) 0%, transparent 60%);
+            animation: luzRoja 3s ease-in-out infinite; pointer-events: none; z-index: 1; mix-blend-mode: screen;
         }
         .luz-azul {
-            position: absolute;
-            top: -20%;
-            right: 10%;
-            width: 80%;
-            height: 140%;
-            background: radial-gradient(ellipse at 70% 50%, rgba(0,50,255,0.08) 0%, transparent 60%);
-            animation: luzPoliciaAzul 4s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-            mix-blend-mode: screen;
+            position: absolute; top: -20%; right: 5%; width: 90%; height: 140%;
+            background: radial-gradient(ellipse at 70% 50%, rgba(0,50,255,0.15) 0%, transparent 60%);
+            animation: luzAzul 3s ease-in-out infinite; pointer-events: none; z-index: 1; mix-blend-mode: screen;
         }
-        
-        /* Neblina */
-        @keyframes neblinaContacto {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-            25% { transform: translate(-30px, 15px) scale(1.1); opacity: 0.3; }
-            50% { transform: translate(20px, -10px) scale(0.95); opacity: 0.15; }
-            75% { transform: translate(-15px, 20px) scale(1.05); opacity: 0.25; }
-            100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+        .neblina-hero {
+            position: absolute; top: -20%; left: -20%; width: 140%; height: 140%;
+            background: radial-gradient(ellipse at 30% 40%, rgba(255,180,0,0.06) 0%, transparent 50%);
+            animation: neblina 10s ease-in-out infinite; pointer-events: none; z-index: 1; filter: blur(50px);
         }
-        .neblina-contacto {
-            position: absolute;
-            top: -20%;
-            left: -20%;
-            width: 140%;
-            height: 140%;
-            background: 
-                radial-gradient(ellipse at 30% 40%, rgba(255,180,0,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 60%, rgba(200,220,255,0.04) 0%, transparent 40%);
-            animation: neblinaContacto 12s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-            filter: blur(50px);
+        .barrido-hero {
+            position: absolute; top: -15%; left: -10%; width: 25%; height: 130%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 30%, rgba(255,180,0,0.08) 50%, rgba(255,255,255,0.02) 70%, transparent 100%);
+            transform: rotate(-5deg); animation: barrido 10s ease-in-out infinite; pointer-events: none; z-index: 1;
         }
-        
-        /* Barrido de luz tipo linterna */
-        @keyframes barridoContacto {
-            0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-            5% { opacity: 0.08; }
-            12% { opacity: 0.1; }
-            15% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
-            20% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-            25% { opacity: 0.08; }
-            32% { opacity: 0.1; }
-            35% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
-            100% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
-        }
-        .barrido-contacto {
-            position: absolute;
-            top: -15%;
-            left: -10%;
-            width: 25%;
-            height: 130%;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.02) 30%,
-                rgba(255, 180, 0, 0.06) 50%,
-                rgba(255, 255, 255, 0.02) 70%,
-                transparent 100%
-            );
-            transform: rotate(-5deg);
-            animation: barridoContacto 12s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        /* Destellos */
-        @keyframes destelloContacto {
-            0%, 100% { opacity: 0; }
-            10% { opacity: 0.1; }
-            20% { opacity: 0; }
-        }
-        .destello-contacto {
-            position: absolute;
-            width: 3px; height: 3px;
-            border-radius: 50%;
-            background: rgba(255, 200, 100, 0.5);
-            box-shadow: 0 0 8px 3px rgba(255, 200, 100, 0.15);
-            pointer-events: none;
-            z-index: 1;
-        }
-        .destello-contacto-1 { top: 25%; left: 30%; animation: destelloContacto 7s ease-in-out infinite; }
-        .destello-contacto-2 { top: 55%; left: 70%; animation: destelloContacto 9s ease-in-out infinite 3s; }
-        .destello-contacto-3 { top: 35%; left: 85%; animation: destelloContacto 11s ease-in-out infinite 6s; }
-        .destello-contacto-4 { top: 65%; left: 20%; animation: destelloContacto 8s ease-in-out infinite 4s; }
-        
-        /* Contenido del hero */
-        .hero-contenido {
-            position: relative;
-            z-index: 3;
-            max-width: 700px;
-        }
-        
-        @keyframes aparecerDifuminado {
-            0% { opacity: 0; filter: blur(12px); transform: translateY(30px) scale(0.95); }
-            30% { opacity: 0.6; filter: blur(4px); transform: translateY(10px) scale(0.98); }
-            60% { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
-            100% { opacity: 1; filter: blur(0px); transform: translateY(0) scale(1); }
-        }
-        
-        @keyframes flotarH1Contacto {
-            0% { transform: translateY(0px); }
-            25% { transform: translateY(-6px); }
-            50% { transform: translateY(-2px); }
-            75% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-        
+        .hero-contenido { position: relative; z-index: 3; max-width: 700px; }
         .hero-contenido h1 {
-            font-size: 4rem;
-            color: #ffb400;
-            margin: 0;
-            text-transform: uppercase;
-            font-weight: 900;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 60px rgba(255,180,0,0.1);
-            letter-spacing: 5px;
-            animation: aparecerDifuminado 2s ease-out forwards, flotarH1Contacto 6s ease-in-out infinite 2.5s;
+            font-size: 4rem; color: #ffb400; margin: 0; text-transform: uppercase; font-weight: 900;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 60px rgba(255,180,0,0.1); letter-spacing: 5px;
+            animation: aparecer 2s ease-out forwards, flotar1 6s ease-in-out infinite 2.5s;
         }
-        
         .hero-contenido h1 span {
-            color: white;
-            display: block;
-            font-size: 1.2rem;
-            letter-spacing: 8px;
-            margin-top: 10px;
-            font-weight: 300;
-            animation: aparecerDifuminado 2s ease-out 0.3s forwards, flotarH1Contacto 7s ease-in-out infinite 3s;
-            opacity: 0;
+            color: white; display: block; font-size: 1.2rem; letter-spacing: 8px; margin-top: 10px; font-weight: 300;
+            animation: aparecer 2s ease-out 0.3s forwards, flotar1 7s ease-in-out infinite 3s; opacity: 0;
         }
-        
-        @keyframes flotarPContacto {
-            0% { transform: translateY(0px); }
-            33% { transform: translateY(-4px); }
-            66% { transform: translateY(1px); }
-            100% { transform: translateY(0px); }
-        }
-        
         .hero-contenido p {
-            color: #c0c5d0;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            font-style: italic;
+            color: #c0c5d0; font-size: 1.2rem; margin-top: 25px; font-style: italic;
             text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-            animation: aparecerDifuminado 2s ease-out 0.6s forwards, flotarPContacto 5s ease-in-out infinite 3.5s;
-            opacity: 0;
+            animation: aparecer 2s ease-out 0.6s forwards, flotar2 5s ease-in-out infinite 3.5s; opacity: 0;
         }
 
-        /* ========================================================
-           LUZ QUE SIGUE AL MOUSE (GLOBAL)
-           ======================================================== */
-        .luz-mouse-global {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,180,0,0.04) 0%, rgba(255,200,100,0.015) 30%, transparent 70%);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            z-index: 9999;
-            mix-blend-mode: screen;
+        /* ===== LUZ MOUSE GLOBAL ===== */
+        .luz-mouse {
+            position: fixed; width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,180,0,0.05) 0%, rgba(255,200,100,0.02) 30%, transparent 70%);
+            pointer-events: none; transform: translate(-50%,-50%); opacity: 0;
+            transition: opacity 0.5s ease; z-index: 9999; mix-blend-mode: screen;
         }
-        .luz-mouse-global.activo {
-            opacity: 1;
-        }
+        .luz-mouse.activo { opacity: 1; }
 
-        /* ========================================================
-           SECCIÓN DEL FORMULARIO - ESTILO EXPEDIENTE
-           ======================================================== */
-        .seccion-formulario {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 50px;
-            padding: 60px 80px 100px;
+        /* ===== FORMULARIO ===== */
+        .seccion-form {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 60px 20px 80px;
             background: linear-gradient(180deg, #050a14 0%, #080f20 50%, #050a14 100%);
-            position: relative;
-            z-index: 2;
-            flex-wrap: wrap;
+            position: relative; z-index: 2;
         }
-        
-        /* --- TARJETA DEL FORMULARIO (EXPEDIENTE) --- */
-        .tarjeta-formulario {
+        .tarjeta {
             background: linear-gradient(145deg, #0f1a30 0%, #0b1528 100%);
-            border-radius: 14px;
-            padding: 45px 40px;
-            width: 520px;
+            border-radius: 14px; padding: 45px 40px; width: 100%; max-width: 560px;
             border-top: 4px solid #ffb400;
             box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255,180,0,0.03);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative; overflow: hidden;
             mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
         }
-        
-        .tarjeta-formulario:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 70px rgba(0,0,0,0.9), 0 0 40px rgba(255,180,0,0.08);
-        }
-        
-        .tarjeta-formulario::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+        .tarjeta::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: radial-gradient(circle at 30% 20%, rgba(255,180,0,0.03) 0%, transparent 60%);
             pointer-events: none;
         }
-        
-        /* Cinta adhesiva decorativa (esquinas) */
-        .tarjeta-formulario::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            right: 30px;
-            width: 60px;
-            height: 20px;
-            background: rgba(255,180,0,0.15);
-            border-radius: 2px;
-            transform: rotate(-3deg);
-            pointer-events: none;
+        .tarjeta h2 {
+            font-size: 1.6rem; margin: 0 0 5px 0; color: white; position: relative; z-index: 1;
+            animation: flotar1 5s ease-in-out infinite;
         }
-        
-        @keyframes flotarH2Form {
-            0% { transform: translateY(0px); }
-            25% { transform: translateY(-5px); }
-            50% { transform: translateY(-1px); }
-            75% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
+        .tarjeta h2 span { color: #ffb400; }
+        .tarjeta .sub {
+            color: #8890a0; font-size: 13px; margin-bottom: 30px; position: relative; z-index: 1;
+            animation: flotar2 6s ease-in-out infinite 0.5s;
         }
-        
-        .tarjeta-formulario h2 {
-            font-size: 1.6rem;
-            margin: 0 0 5px 0;
-            color: white;
-            position: relative;
-            z-index: 1;
-            animation: flotarH2Form 5s ease-in-out infinite;
+        .campo { margin-bottom: 22px; position: relative; z-index: 1; }
+        .campo label {
+            display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+            color: #8890a0; margin-bottom: 8px; font-weight: bold;
         }
-        
-        .tarjeta-formulario h2 span {
-            color: #ffb400;
+        .campo input, .campo textarea, .campo select {
+            width: 100%; padding: 14px 16px; background: rgba(5,10,20,0.6);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; color: white;
+            font-size: 15px; font-family: 'Courier New', monospace;
+            transition: border-color 0.3s, box-shadow 0.3s; outline: none;
         }
-        
-        @keyframes flotarSubForm {
-            0% { transform: translateY(0px); }
-            33% { transform: translateY(-3px); }
-            66% { transform: translateY(1px); }
-            100% { transform: translateY(0px); }
+        .campo input:focus, .campo textarea:focus, .campo select:focus {
+            border-color: #ffb400; box-shadow: 0 0 15px rgba(255,180,0,0.1);
         }
-        
-        .tarjeta-formulario .subtitulo-form {
-            color: #8890a0;
-            font-size: 13px;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-            animation: flotarSubForm 6s ease-in-out infinite 0.5s;
-        }
-        
-        /* --- CAMPOS DEL FORMULARIO --- */
-        .grupo-campo {
-            margin-bottom: 22px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .grupo-campo label {
-            display: block;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #8890a0;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        
-        .grupo-campo input,
-        .grupo-campo textarea,
-        .grupo-campo select {
-            width: 100%;
-            padding: 14px 16px;
-            background: rgba(5, 10, 20, 0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 6px;
-            color: white;
-            font-size: 15px;
-            font-family: 'Courier New', monospace;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            outline: none;
-        }
-        
-        .grupo-campo input:focus,
-        .grupo-campo textarea:focus,
-        .grupo-campo select:focus {
-            border-color: #ffb400;
-            box-shadow: 0 0 15px rgba(255,180,0,0.1);
-        }
-        
-        .grupo-campo input::placeholder,
-        .grupo-campo textarea::placeholder {
-            color: rgba(255,255,255,0.2);
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        
-        .grupo-campo textarea {
-            min-height: 140px;
-            resize: vertical;
-        }
-        
-        .grupo-campo select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238890a0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-        
-        .grupo-campo select option {
-            background: #0b1528;
-            color: white;
-        }
-        
-        /* --- BOTÓN ENVIAR --- */
-        @keyframes flotarBtnEnviar {
-            0% { transform: translateY(0px) scale(1); }
-            40% { transform: translateY(-3px) scale(1.02); }
-            80% { transform: translateY(1px) scale(0.99); }
-            100% { transform: translateY(0px) scale(1); }
-        }
-        
-        .btn-enviar {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
-            color: #050a14;
-            font-weight: bold;
-            font-size: 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
-            margin-top: 10px;
-            animation: flotarBtnEnviar 4s ease-in-out infinite 1s;
-        }
-        
-        .btn-enviar:hover {
-            transform: scale(1.02) !important;
-            box-shadow: 0 0 30px rgba(255,180,0,0.3);
-        }
-        
-        .btn-enviar:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        
-        /* --- MENSAJE DE ÉXITO --- */
-        .mensaje-exito {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .mensaje-exito .icono-check {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255,180,0,0.15);
-            border: 2px solid #ffb400;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 28px;
-            color: #ffb400;
-        }
-        
-        .mensaje-exito h3 {
-            color: #ffb400;
-            font-size: 1.5rem;
-            margin: 0 0 10px;
-        }
-        
-        .mensaje-exito p {
-            color: #8890a0;
-            font-size: 14px;
-        }
+        .campo input::placeholder, .campo textarea::placeholder { color: rgba(255,255,255,0.2); font-family: 'Segoe UI', Arial, sans-serif; }
+        .campo textarea { min-height: 140px; resize: vertical; }
+        .campo select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238890a0' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+        .campo select option { background: #0b1528; color: white; }
 
-        /* --- INFORMACIÓN LATERAL (FICHAS DE EVIDENCIA) --- */
-        .info-lateral {
-            width: 320px;
-            padding-top: 20px;
+        @keyframes flotarBtn { 0% { transform: translateY(0) scale(1); } 40% { transform: translateY(-3px) scale(1.02); } 80% { transform: translateY(1px) scale(0.99); } 100% { transform: translateY(0) scale(1); } }
+        .btn-enviar {
+            width: 100%; padding: 16px; background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
+            color: #050a14; font-weight: bold; font-size: 16px; border: none; border-radius: 6px;
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase; letter-spacing: 2px; position: relative; z-index: 1; margin-top: 10px;
+            animation: flotarBtn 4s ease-in-out infinite 1s;
         }
-        
-        @keyframes flotarBloqueInfo {
-            0% { transform: translateY(0px); }
-            25% { transform: translateY(-4px); }
-            50% { transform: translateY(-1px); }
-            75% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
+        .btn-enviar:hover { transform: scale(1.02) !important; box-shadow: 0 0 30px rgba(255,180,0,0.3); }
+        .btn-enviar:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+        .exito { display: none; text-align: center; padding: 30px; position: relative; z-index: 1; }
+        .exito .check { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,180,0,0.15); border: 2px solid #ffb400; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 28px; color: #ffb400; }
+        .exito h3 { color: #ffb400; font-size: 1.5rem; margin: 0 0 10px; }
+        .exito p { color: #8890a0; font-size: 14px; }
+
+        /* ===== TARJETAS DE CONTACTO ===== */
+        .contacto-grid {
+            display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;
+            margin-top: 50px; width: 100%; max-width: 900px;
         }
-        
-        .info-lateral .bloque-info {
-            margin-bottom: 30px;
-            position: relative;
-            padding: 20px 20px 20px 25px;
+        @keyframes flotarCard { 0% { transform: translateY(0); } 25% { transform: translateY(-5px); } 50% { transform: translateY(-1px); } 75% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
+        .card-contacto {
+            flex: 1; min-width: 220px; max-width: 280px;
+            padding: 25px; background: rgba(15,26,48,0.6); border-radius: 10px;
             border-left: 3px solid #ffb400;
-            background: rgba(255,180,0,0.02);
-            border-radius: 0 8px 8px 0;
-            transition: background 0.3s, border-color 0.3s;
+            transition: background 0.3s;
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
-        
-        .info-lateral .bloque-info:nth-child(1) { animation: flotarBloqueInfo 5s ease-in-out infinite; }
-        .info-lateral .bloque-info:nth-child(2) { animation: flotarBloqueInfo 6s ease-in-out infinite 0.5s; }
-        .info-lateral .bloque-info:nth-child(3) { animation: flotarBloqueInfo 5.5s ease-in-out infinite 1s; }
-        
-        .info-lateral .bloque-info:hover {
-            background: rgba(255,180,0,0.05);
-            border-left-color: #ffb400;
-        }
-        
-        .info-lateral .bloque-info h4 {
-            color: #ffb400;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin: 0 0 8px;
-        }
-        
-        .info-lateral .bloque-info p {
-            color: #a0a5b0;
-            font-size: 14px;
-            margin: 0;
-            line-height: 1.5;
-        }
-        
-        .info-lateral .bloque-info a {
-            color: #a0a5b0;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .info-lateral .bloque-info a:hover {
-            color: #ffb400;
-        }
-        
-        /* --- CITA MISTERIOSA --- */
-        @keyframes flotarCita {
-            0% { transform: translateY(0px); }
-            30% { transform: translateY(-5px); }
-            60% { transform: translateY(1px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .cita-misterio {
-            margin-top: 40px;
-            padding: 25px;
-            background: rgba(255,180,0,0.03);
-            border-radius: 8px;
-            border: 1px solid rgba(255,180,0,0.08);
-            font-style: italic;
-            position: relative;
+        .card-contacto:nth-child(1) { animation: flotarCard 5s ease-in-out infinite; }
+        .card-contacto:nth-child(2) { animation: flotarCard 6s ease-in-out infinite 0.5s; }
+        .card-contacto:nth-child(3) { animation: flotarCard 5.5s ease-in-out infinite 1s; }
+        .card-contacto:hover { background: rgba(255,180,0,0.05); }
+        .card-contacto h4 { color: #ffb400; font-size: 11px; text-transform: uppercase; letter-spacing: 3px; margin: 0 0 8px; }
+        .card-contacto p { color: #a0a5b0; font-size: 13px; margin: 0; line-height: 1.5; }
+        .card-contacto a { color: #a0a5b0; text-decoration: none; transition: color 0.3s; }
+        .card-contacto a:hover { color: #ffb400; }
+
+        /* ===== CITA ===== */
+        @keyframes flotarCita { 0% { transform: translateY(0); } 30% { transform: translateY(-5px); } 60% { transform: translateY(1px); } 100% { transform: translateY(0); } }
+        .cita {
+            margin-top: 50px; padding: 30px 35px; max-width: 600px;
+            background: rgba(255,180,0,0.03); border-radius: 8px;
+            border: 1px solid rgba(255,180,0,0.08); font-style: italic; position: relative;
             animation: flotarCita 7s ease-in-out infinite 1.5s;
             mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
         }
-        
-        .cita-misterio::before {
-            content: '"';
-            font-size: 4rem;
-            color: rgba(255,180,0,0.1);
-            position: absolute;
-            top: -5px;
-            left: 10px;
-            font-family: Georgia, serif;
-        }
-        
-        .cita-misterio p {
-            color: #8890a0;
-            font-size: 14px;
-            line-height: 1.6;
-            margin: 0;
-            padding-left: 20px;
-        }
-        
-        .cita-misterio .autor {
-            color: #ffb400;
-            font-size: 12px;
-            font-style: normal;
-            letter-spacing: 2px;
-            margin-top: 10px;
-            padding-left: 20px;
-        }
+        .cita::before { content: '"'; font-size: 4rem; color: rgba(255,180,0,0.1); position: absolute; top: -5px; left: 10px; font-family: Georgia, serif; }
+        .cita p { color: #8890a0; font-size: 14px; line-height: 1.6; margin: 0; padding-left: 20px; }
+        .cita .autor { color: #ffb400; font-size: 12px; font-style: normal; letter-spacing: 2px; margin-top: 10px; padding-left: 20px; }
 
-        /* ========================================================
-           FOOTER
-           ======================================================== */
-        .footer {
-            text-align: center;
-            padding: 30px;
-            border-top: 1px solid rgba(255,180,0,0.05);
-            background: #050a14;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .footer p {
-            color: #556;
-            font-size: 12px;
-            margin: 0;
-            letter-spacing: 1px;
-        }
+        /* ===== FOOTER ===== */
+        .footer { text-align: center; padding: 30px; border-top: 1px solid rgba(255,180,0,0.05); background: #050a14; position: relative; z-index: 2; }
+        .footer p { color: #556; font-size: 12px; margin: 0; letter-spacing: 1px; }
 
-        /* ========================================================
-           RESPONSIVE
-           ======================================================== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .navbar { padding: 10px 15px; gap: 8px; }
             .navbar .logo img { height: 60px !important; }
             .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
             .navbar .links a { margin: 3px 6px; font-size: 11px; letter-spacing: 0.5px; }
             .navbar .btn-amarillo { padding: 8px 16px; font-size: 11px; }
-            .hero-contacto { min-height: 40vh; padding: 60px 20px 40px; }
+            .hero { min-height: 40vh; padding: 60px 20px 40px; }
             .hero-contenido h1 { font-size: 2.5rem; }
             .hero-contenido p { font-size: 1rem; }
-            .seccion-formulario { padding: 40px 20px 60px; flex-direction: column; align-items: center; }
-            .tarjeta-formulario { width: 100%; padding: 30px 20px; }
-            .info-lateral { width: 100%; }
-            .ciudad-fondo { height: 40%; }
+            .seccion-form { padding: 40px 20px 60px; }
+            .tarjeta { padding: 30px 20px; }
+            .contacto-grid { flex-direction: column; align-items: center; }
+            .card-contacto { max-width: 100%; width: 100%; }
+            .ciudad { height: 40%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Luz que sigue al mouse (global) -->
-    <div class="luz-mouse-global" id="luz-mouse-global"></div>
+    <div class="luz-mouse" id="luz-mouse"></div>
 
     <nav class="navbar">
-        <div class="logo">
-            <img src="img/logon.png" alt="Logo El Comisario" style="height: 111px;">
-        </div>
+        <div class="logo"><img src="img/logon.png" alt="Logo El Comisario" style="height: 111px;"></div>
         <div class="links">
             <a href="index.html">INICIO</a>
             <a href="#">EPISODIOS</a>
@@ -701,41 +228,33 @@
         <a href="index.html" class="btn-amarillo">◄ VOLVER</a>
     </nav>
 
-    <header class="hero-contacto">
-        <div class="fondo-contacto"></div>
-        <div class="ciudad-fondo"></div>
+    <header class="hero">
+        <div class="hero-fondo"></div>
+        <div class="ciudad"></div>
         <div class="luz-roja"></div>
         <div class="luz-azul"></div>
-        <div class="neblina-contacto"></div>
-        <div class="barrido-contacto"></div>
-        <div class="destello-contacto destello-contacto-1"></div>
-        <div class="destello-contacto destello-contacto-2"></div>
-        <div class="destello-contacto destello-contacto-3"></div>
-        <div class="destello-contacto destello-contacto-4"></div>
+        <div class="neblina-hero"></div>
+        <div class="barrido-hero"></div>
         <div class="hero-contenido">
             <h1>CONTACTO<span>— HABLEMOS —</span></h1>
             <p>"La verdad no prescribe. Si tienes información, escríbenos."</p>
         </div>
     </header>
 
-    <section class="seccion-formulario">
-        <!-- FORMULARIO -->
-        <div class="tarjeta-formulario" id="tarjeta-form">
+    <section class="seccion-form">
+        <div class="tarjeta">
             <h2>ENVÍA TU <span>MENSAJE</span></h2>
-            <p class="subtitulo-form">Todos los campos son confidenciales.</p>
-
+            <p class="sub">Todos los campos son confidenciales.</p>
             <form id="form-contacto">
-                <div class="grupo-campo">
+                <div class="campo">
                     <label for="nombre">Nombre o Alias</label>
                     <input type="text" id="nombre" placeholder="Ej: Testigo anónimo" required>
                 </div>
-
-                <div class="grupo-campo">
+                <div class="campo">
                     <label for="email">Correo Electrónico</label>
                     <input type="email" id="email" placeholder="tu@correo.com" required>
                 </div>
-
-                <div class="grupo-campo">
+                <div class="campo">
                     <label for="asunto">Tipo de Mensaje</label>
                     <select id="asunto" required>
                         <option value="">Selecciona una opción...</option>
@@ -747,43 +266,37 @@
                         <option value="otro">Otro</option>
                     </select>
                 </div>
-
-                <div class="grupo-campo">
+                <div class="campo">
                     <label for="mensaje">Mensaje</label>
                     <textarea id="mensaje" placeholder="Escribe aquí tu mensaje. Cuanta más información, mejor podremos ayudarte..." required></textarea>
                 </div>
-
                 <button type="submit" class="btn-enviar" id="btn-enviar">► ENVIAR MENSAJE</button>
             </form>
-
-            <div class="mensaje-exito" id="mensaje-exito">
-                <div class="icono-check">✓</div>
+            <div class="exito" id="exito">
+                <div class="check">✓</div>
                 <h3>MENSAJE ENVIADO</h3>
                 <p>Tu mensaje ha sido recibido. Revisaremos la información y te contactaremos si es necesario. La verdad no prescribe.</p>
             </div>
         </div>
 
-        <!-- INFORMACIÓN LATERAL -->
-        <div class="info-lateral">
-            <div class="bloque-info">
+        <div class="contacto-grid">
+            <div class="card-contacto">
                 <h4>Correo Directo</h4>
                 <p><a href="mailto:contacto@elcomisario.cl">contacto@elcomisario.cl</a></p>
             </div>
-
-            <div class="bloque-info">
+            <div class="card-contacto">
                 <h4>Casos Anónimos</h4>
                 <p>Garantizamos confidencialidad total. Puedes usar un alias si prefieres mantener tu identidad en reserva.</p>
             </div>
-
-            <div class="bloque-info">
+            <div class="card-contacto">
                 <h4>Tiempo de Respuesta</h4>
                 <p>Revisamos cada mensaje personalmente. Generalmente respondemos dentro de 48 a 72 horas hábiles.</p>
             </div>
+        </div>
 
-            <div class="cita-misterio">
-                <p>Hay casos que el sistema entierra, pero la verdad siempre encuentra la forma de salir a la luz.</p>
-                <div class="autor">— EL COMISARIO</div>
-            </div>
+        <div class="cita">
+            <p>Hay casos que el sistema entierra, pero la verdad siempre encuentra la forma de salir a la luz.</p>
+            <div class="autor">— EL COMISARIO</div>
         </div>
     </section>
 
@@ -792,44 +305,21 @@
     </footer>
 
     <script>
-        // ========================================================
-        // LUZ QUE SIGUE AL MOUSE (GLOBAL)
-        // ========================================================
         (function() {
-            const luzGlobal = document.getElementById('luz-mouse-global');
-            
-            document.addEventListener('mouseenter', function() {
-                luzGlobal.classList.add('activo');
-            });
-            
-            document.addEventListener('mousemove', function(e) {
-                luzGlobal.style.left = e.clientX + 'px';
-                luzGlobal.style.top = e.clientY + 'px';
-            });
-            
-            document.addEventListener('mouseleave', function() {
-                luzGlobal.classList.remove('activo');
-            });
+            const luz = document.getElementById('luz-mouse');
+            document.addEventListener('mouseenter', () => luz.classList.add('activo'));
+            document.addEventListener('mousemove', e => { luz.style.left = e.clientX + 'px'; luz.style.top = e.clientY + 'px'; });
+            document.addEventListener('mouseleave', () => luz.classList.remove('activo'));
         })();
-
-        // ========================================================
-        // SIMULACIÓN DE ENVÍO DE FORMULARIO
-        // ========================================================
         (function() {
             const form = document.getElementById('form-contacto');
-            const btnEnviar = document.getElementById('btn-enviar');
-            const mensajeExito = document.getElementById('mensaje-exito');
-            
+            const btn = document.getElementById('btn-enviar');
+            const exito = document.getElementById('exito');
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
-                btnEnviar.disabled = true;
-                btnEnviar.textContent = '⏳ ENVIANDO...';
-                
-                setTimeout(function() {
-                    form.style.display = 'none';
-                    mensajeExito.style.display = 'block';
-                }, 2000);
+                btn.disabled = true;
+                btn.textContent = '⏳ ENVIANDO...';
+                setTimeout(() => { form.style.display = 'none'; exito.style.display = 'block'; }, 2000);
             });
         })();
     </script>
