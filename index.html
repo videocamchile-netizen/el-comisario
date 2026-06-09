@@ -682,6 +682,107 @@
             border-top: 1px solid rgba(255,180,0,0.05);
         }
         
+        /* ===== NEBLINA ESPESA DE FONDO ===== */
+        @keyframes neblinaMovimiento {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+            25% { transform: translate(-30px, 20px) scale(1.1); opacity: 0.2; }
+            50% { transform: translate(20px, -15px) scale(0.95); opacity: 0.12; }
+            75% { transform: translate(-15px, 30px) scale(1.05); opacity: 0.18; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0.15; }
+        }
+        .neblina-caso {
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(255,180,0,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(200,220,255,0.04) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,200,100,0.03) 0%, transparent 60%);
+            animation: neblinaMovimiento 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(40px);
+        }
+        .neblina-caso-2 {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255,180,0,0.04) 0%, transparent 60%);
+            animation: neblinaMovimiento 18s ease-in-out infinite 4s reverse;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(60px);
+        }
+        
+        /* ===== RAYOS DE LUZ ===== */
+        @keyframes rayosCaso {
+            0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+            8% { opacity: 0.08; }
+            15% { opacity: 0.1; }
+            20% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+            100% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+        }
+        .rayo-caso {
+            position: absolute;
+            top: -15%;
+            left: -10%;
+            width: 20%;
+            height: 130%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.01) 25%,
+                rgba(255, 180, 0, 0.05) 50%,
+                rgba(255, 255, 255, 0.01) 75%,
+                transparent 100%
+            );
+            transform: rotate(-5deg);
+            animation: rayosCaso 12s ease-in-out infinite 2s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .rayo-caso-2 {
+            position: absolute;
+            top: -10%;
+            left: -5%;
+            width: 15%;
+            height: 120%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 200, 100, 0.02) 30%,
+                rgba(255, 220, 150, 0.04) 50%,
+                rgba(255, 200, 100, 0.02) 70%,
+                transparent 100%
+            );
+            transform: rotate(-8deg);
+            animation: rayosCaso 16s ease-in-out infinite 6s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* ===== LUZ QUE SIGUE AL MOUSE ===== */
+        .luz-mouse-caso {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,180,0,0.08) 0%, rgba(255,200,100,0.03) 30%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 3;
+            mix-blend-mode: screen;
+        }
+        .luz-mouse-caso.activo {
+            opacity: 1;
+        }
+        
         @keyframes barridoCaso {
             0% { transform: translateX(-100%) rotate(-3deg); opacity: 0; }
             5% { opacity: 0.05; }
@@ -725,6 +826,8 @@
         }
         .destello-caso-1 { top: 30%; left: 20%; animation: destelloCaso 8s ease-in-out infinite; }
         .destello-caso-2 { top: 60%; left: 70%; animation: destelloCaso 10s ease-in-out infinite 4s; }
+        .destello-caso-3 { top: 20%; left: 80%; animation: destelloCaso 12s ease-in-out infinite 7s; }
+        .destello-caso-4 { top: 70%; left: 15%; animation: destelloCaso 9s ease-in-out infinite 5s; }
         
         .caso-contenido {
             display: flex;
@@ -762,11 +865,60 @@
             flex-direction: column;
             justify-content: center;
             border-radius: 0 6px 6px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Brillo interno que sigue al mouse dentro del bloque amarillo */
+        .brillo-caso-texto {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        .brillo-caso-texto.activo {
+            opacity: 1;
+        }
+        
+        /* ===== MOVIMIENTOS INDEPENDIENTES PARA CADA TEXTO ===== */
+        @keyframes flotarH4Caso {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-4px) rotate(-0.3deg); }
+            50% { transform: translateY(-1px) rotate(0.2deg); }
+            75% { transform: translateY(-5px) rotate(-0.1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes flotarH2Caso {
+            0% { transform: translateY(0px); }
+            33% { transform: translateY(-6px); }
+            66% { transform: translateY(-2px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes flotarPCaso {
+            0% { transform: translateY(0px); }
+            30% { transform: translateY(-3px); }
+            60% { transform: translateY(1px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes flotarBtnCaso {
+            0% { transform: translateY(0px) scale(1); }
+            40% { transform: translateY(-3px) scale(1.02); }
+            80% { transform: translateY(1px) scale(0.99); }
+            100% { transform: translateY(0px) scale(1); }
         }
         
         .caso-texto h4 {
             color: #3d2b00 !important;
             letter-spacing: 2px;
+            animation: flotarH4Caso 5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
         
         .caso-texto h2 {
@@ -774,6 +926,9 @@
             margin-top: 10px;
             line-height: 1.1;
             color: #1a1200;
+            animation: flotarH2Caso 6s ease-in-out infinite 0.5s;
+            position: relative;
+            z-index: 2;
         }
         
         .caso-texto h2 span {
@@ -785,12 +940,18 @@
             line-height: 1.6;
             font-size: 1.1rem;
             margin: 20px 0 30px 0;
+            animation: flotarPCaso 7s ease-in-out infinite 1s;
+            position: relative;
+            z-index: 2;
         }
         
         .caso-texto .btn-amarillo {
             background: #1a1200;
             color: #ffb400;
             border: 2px solid #ffb400;
+            animation: flotarBtnCaso 4s ease-in-out infinite 1.5s;
+            position: relative;
+            z-index: 2;
         }
         .caso-texto .btn-amarillo:hover {
             background: #ffb400;
@@ -935,17 +1096,32 @@
     <!-- ========================================================
          NUEVA SECCIÓN - CASO QUE CONTAR
          ======================================================== -->
-    <section class="seccion-caso">
+    <section class="seccion-caso" id="seccion-caso">
+        <!-- Neblina espesa de fondo -->
+        <div class="neblina-caso"></div>
+        <div class="neblina-caso-2"></div>
+        
+        <!-- Rayos de luz -->
+        <div class="rayo-caso"></div>
+        <div class="rayo-caso-2"></div>
+        
+        <!-- Luz que sigue al mouse -->
+        <div class="luz-mouse-caso" id="luz-mouse-caso"></div>
+        
         <!-- Efectos de luz -->
         <div class="barrido-caso"></div>
         <div class="destello-caso destello-caso-1"></div>
         <div class="destello-caso destello-caso-2"></div>
+        <div class="destello-caso destello-caso-3"></div>
+        <div class="destello-caso destello-caso-4"></div>
         
         <div class="caso-contenido">
             <div class="caso-imagen">
                 <img src="img/sola.jpg" alt="Sola">
             </div>
-            <div class="caso-texto">
+            <div class="caso-texto" id="caso-texto">
+                <!-- Brillo interno que sigue al mouse -->
+                <div class="brillo-caso-texto" id="brillo-caso-texto"></div>
                 <h4>— ¿TIENES UN CASO?</h4>
                 <h2>SI TIENES UNA HISTORIA<br><span>QUE CONTAR</span></h2>
                 <p>Si has sido víctima o conoces un caso que necesita ser investigado, contáctanos. En El Comisario damos voz a quienes buscan justicia.</p>
@@ -1071,6 +1247,53 @@
             hero.addEventListener('mouseleave', function() {
                 fondo.style.transform = '';
             });
+        })();
+
+        // ========================================================
+        // LUZ QUE SIGUE AL MOUSE EN SECCIÓN CASO
+        // ========================================================
+        (function() {
+            const seccionCaso = document.getElementById('seccion-caso');
+            const luzMouse = document.getElementById('luz-mouse-caso');
+            const brilloTexto = document.getElementById('brillo-caso-texto');
+            const casoTexto = document.getElementById('caso-texto');
+            
+            if (!seccionCaso || !luzMouse) return;
+            
+            seccionCaso.addEventListener('mouseenter', function() {
+                luzMouse.classList.add('activo');
+            });
+            
+            seccionCaso.addEventListener('mousemove', function(e) {
+                const rect = seccionCaso.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                luzMouse.style.left = x + 'px';
+                luzMouse.style.top = y + 'px';
+            });
+            
+            seccionCaso.addEventListener('mouseleave', function() {
+                luzMouse.classList.remove('activo');
+            });
+            
+            // Brillo dentro del bloque amarillo
+            if (casoTexto && brilloTexto) {
+                casoTexto.addEventListener('mouseenter', function() {
+                    brilloTexto.classList.add('activo');
+                });
+                
+                casoTexto.addEventListener('mousemove', function(e) {
+                    const rect = casoTexto.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    brilloTexto.style.left = x + 'px';
+                    brilloTexto.style.top = y + 'px';
+                });
+                
+                casoTexto.addEventListener('mouseleave', function() {
+                    brilloTexto.classList.remove('activo');
+                });
+            }
         })();
 
         // ========================================================
