@@ -335,7 +335,55 @@
             border-bottom: 1px solid rgba(255,180,0,0.05);
             position: relative;
             z-index: 3;
+            overflow: hidden;
         }
+        
+        /* Barrido de luz en sección stats */
+        @keyframes barridoStats {
+            0% { transform: translateX(-100%) rotate(-3deg); opacity: 0; }
+            5% { opacity: 0.06; }
+            12% { opacity: 0.08; }
+            15% { transform: translateX(200vw) rotate(3deg); opacity: 0; }
+            100% { transform: translateX(200vw) rotate(3deg); opacity: 0; }
+        }
+        .barrido-stats {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 25%;
+            height: 120%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.01) 30%,
+                rgba(255, 180, 0, 0.04) 50%,
+                rgba(255, 255, 255, 0.01) 70%,
+                transparent 100%
+            );
+            transform: rotate(-3deg);
+            animation: barridoStats 14s ease-in-out infinite 3s;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Destellos en stats */
+        @keyframes destelloStats {
+            0%, 100% { opacity: 0; }
+            10% { opacity: 0.08; }
+            20% { opacity: 0; }
+        }
+        .destello-stats {
+            position: absolute;
+            width: 3px; height: 3px;
+            border-radius: 50%;
+            background: rgba(255, 200, 100, 0.4);
+            box-shadow: 0 0 6px 2px rgba(255, 200, 100, 0.1);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .destello-stats-1 { top: 30%; left: 20%; animation: destelloStats 8s ease-in-out infinite; }
+        .destello-stats-2 { top: 60%; left: 70%; animation: destelloStats 10s ease-in-out infinite 4s; }
+        .destello-stats-3 { top: 40%; left: 85%; animation: destelloStats 12s ease-in-out infinite 7s; }
         .stat-box { 
             position: relative;
             padding: 10px 30px;
@@ -632,6 +680,12 @@
     </header>
 
     <section class="seccion-stats">
+        <!-- Efectos de luz en stats -->
+        <div class="barrido-stats"></div>
+        <div class="destello-stats destello-stats-1"></div>
+        <div class="destello-stats destello-stats-2"></div>
+        <div class="destello-stats destello-stats-3"></div>
+        
         <div class="stat-box">
             <h3>120+</h3>
             <p>Episodios Publicados</p>
@@ -649,6 +703,7 @@
             <p>Años de Experiencia</p>
         </div>
     </section>
+
 
     <section class="seccion-info">
         <div class="info-texto">
@@ -791,16 +846,17 @@
         })();
 
         // ========================================================
-        // BRILLO SIGUE AL CURSOR EN FOTOS Y TEXTO
+        // BRILLO + REACCIÓN FÍSICA AL CURSOR
         // ========================================================
         (function() {
-            // Elementos que tendrán el efecto de brillo
+            // Elementos que tendrán el efecto
             const elementos = document.querySelectorAll(
                 '.foto-carlos, .info-carlos h3, .info-carlos .cargo, ' +
-                '.info-texto h2, .info-texto h4, .info-texto p, ' +
+                '.info-texto, .info-texto h2, .info-texto h4, .info-texto p, ' +
                 '.hero-content h1, .hero-content p, ' +
                 '.stat-box, .tarjeta-flotante, .contenedor-carlos'
             );
+
             
             elementos.forEach(function(el) {
                 // Crear el círculo de brillo
@@ -809,10 +865,13 @@
                 el.style.position = 'relative';
                 el.appendChild(brillo);
                 
-                let timeout;
+                // Guardar transform original
+                const transformOriginal = el.style.transform || '';
+                let suavizado;
                 
                 el.addEventListener('mouseenter', function() {
                     brillo.classList.add('activo');
+                    el.style.transition = 'transform 0.15s ease-out';
                 });
                 
                 el.addEventListener('mousemove', function(e) {
@@ -821,13 +880,33 @@
                     const y = e.clientY - rect.top;
                     brillo.style.left = x + 'px';
                     brillo.style.top = y + 'px';
+                    
+                    // Calcular distancia al centro para inclinación
+                    const centroX = rect.width / 2;
+                    const centroY = rect.height / 2;
+                    const diffX = (x - centroX) / centroX;
+                    const diffY = (y - centroY) / centroY;
+                    
+                    // Aplicar inclinación 3D sutil y leve escala
+                    const rotX = diffY * 3;
+                    const rotY = diffX * -3;
+                    const escala = 1 + (1 - Math.abs(diffX * diffY * 0.3)) * 0.02;
+                    
+                    cancelAnimationFrame(suavizado);
+                    suavizado = requestAnimationFrame(function() {
+                        el.style.transform = transformOriginal + 
+                            ` perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(${escala})`;
+                    });
                 });
                 
                 el.addEventListener('mouseleave', function() {
                     brillo.classList.remove('activo');
+                    el.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    el.style.transform = transformOriginal;
                 });
             });
         })();
+
     </script>
 
 
