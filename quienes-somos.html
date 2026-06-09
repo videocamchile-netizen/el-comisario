@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos - El Comisario</title>
+    <style>
+        /* ========================================================
+           ESTILOS BASE
+           ======================================================== */
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background-color: #050a14; 
+            color: white; 
+            overflow-x: hidden;
+        }
+        
+        /* ========================================================
+           BARRA DE NAVEGACIÓN
+           ======================================================== */
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 20px 50px; 
+            background: linear-gradient(180deg, rgba(11,21,40,0.98) 0%, rgba(11,21,40,0.85) 100%);
+            align-items: center; 
+            border-bottom: 1px solid rgba(255,180,0,0.08);
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+        }
+        .navbar a { 
+            color: white; 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-size: 14px; 
+            transition: color 0.3s;
+            letter-spacing: 1px;
+        }
+        .navbar a:hover, .navbar a.activo { color: #ffb400; }
+        
+        .btn-amarillo { 
+            background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
+            color: #050a14; 
+            padding: 12px 24px; 
+            font-weight: bold; 
+            border-radius: 6px; 
+            text-decoration: none; 
+            border: none; 
+            cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+        }
+        .btn-amarillo:hover { 
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 180, 0, 0.4);
+        }
+
+        /* ========================================================
+           HERO CON REJAS DE CÁRCEL
+           ======================================================== */
+        @keyframes respiracionRejas {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        .hero-quienes {
+            position: relative;
+            min-height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 80px 20px 60px;
+        }
+        
+        /* Fondo oscuro con gradiente */
+        .fondo-quienes {
+            position: absolute;
+            top: -10px; left: -10px; width: 102%; height: 102%;
+            background: 
+                radial-gradient(ellipse at 50% 40%, rgba(10, 20, 40, 0.3) 0%, transparent 70%),
+                linear-gradient(180deg, #050a14 0%, #0a0f1e 50%, #050a14 100%);
+            animation: respiracionRejas 20s ease-in-out infinite;
+            z-index: 0;
+        }
+        
+        /* REJAS DE CÁRCEL (SVG) */
+        .rejas-fondo {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='100' viewBox='0 0 120 100'%3E%3Cg opacity='0.06'%3E%3Crect x='0' y='0' width='8' height='100' fill='%23ffb400'/%3E%3Crect x='20' y='0' width='8' height='100' fill='%23ffb400'/%3E%3Crect x='40' y='0' width='8' height='100' fill='%23ffb400'/%3E%3Crect x='60' y='0' width='8' height='100' fill='%23ffb400'/%3E%3Crect x='80' y='0' width='8' height='100' fill='%23ffb400'/%3E%3Crect x='100' y='0' width='8' height='100' fill='%23ffb400'/%3E%3Crect x='0' y='0' width='120' height='6' fill='%23ffb400'/%3E%3Crect x='0' y='20' width='120' height='6' fill='%23ffb400'/%3E%3Crect x='0' y='40' width='120' height='6' fill='%23ffb400'/%3E%3Crect x='0' y='60' width='120' height='6' fill='%23ffb400'/%3E%3Crect x='0' y='80' width='120' height='6' fill='%23ffb400'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 120px 100px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        /* Segunda capa de rejas más finas */
+        .rejas-fondo-2 {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg opacity='0.04'%3E%3Crect x='0' y='0' width='4' height='80' fill='%23ffffff'/%3E%3Crect x='20' y='0' width='4' height='80' fill='%23ffffff'/%3E%3Crect x='40' y='0' width='4' height='80' fill='%23ffffff'/%3E%3Crect x='60' y='0' width='4' height='80' fill='%23ffffff'/%3E%3Crect x='0' y='0' width='80' height='4' fill='%23ffffff'/%3E%3Crect x='0' y='20' width='80' height='4' fill='%23ffffff'/%3E%3Crect x='0' y='40' width='80' height='4' fill='%23ffffff'/%3E%3Crect x='0' y='60' width='80' height='4' fill='%23ffffff'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 80px 80px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .hero-contenido {
+            position: relative;
+            z-index: 3;
+            max-width: 750px;
+        }
+        
+        .hero-contenido h1 {
+            font-size: 4rem;
+            color: #ffb400;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 900;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            letter-spacing: 5px;
+        }
+        
+        .hero-contenido h1 span {
+            color: white;
+            display: block;
+            font-size: 1.1rem;
+            letter-spacing: 8px;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        /* ========================================================
+           SECCIÓN DE TEXTO
+           ======================================================== */
+        .seccion-texto {
+            display: flex;
+            justify-content: center;
+            padding: 80px 80px 100px;
+            background: linear-gradient(180deg, #050a14 0%, #080f20 50%, #050a14 100%);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contenido-principal {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .contenido-principal .etiqueta {
+            color: #ffb400;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .contenido-principal h2 {
+            font-size: 2.8rem;
+            margin: 0 0 30px 0;
+            line-height: 1.1;
+        }
+        
+        .contenido-principal h2 span {
+            color: #ffb400;
+        }
+        
+        .contenido-principal p {
+            color: #a0a5b0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .contenido-principal .destacado {
+            border-left: 3px solid #ffb400;
+            padding: 20px 25px;
+            background: rgba(255,180,0,0.03);
+            border-radius: 0 8px 8px 0;
+            margin: 30px 0;
+            font-style: italic;
+            color: #c0c5d0;
+        }
+        
+        .contenido-principal .firma {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,180,0,0.1);
+        }
+        
+        .contenido-principal .firma p {
+            color: #ffb400;
+            font-size: 14px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .contenido-principal .firma span {
+            color: #556;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* ========================================================
+           FOOTER
+           ======================================================== */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255,180,0,0.05);
+            background: #050a14;
+            position: relative;
+            z-index: 2;
+        }
+        .footer p {
+            color: #556;
+            font-size: 12px;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        /* ========================================================
+           RESPONSIVE
+           ======================================================== */
+        @media (max-width: 900px) {
+            .navbar { flex-direction: column; padding: 15px; gap: 15px; }
+            .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; }
+            .navbar .links a { margin: 5px 10px; font-size: 12px; }
+            .hero-contenido h1 { font-size: 2.5rem; }
+            .seccion-texto { padding: 50px 25px 70px; }
+            .contenido-principal h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo-comi.png" alt="Logo El Comisario" style="height: 55px;">
+        </div>
+        <div class="links">
+            <a href="index.html">INICIO</a>
+            <a href="#">EPISODIOS</a>
+            <a href="#">CASOS</a>
+            <a href="quienes-somos.html" class="activo">QUIÉNES SOMOS</a>
+            <a href="contacto.html">CONTACTO</a>
+        </div>
+        <a href="index.html" class="btn-amarillo">◄ VOLVER</a>
+    </nav>
+
+    <header class="hero-quienes">
+        <div class="fondo-quienes"></div>
+        <div class="rejas-fondo"></div>
+        <div class="rejas-fondo-2"></div>
+        <div class="hero-contenido">
+            <h1>QUIÉNES SOMOS<span>— LA VERDAD NO PRESCRIBE —</span></h1>
+        </div>
+    </header>
+
+    <section class="seccion-texto">
+        <div class="contenido-principal">
+            <span class="etiqueta">— NUESTRA HISTORIA</span>
+            <h2>SOMOS LA VOZ DE <span>LOS QUE CALLAN</span></h2>
+            
+            <p>El Comisario nace de una convicción inquebrantable: la verdad no prescribe y la justicia no debe tener fecha de vencimiento. Somos un canal independiente dedicado a investigar y visibilizar aquellos casos que el sistema ha dejado en el olvido, donde las víctimas han sido silenciadas y los responsables continúan impunes.</p>
+            
+            <p>Detrás de este proyecto hay un equipo comprometido con el rigor periodístico y la metodología policial. Analizamos cada caso con la mirada de quien conoce los pasillos de la investigación criminal, pero también con la sensibilidad de quien entiende que detrás de cada expediente hay una familia quebrada, una vida destruida y una comunidad que exige respuestas.</p>
+            
+            <div class="destacado">
+                "No descansaremos hasta que cada víctima olvidada tenga la oportunidad de ser escuchada. Porque cuando el sistema falla, cuando las puertas se cierran y los expedientes se archivan, ahí estamos nosotros para levantar la voz."
+            </div>
+            
+            <p>Nuestro compromiso es con la verdad, sin importar a quién incomode. Creemos en el poder de la información para generar cambios reales, en la fuerza de una comunidad que ya no quiere mirar hacia otro lado. Cada caso que abordamos es una promesa: no vamos a soltarlo hasta que la verdad salga a la luz.</p>
+            
+            <p>Este canal es para ti, que has buscado justicia y no la has encontrado. Para ti, que tienes información y no sabes a quién contársela. Para ti, que crees que un mundo más justo es posible. Bienvenido a El Comisario. Aquí las víctimas tienen voz.</p>
+            
+            <div class="firma">
+                <p>— EL COMISARIO</p>
+                <span>Ex Comisario PDI · Fundador</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 El Comisario · Donde las víctimas tienen voz</p>
+    </footer>
+
+</body>
+</html>

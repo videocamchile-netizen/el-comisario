@@ -118,20 +118,28 @@
             z-index: 1;
         }
 
-        /* --- BARRA DE LUZ (INTERROGATORIO) - PASA VARIAS VECES --- */
+        /* --- BARRA DE LUZ (INTERROGATORIO) - LOOP CONTINUO --- */
         @keyframes barridoLuz {
             0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-            3% { opacity: 0.12; }
+            4% { opacity: 0.12; }
             10% { opacity: 0.15; }
             13% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
             16% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-            19% { opacity: 0.12; }
+            20% { opacity: 0.12; }
             26% { opacity: 0.15; }
             29% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
             32% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-            35% { opacity: 0.10; }
+            36% { opacity: 0.10; }
             40% { opacity: 0.12; }
             43% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+            46% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+            50% { opacity: 0.12; }
+            56% { opacity: 0.15; }
+            59% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+            62% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+            66% { opacity: 0.10; }
+            70% { opacity: 0.12; }
+            73% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
             100% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
         }
         .barrido-luz {
@@ -149,10 +157,11 @@
                 transparent 100%
             );
             transform: rotate(-5deg);
-            animation: barridoLuz 18s ease-in-out infinite;
+            animation: barridoLuz 16s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
+
 
 
         /* --- VIÑETA PULSANTE --- */
@@ -426,7 +435,41 @@
             z-index: 2;
             gap: 80px;
             min-height: 80vh;
+            overflow: hidden;
         }
+        
+        /* Barrido de luz en sección info (foto) */
+        @keyframes barridoInfo {
+            0% { transform: translateX(-100%) rotate(-4deg); opacity: 0; }
+            5% { opacity: 0.05; }
+            12% { opacity: 0.07; }
+            15% { transform: translateX(200vw) rotate(4deg); opacity: 0; }
+            20% { transform: translateX(-100%) rotate(-4deg); opacity: 0; }
+            25% { opacity: 0.05; }
+            32% { opacity: 0.07; }
+            35% { transform: translateX(200vw) rotate(4deg); opacity: 0; }
+            100% { transform: translateX(200vw) rotate(4deg); opacity: 0; }
+        }
+        .barrido-info {
+            position: absolute;
+            top: -15%;
+            left: -10%;
+            width: 28%;
+            height: 130%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.01) 30%,
+                rgba(255, 180, 0, 0.035) 50%,
+                rgba(255, 255, 255, 0.01) 70%,
+                transparent 100%
+            );
+            transform: rotate(-4deg);
+            animation: barridoInfo 20s ease-in-out infinite 2s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .info-texto { 
             max-width: 45%; 
             order: 2;
@@ -636,7 +679,8 @@
             <a href="#">INICIO</a>
             <a href="#">EPISODIOS</a>
             <a href="#">CASOS</a>
-            <a href="#">QUIÉNES SOMOS</a>
+            <a href="quienes-somos.html">QUIÉNES SOMOS</a>
+
             <a href="contacto.html">CONTACTO</a>
 
         </div>
@@ -707,7 +751,11 @@
 
 
     <section class="seccion-info">
+        <!-- Barrido de luz en la sección de la foto -->
+        <div class="barrido-info"></div>
+        
         <div class="info-texto">
+
             <h4 style="color: #ffb400; letter-spacing: 2px;">— NUESTRA MISIÓN</h4>
             <h2>CUANDO EL SISTEMA FALLA,<br><span>NOSOTROS NO FALLAMOS</span></h2>
             <p>En este canal damos la palabra a quienes han sufrido en silencio. Víctimas, familiares y testigos que buscan respuestas que la justicia oficial no les ha dado.</p>
