@@ -118,12 +118,20 @@
             z-index: 1;
         }
 
-        /* --- BARRA DE LUZ (INTERROGATORIO) --- */
+        /* --- BARRA DE LUZ (INTERROGATORIO) - PASA VARIAS VECES --- */
         @keyframes barridoLuz {
             0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-            5% { opacity: 0.12; }
-            45% { opacity: 0.15; }
-            50% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+            3% { opacity: 0.12; }
+            10% { opacity: 0.15; }
+            13% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+            16% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+            19% { opacity: 0.12; }
+            26% { opacity: 0.15; }
+            29% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
+            32% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+            35% { opacity: 0.10; }
+            40% { opacity: 0.12; }
+            43% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
             100% { transform: translateX(200vw) rotate(5deg); opacity: 0; }
         }
         .barrido-luz {
@@ -141,10 +149,11 @@
                 transparent 100%
             );
             transform: rotate(-5deg);
-            animation: barridoLuz 12s ease-in-out infinite;
+            animation: barridoLuz 18s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
+
 
         /* --- VIÑETA PULSANTE --- */
         @keyframes pulsoViñeta {
@@ -240,12 +249,36 @@
         }
 
         /* ========================================================
-           HERO CONTENT
+           HERO CONTENT - LETRAS CON VIDA
            ======================================================== */
         @keyframes flotarLetras {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-8px); } 
             100% { transform: translateY(0px); }
+        }
+
+        /* Aparición difuminada para EL COMISARIO */
+        @keyframes aparecerDifuminado {
+            0% { 
+                opacity: 0; 
+                filter: blur(12px); 
+                transform: translateY(30px) scale(0.95);
+            }
+            30% {
+                opacity: 0.6;
+                filter: blur(4px);
+                transform: translateY(10px) scale(0.98);
+            }
+            60% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0) scale(1);
+            }
         }
 
         .hero-content { 
@@ -263,8 +296,15 @@
             text-transform: uppercase; 
             font-weight: 900;
             text-shadow: 0 10px 30px rgba(0,0,0,0.9), 0 0 60px rgba(255,180,0,0.05);
+            animation: aparecerDifuminado 2.5s ease-out forwards;
         }
-        .hero-content h1 span { color: white; display: block; }
+        
+        .hero-content h1 span { 
+            color: white; 
+            display: block; 
+            animation: aparecerDifuminado 2.5s ease-out 0.3s forwards;
+            opacity: 0;
+        }
         
         .hero-content p { 
             font-size: 1.3rem; 
@@ -272,7 +312,15 @@
             margin: 30px 0 40px 0; 
             color: #d1d5dc;
             text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            animation: aparecerDifuminado 2.5s ease-out 0.6s forwards;
+            opacity: 0;
         }
+        
+        .hero-content div { 
+            animation: aparecerDifuminado 2.5s ease-out 0.9s forwards;
+            opacity: 0;
+        }
+
 
         /* ========================================================
            SECCIÓN STATS
@@ -323,63 +371,176 @@
         .seccion-info { 
             display: flex; 
             justify-content: space-between; 
-            padding: 120px 80px; 
+            align-items: center;
+            padding: 100px 80px; 
             background: linear-gradient(180deg, #050a14 0%, #080f20 50%, #050a14 100%);
             position: relative; 
             z-index: 2;
+            gap: 80px;
+            min-height: 80vh;
         }
-        .info-texto { max-width: 50%; }
-        .info-texto h2 { font-size: 3rem; margin-top: 10px; line-height: 1.1; }
+        .info-texto { 
+            max-width: 45%; 
+            order: 2;
+        }
+        .info-texto h4 {
+            animation: aparecerDifuminado 2.5s ease-out forwards;
+        }
+        .info-texto h2 { 
+            font-size: 3rem; 
+            margin-top: 10px; 
+            line-height: 1.1; 
+            animation: aparecerDifuminado 2.5s ease-out 0.3s forwards;
+            opacity: 0;
+        }
         .info-texto h2 span { color: #ffb400; }
-        .info-texto p { color: #a0a5b0; line-height: 1.6; font-size: 1.1rem; }
+        .info-texto p { 
+            color: #a0a5b0; 
+            line-height: 1.6; 
+            font-size: 1.1rem; 
+            animation: aparecerDifuminado 2.5s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+        .info-texto p:last-of-type {
+            animation: aparecerDifuminado 2.5s ease-out 0.9s forwards;
+            opacity: 0;
+        }
+
 
         /* ========================================================
-           TARJETA FLOTANTE 3D
+           EFECTO DE BRILLO AL PASAR EL CURSOR
            ======================================================== */
-        .tarjeta-flotante {
-            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
-            border-radius: 14px;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-            background: linear-gradient(145deg, #0f1a30 0%, #0b1528 100%);
-            padding: 35px;
-            width: 400px;
-            border-top: 4px solid #ffb400; 
-            overflow: hidden;
+        .brillo-cursor {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,180,0,0.08) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 5;
+            mix-blend-mode: overlay;
         }
         
-        .tarjeta-flotante::before {
+        .brillo-cursor.activo {
+            opacity: 1;
+        }
+
+        /* ========================================================
+           CARLOS COLLAO - FOTO GRANDE SIN RECUADRO
+           ======================================================== */
+        @keyframes respiracionFoto {
+            0% { transform: scale(1) translateY(0); filter: brightness(1); }
+            50% { transform: scale(1.02) translateY(-5px); filter: brightness(1.08); }
+            100% { transform: scale(1) translateY(0); filter: brightness(1); }
+        }
+        
+        @keyframes brilloSuave {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+        
+        .contenedor-carlos {
+            position: relative;
+            width: 55%;
+            order: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .foto-carlos {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 6px;
+            overflow: hidden;
+            animation: respiracionFoto 6s ease-in-out infinite;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.05);
+        }
+        
+        .foto-carlos img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+        
+        /* Capa de brillo sobre la foto */
+        .foto-carlos::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(255,180,0,0.03) 0%, transparent 60%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255,180,0,0.05) 0%,
+                transparent 30%,
+                rgba(255,255,255,0.03) 50%,
+                transparent 70%,
+                rgba(255,180,0,0.03) 100%
+            );
+            animation: brilloSuave 4s ease-in-out infinite;
             pointer-events: none;
+            border-radius: 6px;
         }
         
-        .tarjeta-flotante img { 
-            width: 100%; 
-            border-radius: 8px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
+        /* Línea decorativa dorada al costado de la foto */
+        .foto-carlos::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10%;
+            height: 80%;
+            width: 3px;
+            background: linear-gradient(180deg, transparent, #ffb400, transparent);
+            z-index: 2;
+            border-radius: 2px;
+        }
+
+        
+        .info-carlos {
+            margin-top: 25px;
+            padding-left: 10px;
         }
         
-        .tarjeta-flotante:hover {
-            transform: translateY(-18px) scale(1.02); 
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 180, 0, 0.08);
+        .info-carlos h3 {
+            font-size: 2.2rem;
+            margin: 0;
+            color: white;
+            letter-spacing: 3px;
+            font-weight: 900;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
         }
         
-        .etiqueta-cargo { 
-            color: #ffb400; 
-            font-size: 13px; 
-            letter-spacing: 2px; 
-            font-weight: bold; 
-            margin-top: 5px;
+        .info-carlos .cargo {
+            color: #ffb400;
+            font-size: 14px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin: 5px 0 0 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
+        
+        .info-carlos .cargo span {
+            color: rgba(255,255,255,0.4);
+            font-weight: normal;
+        }
+        
+        .info-carlos .descripcion {
+            color: #8890a0;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: 10px;
+            max-width: 500px;
+        }
+
+
 
         /* ========================================================
            LIENZO DE PARTÍCULAS (CANVAS)
@@ -408,8 +569,12 @@
             .stat-box { width: 45%; }
             .stat-box::after { display: none; }
             .seccion-info { flex-direction: column; padding: 60px 30px; gap: 40px; }
-            .info-texto { max-width: 100%; }
-            .tarjeta-flotante { width: 100%; }
+            .info-texto { max-width: 100%; order: 2; }
+            .contenedor-carlos { width: 100%; order: 1; }
+            .foto-carlos { max-width: 100%; }
+            .info-carlos h3 { font-size: 1.6rem; }
+
+
         }
     </style>
 </head>
@@ -492,13 +657,19 @@
             <p>Con la mirada de un ex comisario de la PDI, analizamos cada caso con rigor, metodología policial y el compromiso con la verdad.</p>
         </div>
 
-        <div class="tarjeta-flotante">
-            <img src="carlos-collao.png" alt="Carlos Collao">
-            <h3 style="font-size: 1.8rem; margin-top: 20px; margin-bottom: 5px;">CARLOS COLLAO</h3>
-            <p class="etiqueta-cargo">EX COMISARIO · PDI DE CHILE</p>
-            <p style="color: #a0a5b0; font-size: 15px; line-height: 1.5;">Con más de tres décadas al servicio de la Policía de Investigaciones, hoy pone su experiencia al servicio de la verdad y de quienes no han encontrado justicia.</p>
+        <div class="contenedor-carlos">
+            <div class="foto-carlos">
+                <img src="carlos-collao.png" alt="Carlos Collao">
+            </div>
+            <div class="info-carlos">
+                <h3>CARLOS COLLAO</h3>
+                <p class="cargo">COMISARIO (R) · PDI DE CHILE</p>
+                <p class="descripcion">Con más de dos décadas al servicio de la Policía de Investigaciones, hoy pone su experiencia al servicio de la verdad y de quienes no han encontrado justicia.</p>
+
+            </div>
         </div>
     </section>
+
 
     <script>
         // ========================================================
@@ -617,7 +788,47 @@
                 fondo.style.transform = '';
             });
         })();
+
+        // ========================================================
+        // BRILLO SIGUE AL CURSOR EN FOTOS Y TEXTO
+        // ========================================================
+        (function() {
+            // Elementos que tendrán el efecto de brillo
+            const elementos = document.querySelectorAll(
+                '.foto-carlos, .info-carlos h3, .info-carlos .cargo, ' +
+                '.info-texto h2, .info-texto h4, .info-texto p, ' +
+                '.hero-content h1, .hero-content p, ' +
+                '.stat-box, .tarjeta-flotante, .contenedor-carlos'
+            );
+            
+            elementos.forEach(function(el) {
+                // Crear el círculo de brillo
+                const brillo = document.createElement('div');
+                brillo.className = 'brillo-cursor';
+                el.style.position = 'relative';
+                el.appendChild(brillo);
+                
+                let timeout;
+                
+                el.addEventListener('mouseenter', function() {
+                    brillo.classList.add('activo');
+                });
+                
+                el.addEventListener('mousemove', function(e) {
+                    const rect = el.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    brillo.style.left = x + 'px';
+                    brillo.style.top = y + 'px';
+                });
+                
+                el.addEventListener('mouseleave', function() {
+                    brillo.classList.remove('activo');
+                });
+            });
+        })();
     </script>
+
 
 </body>
 </html>
