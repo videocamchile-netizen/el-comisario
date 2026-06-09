@@ -731,23 +731,44 @@
         .caso-texto {
             flex: 1;
             max-width: 50%;
+            background: linear-gradient(135deg, #ffb400 0%, #d49400 100%);
+            border-radius: 6px;
+            padding: 40px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.15);
+        }
+        
+        .caso-texto h4 {
+            color: #3d2b00 !important;
+            letter-spacing: 2px;
         }
         
         .caso-texto h2 {
             font-size: 3rem;
             margin-top: 10px;
             line-height: 1.1;
+            color: #1a1200;
         }
         
         .caso-texto h2 span {
-            color: #ffb400;
+            color: #ffffff;
         }
         
         .caso-texto p {
-            color: #a0a5b0;
+            color: #3d2b00;
             line-height: 1.6;
             font-size: 1.1rem;
             margin: 20px 0 30px 0;
+        }
+        
+        .caso-texto .btn-amarillo {
+            background: #1a1200;
+            color: #ffb400;
+            border: 2px solid #ffb400;
+        }
+        .caso-texto .btn-amarillo:hover {
+            background: #ffb400;
+            color: #1a1200;
+            box-shadow: 0 0 25px rgba(255, 180, 0, 0.4);
         }
 
         /* ========================================================
@@ -898,7 +919,7 @@
                 <img src="caso-que-contar?.jpg" alt="Caso que contar">
             </div>
             <div class="caso-texto">
-                <h4 style="color: #ffb400; letter-spacing: 2px;">— ¿TIENES UN CASO?</h4>
+                <h4>— ¿TIENES UN CASO?</h4>
                 <h2>SI TIENES UNA HISTORIA<br><span>QUE CONTAR</span></h2>
                 <p>Si has sido víctima o conoces un caso que necesita ser investigado, contáctanos. En El Comisario damos voz a quienes buscan justicia.</p>
                 <a href="contacto.html" class="btn-amarillo" style="display: inline-block;">► CONTÁCTANOS</a>
