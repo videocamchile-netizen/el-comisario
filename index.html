@@ -104,6 +104,8 @@
             animation: respiracionCine 28s ease-in-out infinite; 
             z-index: 0;
             filter: saturate(1.1) contrast(1.05);
+            mask-image: radial-gradient(ellipse at center, black 55%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 55%, transparent 100%);
         }
 
         /* --- CAPA DE ILUMINACIÓN CINEMATOGRÁFICA --- */
@@ -572,6 +574,8 @@
             overflow: hidden;
             animation: respiracionFoto 6s ease-in-out infinite;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.05);
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         }
         
         .foto-carlos img {
@@ -854,6 +858,8 @@
             display: block;
             border-radius: 6px 0 0 6px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            mask-image: linear-gradient(to right, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
         }
         
         .caso-texto {
