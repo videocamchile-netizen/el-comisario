@@ -104,8 +104,17 @@
             animation: respiracionCine 28s ease-in-out infinite; 
             z-index: 0;
             filter: saturate(1.1) contrast(1.05);
-            mask-image: radial-gradient(ellipse at center, black 55%, transparent 100%);
-            -webkit-mask-image: radial-gradient(ellipse at center, black 55%, transparent 100%);
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+        }
+
+        /* --- CAPA OSCURA ADICIONAL PARA FUNDIR BORDES --- */
+        .fondo-vivo::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            box-shadow: inset 0 0 200px 80px #050a14;
+            pointer-events: none;
         }
 
         /* --- CAPA DE ILUMINACIÓN CINEMATOGRÁFICA --- */
@@ -574,8 +583,8 @@
             overflow: hidden;
             animation: respiracionFoto 6s ease-in-out infinite;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.05);
-            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
         }
         
         .foto-carlos img {
@@ -585,7 +594,7 @@
             border-radius: 6px;
         }
         
-        /* Capa de brillo sobre la foto */
+        /* Capa de brillo sobre la foto + sombra para fundir bordes */
         .foto-carlos::after {
             content: '';
             position: absolute;
@@ -604,6 +613,7 @@
             animation: brilloSuave 4s ease-in-out infinite;
             pointer-events: none;
             border-radius: 6px;
+            box-shadow: inset 0 -120px 120px -40px #050a14;
         }
         
         /* Línea decorativa dorada al costado de la foto */
@@ -851,6 +861,14 @@
             align-items: stretch;
         }
         
+        .caso-imagen {
+            flex: 0 0 auto;
+            width: 45%;
+            display: flex;
+            align-items: stretch;
+            position: relative;
+        }
+        
         .caso-imagen img {
             width: 100%;
             height: 100%;
@@ -858,8 +876,40 @@
             display: block;
             border-radius: 6px 0 0 6px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            mask-image: linear-gradient(to right, black 80%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+            mask-image: linear-gradient(to right, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+        }
+        
+        /* Sombra oscura para fundir borde derecho de la imagen */
+        .caso-imagen::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, #050a14);
+            pointer-events: none;
+        }
+        .caso-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 6px 0 0 6px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            mask-image: linear-gradient(to right, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);
+        }
+        
+        /* Sombra oscura para fundir borde derecho de la imagen */
+        .caso-imagen::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, #050a14);
+            pointer-events: none;
         }
         
         .caso-texto {
