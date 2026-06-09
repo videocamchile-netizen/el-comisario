@@ -728,8 +728,8 @@
         
         .caso-contenido {
             display: flex;
-            align-items: center;
-            gap: 60px;
+            align-items: stretch;
+            gap: 0;
             max-width: 1200px;
             width: 100%;
             position: relative;
@@ -737,25 +737,30 @@
         }
         
         .caso-imagen {
-            flex: 1;
-            max-width: 50%;
+            flex: 0 0 auto;
+            width: 45%;
+            display: flex;
+            align-items: stretch;
         }
         
         .caso-imagen img {
             width: 100%;
-            height: auto;
-            border-radius: 6px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.05);
+            height: 100%;
+            object-fit: cover;
             display: block;
+            border-radius: 6px 0 0 6px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
         }
         
         .caso-texto {
             flex: 1;
-            max-width: 50%;
             background: linear-gradient(135deg, #ffb400 0%, #d49400 100%);
-            border-radius: 6px;
             padding: 40px 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(255,180,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 0 6px 6px 0;
         }
         
         .caso-texto h4 {
@@ -937,7 +942,7 @@
         
         <div class="caso-contenido">
             <div class="caso-imagen">
-                <img src="img/caso-que-contar?.jpg" alt="Caso que contar">
+                <img src="img/sola.jpg" alt="Sola">
             </div>
             <div class="caso-texto">
                 <h4>— ¿TIENES UN CASO?</h4>
