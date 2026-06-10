@@ -141,6 +141,11 @@
             letter-spacing: 1px;
         }
         .navbar a:hover, .navbar a.activo { color: #ffb400; }
+        .navbar-live {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
         
         .btn-amarillo { 
             background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
@@ -931,11 +936,24 @@
            RESPONSIVE
            ======================================================== */
         @media (max-width: 900px) {
-            .navbar { padding: 10px 15px; gap: 8px; }
+            .navbar { 
+                padding: 10px 15px; 
+                gap: 8px; 
+                flex-wrap: wrap; 
+                justify-content: center; 
+            }
+            .navbar .logo { width: 100%; text-align: center; }
             .navbar .logo img { height: 60px !important; }
-            .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
+            .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; width: 100%; }
             .navbar .links a { margin: 3px 6px; font-size: 13px; letter-spacing: 0.5px; }
             .navbar .btn-amarillo { padding: 8px 16px; font-size: 13px; }
+            .navbar-live {
+                width: 100%;
+                justify-content: center;
+                padding-top: 8px;
+                margin-top: 4px;
+                border-top: 1px solid rgba(255,180,0,0.12);
+            }
             .hero-episodios { min-height: 300vh; padding: 60px 15px 40px; }
             .hero-contenido h1 { font-size: 2.8rem; }
             .hero-contenido p { font-size: 1rem; }
@@ -1004,12 +1022,12 @@
             <a href="quienes-somos.html">QUIÉNES SOMOS</a>
             <a href="contacto.html">CONTACTO</a>
         </div>
-        <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="navbar-live">
             <!-- Indicador PROGRAMA EN VIVO ON/OFF -->
-            <a href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="indicador-en-vivo" id="indicadorEnVivo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;">
+            <a href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="indicador-en-vivo" id="indicadorEnVivo">
                 <span style="font-size: 12px; color: #8890a0; letter-spacing: 1px; white-space: nowrap;">📺 EN VIVO</span>
-                <span class="indicador-punto" id="indicadorPunto" style="width: 10px; height: 10px; border-radius: 50%; background: #444; display: inline-block; transition: all 0.3s ease;"></span>
-                <span class="indicador-estado" id="indicadorEstado" style="font-size: 10px; font-weight: bold; color: #666; letter-spacing: 1px; transition: all 0.3s ease;">OFF</span>
+                <span class="indicador-punto" id="indicadorPunto"></span>
+                <span class="indicador-estado" id="indicadorEstado">OFF</span>
             </a>
             <a href="index.html" class="btn-amarillo">◄ VOLVER</a>
         </div>
