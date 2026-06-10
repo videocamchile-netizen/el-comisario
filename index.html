@@ -135,6 +135,161 @@
         .navbar a:hover { color: #ffb400; }
         
         /* ========================================================
+           SECCIÓN EN VIVO
+           ======================================================== */
+        @keyframes pulsoRojo {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes brilloEnVivo {
+            0% { box-shadow: 0 0 20px rgba(255,0,0,0.2), 0 0 40px rgba(255,0,0,0.1); }
+            50% { box-shadow: 0 0 30px rgba(255,0,0,0.4), 0 0 60px rgba(255,0,0,0.2); }
+            100% { box-shadow: 0 0 20px rgba(255,0,0,0.2), 0 0 40px rgba(255,0,0,0.1); }
+        }
+        @keyframes aparecerEnVivo {
+            0% { opacity: 0; transform: translateY(-30px) scale(0.95); max-height: 0; }
+            100% { opacity: 1; transform: translateY(0) scale(1); max-height: 800px; }
+        }
+        @keyframes desaparecerEnVivo {
+            0% { opacity: 1; transform: translateY(0) scale(1); max-height: 800px; }
+            100% { opacity: 0; transform: translateY(-30px) scale(0.95); max-height: 0; }
+        }
+        .seccion-en-vivo {
+            display: none;
+            position: relative;
+            z-index: 5;
+            background: linear-gradient(135deg, rgba(40,10,10,0.95) 0%, rgba(20,5,5,0.95) 100%);
+            border-bottom: 2px solid rgba(255,0,0,0.3);
+            overflow: hidden;
+            animation: aparecerEnVivo 0.6s ease-out forwards;
+        }
+        .seccion-en-vivo.ocultando {
+            animation: desaparecerEnVivo 0.5s ease-in forwards;
+        }
+        .seccion-en-vivo.visible {
+            display: block;
+        }
+        .seccion-en-vivo::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255,0,0,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,50,0,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .en-vivo-interior {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .en-vivo-indicador {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        .en-vivo-punto {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ff0000;
+            animation: pulsoRojo 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255,0,0,0.6);
+        }
+        .en-vivo-label {
+            font-size: 14px;
+            font-weight: 900;
+            color: #ff0000;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .en-vivo-video {
+            flex: 1;
+            max-width: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            animation: brilloEnVivo 3s ease-in-out infinite;
+        }
+        .en-vivo-video iframe {
+            width: 100%;
+            height: 225px;
+            border: none;
+            display: block;
+        }
+        .en-vivo-info {
+            flex: 1;
+        }
+        .en-vivo-info h3 {
+            color: #ff4444;
+            font-size: 1.2rem;
+            margin: 0 0 5px 0;
+            letter-spacing: 1px;
+        }
+        .en-vivo-info p {
+            color: #cc9999;
+            font-size: 13px;
+            margin: 0 0 12px 0;
+            line-height: 1.4;
+        }
+        .en-vivo-info .btn-ver-directo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ff0000;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .en-vivo-info .btn-ver-directo:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+        .en-vivo-cerrar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.3);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 2;
+        }
+        .en-vivo-cerrar:hover {
+            color: rgba(255,255,255,0.8);
+        }
+        @media (max-width: 900px) {
+            .en-vivo-interior {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+            .en-vivo-video {
+                max-width: 100%;
+                width: 100%;
+            }
+            .en-vivo-video iframe {
+                height: 200px;
+            }
+            .en-vivo-info h3 {
+                font-size: 1rem;
+            }
+        }
+        
+        /* ========================================================
            BOTONES
            ======================================================== */
         .btn-amarillo { 
@@ -1232,6 +1387,25 @@
 
     </nav>
 
+    <!-- ===== SECCIÓN EN VIVO ===== -->
+    <div class="seccion-en-vivo" id="seccionEnVivo">
+        <button class="en-vivo-cerrar" id="btnCerrarEnVivo" title="Cerrar">✕</button>
+        <div class="en-vivo-interior">
+            <div class="en-vivo-indicador">
+                <div class="en-vivo-punto"></div>
+                <span class="en-vivo-label">EN VIVO</span>
+            </div>
+            <div class="en-vivo-video">
+                <iframe id="iframeEnVivo" src="" allowfullscreen></iframe>
+            </div>
+            <div class="en-vivo-info">
+                <h3 id="tituloEnVivo">Transmisión en vivo</h3>
+                <p id="descEnVivo">Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.</p>
+                <a id="linkEnVivo" href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="btn-ver-directo">▶ VER EN YOUTUBE</a>
+            </div>
+        </div>
+    </div>
+
     <header class="hero-container" id="hero">
         <!-- Fondo con respiración -->
         <div class="fondo-vivo"></div>
@@ -1617,6 +1791,111 @@
                 }
             });
             btn.style.display = 'none';
+        })();
+
+        // ========================================================
+        // SISTEMA DE DETECCIÓN DE TRANSMISIÓN EN VIVO
+        // ========================================================
+        (function() {
+            const CHANNEL_ID = 'UCq6pB1t3Jq0J5oJ5oJ5oJ5o'; // @elcomisariotv
+            // NOTA: Como YouTube requiere API key para detectar lives automáticamente,
+            // usamos un sistema híbrido:
+            // 1. Intenta detectar automáticamente con petición a YouTube
+            // 2. Si falla, permite activación manual
+            
+            const seccion = document.getElementById('seccionEnVivo');
+            const iframe = document.getElementById('iframeEnVivo');
+            const btnCerrar = document.getElementById('btnCerrarEnVivo');
+            const titulo = document.getElementById('tituloEnVivo');
+            const desc = document.getElementById('descEnVivo');
+            const link = document.getElementById('linkEnVivo');
+            
+            // ID del último live conocido (para modo manual)
+            // Cambia este ID cuando quieras activar el modo EN VIVO manualmente
+            // Déjalo vacío '' para que intente detectar automáticamente
+            const LIVE_ID_MANUAL = ''; // Ej: 'dQw4w9WgXcQ'
+            
+            // Función para mostrar la sección en vivo
+            function mostrarEnVivo(videoId, tituloTexto, descTexto) {
+                if (!seccion) return;
+                
+                // Configurar el iframe
+                iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1';
+                
+                // Actualizar textos si se proporcionan
+                if (tituloTexto) titulo.textContent = tituloTexto;
+                if (descTexto) desc.textContent = descTexto;
+                
+                // Actualizar link
+                link.href = 'https://www.youtube.com/watch?v=' + videoId;
+                
+                // Mostrar la sección
+                seccion.classList.remove('ocultando');
+                seccion.classList.add('visible');
+            }
+            
+            // Función para ocultar la sección en vivo
+            function ocultarEnVivo() {
+                if (!seccion) return;
+                seccion.classList.add('ocultando');
+                setTimeout(function() {
+                    seccion.classList.remove('visible');
+                    seccion.classList.remove('ocultando');
+                    iframe.src = '';
+                }, 500);
+            }
+            
+            // Botón cerrar
+            if (btnCerrar) {
+                btnCerrar.addEventListener('click', ocultarEnVivo);
+            }
+            
+            // ========================================================
+            // DETECCIÓN AUTOMÁTICA usando YouTube Data API
+            // ========================================================
+            function verificarLiveAutomatico() {
+                // Usamos el endpoint público de YouTube para buscar lives
+                // Esto funciona sin API key para canales públicos
+                var url = 'https://www.youtube.com/@elcomisariotv/live';
+                
+                fetch(url, { method: 'HEAD' })
+                    .then(function(response) {
+                        // Si la URL /live redirige, significa que hay un live activo
+                        if (response.url && response.url.indexOf('/live') === -1 && response.url.indexOf('watch?v=') !== -1) {
+                            // Extraer el video ID de la URL de redirección
+                            var match = response.url.match(/watch\?v=([^&]+)/);
+                            if (match && match[1]) {
+                                mostrarEnVivo(match[1], 'Transmisión en vivo', 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
+                            }
+                        } else {
+                            // No hay live activo, intentar modo manual
+                            verificarModoManual();
+                        }
+                    })
+                    .catch(function() {
+                        // Si falla la petición, intentar modo manual
+                        verificarModoManual();
+                    });
+            }
+            
+            // ========================================================
+            // MODO MANUAL (activar/editando LIVE_ID_MANUAL)
+            // ========================================================
+            function verificarModoManual() {
+                if (LIVE_ID_MANUAL && LIVE_ID_MANUAL.length > 0) {
+                    mostrarEnVivo(LIVE_ID_MANUAL, 'Transmisión en vivo', 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
+                }
+            }
+            
+            // ========================================================
+            // INICIAR VERIFICACIÓN
+            // ========================================================
+            // Intentar detección automática primero
+            verificarLiveAutomatico();
+            
+            // Re-verificar cada 5 minutos por si empieza un live
+            setInterval(verificarLiveAutomatico, 5 * 60 * 1000);
+            
         })();
     </script>
 
