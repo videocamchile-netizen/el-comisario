@@ -1534,6 +1534,17 @@
         .mensaje-aviso.error {
             color: #ff5252;
         }
+        .contador-suscriptores {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #8890a0;
+            letter-spacing: 1px;
+        }
+        .contador-suscriptores span {
+            color: #ffb400;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
         /* ===== FOOTER ===== */
         .footer { text-align: center; padding: 30px; border-top: 1px solid rgba(255,180,0,0.05); background: #050a14; position: relative; z-index: 2; }
@@ -1970,6 +1981,7 @@
                 <button type="submit" id="btnAviso">✅ AVÍSAME</button>
             </form>
             <div class="mensaje-aviso" id="mensajeAviso"></div>
+            <div class="contador-suscriptores" id="contadorSuscriptores">👥 <span id="numSuscriptores">0</span> personas ya se han registrado</div>
         </div>
     </section>
 
@@ -2073,7 +2085,19 @@
                     suscriptores.push(email);
                     localStorage.setItem('suscriptores', JSON.stringify(suscriptores));
                 }
+                actualizarContador();
             }
+            
+            // ========================================================
+            // ACTUALIZAR CONTADOR DE SUSCRIPTORES
+            // ========================================================
+            function actualizarContador() {
+                var numSpan = document.getElementById('numSuscriptores');
+                if (!numSpan) return;
+                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                numSpan.textContent = suscriptores.length;
+            }
+            actualizarContador();
             
         })();
 
