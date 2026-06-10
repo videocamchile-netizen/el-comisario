@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiénes Somos - El Comisario</title>
+    <title>Episodios - El Comisario</title>
     <style>
         /* ========================================================
            FONDO FLUIDO CRISTALINO INTENSO (todo el sitio)
@@ -160,9 +160,9 @@
         }
 
         /* ========================================================
-           HERO CON FOTO ESPALDA + EFECTOS CINEMATOGRÁFICOS
+           HERO CON FOTO TV + EFECTOS CINEMATOGRÁFICOS
            ======================================================== */
-        @keyframes respiracionEspalda {
+        @keyframes respiracionTV {
             0% { transform: scale(1) translate(0, 0); }
             25% { transform: scale(1.03) translate(-3px, -2px); }
             50% { transform: scale(1.06) translate(-5px, -5px); }
@@ -187,7 +187,7 @@
             90% { transform: translate(-2px, 2px); }
             100% { transform: translate(0, 0); }
         }
-        @keyframes barridoEspalda {
+        @keyframes barridoTV {
             0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
             4% { opacity: 0.12; }
             10% { opacity: 0.15; }
@@ -237,9 +237,9 @@
             100% { transform: translateY(0px); }
         }
         
-        .hero-quienes {
+        .hero-episodios {
             position: relative;
-            min-height: 70vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -248,20 +248,20 @@
             padding: 80px 20px 60px;
         }
         
-        /* Fondo con la foto espalda.jpg */
-        .fondo-espalda {
+        /* Fondo con la foto tv.jpg a pantalla completa */
+        .fondo-tv {
             position: absolute;
             top: -15px; left: -15px; width: 105%; height: 105%;
-            background-image: url('img/espalda.jpg');
+            background-image: url('img/tv.jpg');
             background-size: cover;
-            background-position: center 30%;
-            animation: respiracionEspalda 28s ease-in-out infinite;
+            background-position: center;
+            animation: respiracionTV 28s ease-in-out infinite;
             z-index: 0;
             filter: saturate(1.1) contrast(1.05);
             mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
             -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
         }
-        .fondo-espalda::after {
+        .fondo-tv::after {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -270,7 +270,7 @@
         }
         
         /* Capa oscura para fundir bordes */
-        .capa-oscura-espalda {
+        .capa-oscura-tv {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background:
@@ -282,7 +282,7 @@
         }
         
         /* Barrido de luz */
-        .barrido-espalda {
+        .barrido-tv {
             position: absolute;
             top: -20%;
             left: -10%;
@@ -297,13 +297,13 @@
                 transparent 100%
             );
             transform: rotate(-5deg);
-            animation: barridoEspalda 16s ease-in-out infinite;
+            animation: barridoTV 16s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
         
         /* Viñeta pulsante */
-        .vineta-espalda {
+        .vineta-tv {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             box-shadow: inset 0 0 150px rgba(0,0,0,0.7), inset 0 0 300px rgba(0,0,0,0.3);
@@ -313,7 +313,7 @@
         }
         
         /* Grano de película */
-        .grano-espalda {
+        .grano-tv {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0.03;
@@ -327,34 +327,34 @@
         }
         
         /* Destellos de luz */
-        .destello-espalda {
+        .destello-tv {
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
             z-index: 1;
         }
-        .destello-espalda-1 {
+        .destello-tv-1 {
             width: 4px; height: 4px;
             background: rgba(255,200,100,0.6);
             top: 25%; left: 60%;
             animation: destello1 7s ease-in-out infinite;
             box-shadow: 0 0 6px 2px rgba(255,200,100,0.2);
         }
-        .destello-espalda-2 {
+        .destello-tv-2 {
             width: 3px; height: 3px;
             background: rgba(180,220,255,0.5);
             top: 55%; left: 30%;
             animation: destello2 9s ease-in-out infinite 2s;
             box-shadow: 0 0 4px 1px rgba(180,220,255,0.15);
         }
-        .destello-espalda-3 {
+        .destello-tv-3 {
             width: 5px; height: 5px;
             background: rgba(255,180,50,0.4);
             top: 70%; left: 75%;
             animation: destello3 11s ease-in-out infinite 4s;
             box-shadow: 0 0 8px 3px rgba(255,180,50,0.1);
         }
-        .destello-espalda-4 {
+        .destello-tv-4 {
             width: 2px; height: 2px;
             background: rgba(200,220,255,0.6);
             top: 35%; left: 45%;
@@ -365,12 +365,12 @@
         .hero-contenido {
             position: relative;
             z-index: 3;
-            max-width: 750px;
+            max-width: 800px;
             animation: flotarLetras 6s ease-in-out infinite;
         }
         
         .hero-contenido h1 {
-            font-size: 4rem;
+            font-size: 5rem;
             color: #ffb400;
             margin: 0;
             text-transform: uppercase;
@@ -383,131 +383,22 @@
         .hero-contenido h1 span {
             color: white;
             display: block;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             letter-spacing: 8px;
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: 300;
             animation: aparecerDifuminado 2.5s ease-out 0.3s forwards;
             opacity: 0;
         }
-
-        /* ========================================================
-           SECCIÓN DE TEXTO
-           ======================================================== */
-        .seccion-texto {
-            display: flex;
-            justify-content: center;
-            padding: 80px 80px 100px;
-            background: linear-gradient(180deg, #050a14 0%, #080f20 50%, #050a14 100%);
-            position: relative;
-            z-index: 2;
-        }
         
-        .contenido-principal {
-            max-width: 800px;
-            width: 100%;
-        }
-        
-        .contenido-principal .etiqueta {
-            color: #ffb400;
-            font-size: 12px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: block;
-        }
-        
-        .contenido-principal h2 {
-            font-size: 2.8rem;
-            margin: 0 0 30px 0;
-            line-height: 1.1;
-            animation: aparecerDifuminado 3s ease-out forwards;
-        }
-        
-        .contenido-principal h2 span {
-            color: #ffb400;
-        }
-        
-        /* Animaciones de respiración independientes para cada párrafo */
-        @keyframes flotarParrafo1 {
-            0% { transform: translateY(0px); }
-            33% { transform: translateY(-4px); }
-            66% { transform: translateY(2px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes flotarParrafo2 {
-            0% { transform: translateY(0px); }
-            25% { transform: translateY(-5px); }
-            50% { transform: translateY(-1px); }
-            75% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes flotarParrafo3 {
-            0% { transform: translateY(0px); }
-            40% { transform: translateY(-3px); }
-            80% { transform: translateY(1px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes flotarDestacado {
-            0% { transform: translateY(0px) rotate(0deg); }
-            30% { transform: translateY(-3px) rotate(-0.3deg); }
-            60% { transform: translateY(1px) rotate(0.2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        @keyframes flotarFirma {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-4px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .contenido-principal p {
-            color: #a0a5b0;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: aparecerDifuminado 2.5s ease-out forwards;
-        }
-        .contenido-principal p:nth-of-type(1) { animation-delay: 0.3s; }
-        .contenido-principal p:nth-of-type(2) { animation-delay: 0.6s; }
-        .contenido-principal p:nth-of-type(3) { animation-delay: 1.2s; }
-        .contenido-principal p:nth-of-type(4) { animation-delay: 1.5s; }
-        
-        .contenido-principal .destacado {
-            border-left: 3px solid #ffb400;
-            padding: 20px 25px;
-            background: rgba(255,180,0,0.03);
-            border-radius: 0 8px 8px 0;
-            margin: 30px 0;
+        .hero-contenido p {
+            font-size: 1.3rem;
             font-style: italic;
-            color: #c0c5d0;
+            margin: 30px 0 40px 0;
+            color: #d1d5dc;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            animation: aparecerDifuminado 2.5s ease-out 0.6s forwards;
             opacity: 0;
-            animation: aparecerDifuminado 2.5s ease-out 0.9s forwards, flotarDestacado 6s ease-in-out infinite 3.5s;
-        }
-        
-        .contenido-principal .firma {
-            margin-top: 40px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255,180,0,0.1);
-            opacity: 0;
-            animation: aparecerDifuminado 2.5s ease-out 1.8s forwards, flotarFirma 5s ease-in-out infinite 4.5s;
-        }
-        
-        .contenido-principal .firma p {
-            color: #ffb400;
-            font-size: 14px;
-            letter-spacing: 2px;
-            font-weight: bold;
-            margin: 0;
-            opacity: 1;
-            animation: none;
-        }
-        
-        .contenido-principal .firma span {
-            color: #556;
-            font-size: 12px;
-            letter-spacing: 1px;
         }
 
         /* ========================================================
@@ -573,9 +464,9 @@
             .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
             .navbar .links a { margin: 3px 6px; font-size: 11px; letter-spacing: 0.5px; }
             .navbar .btn-amarillo { padding: 8px 16px; font-size: 11px; }
-            .hero-contenido h1 { font-size: 2.5rem; }
-            .seccion-texto { padding: 50px 25px 70px; }
-            .contenido-principal h2 { font-size: 2rem; }
+            .hero-episodios { min-height: 85vh; padding: 60px 20px 40px; }
+            .hero-contenido h1 { font-size: 2.8rem; }
+            .hero-contenido p { font-size: 1rem; }
         }
     </style>
 </head>
@@ -608,59 +499,34 @@
         </div>
         <div class="links">
             <a href="index.html">INICIO</a>
-            <a href="episodios.html">EPISODIOS</a>
-            <a href="quienes-somos.html" class="activo">QUIÉNES SOMOS</a>
+            <a href="episodios.html" class="activo">EPISODIOS</a>
+            <a href="quienes-somos.html">QUIÉNES SOMOS</a>
             <a href="contacto.html">CONTACTO</a>
         </div>
         <a href="index.html" class="btn-amarillo">◄ VOLVER</a>
     </nav>
 
-    <header class="hero-quienes">
-        <!-- Fondo con la foto espalda.jpg -->
-        <div class="fondo-espalda"></div>
+    <header class="hero-episodios">
+        <!-- Fondo con la foto tv.jpg -->
+        <div class="fondo-tv"></div>
         <!-- Capa oscura para fundir bordes -->
-        <div class="capa-oscura-espalda"></div>
+        <div class="capa-oscura-tv"></div>
         <!-- Barrido de luz -->
-        <div class="barrido-espalda"></div>
+        <div class="barrido-tv"></div>
         <!-- Viñeta pulsante -->
-        <div class="vineta-espalda"></div>
+        <div class="vineta-tv"></div>
         <!-- Grano de película -->
-        <div class="grano-espalda"></div>
+        <div class="grano-tv"></div>
         <!-- Destellos de luz -->
-        <div class="destello-espalda destello-espalda-1"></div>
-        <div class="destello-espalda destello-espalda-2"></div>
-        <div class="destello-espalda destello-espalda-3"></div>
-        <div class="destello-espalda destello-espalda-4"></div>
+        <div class="destello-tv destello-tv-1"></div>
+        <div class="destello-tv destello-tv-2"></div>
+        <div class="destello-tv destello-tv-3"></div>
+        <div class="destello-tv destello-tv-4"></div>
         <div class="hero-contenido">
-            <h1>QUIÉNES SOMOS<span>— LA VERDAD NO PRESCRIBE —</span></h1>
+            <h1>EPISODIOS<span>— LA VERDAD NO PRESCRIBE —</span></h1>
+            <p>Cada caso, cada historia, cada verdad que sale a la luz.</p>
         </div>
     </header>
-
-    <section class="seccion-texto">
-        <!-- Capa fluida animada sobre el fondo sólido -->
-        <div class="capa-fluida"></div>
-        <div class="contenido-principal">
-            <span class="etiqueta">— NUESTRA HISTORIA</span>
-            <h2>SOMOS LA VOZ DE <span>LOS QUE CALLAN</span></h2>
-            
-            <p>El Comisario nace de una convicción inquebrantable: la verdad no prescribe y la justicia no debe tener fecha de vencimiento. Somos un canal independiente dedicado a investigar y visibilizar aquellos casos que el sistema ha dejado en el olvido, donde las víctimas han sido silenciadas y los responsables continúan impunes.</p>
-            
-            <p>Detrás de este proyecto hay un equipo comprometido con el rigor periodístico y la metodología policial. Analizamos cada caso con la mirada de quien conoce los pasillos de la investigación criminal, pero también con la sensibilidad de quien entiende que detrás de cada expediente hay una familia quebrada, una vida destruida y una comunidad que exige respuestas.</p>
-            
-            <div class="destacado">
-                "No descansaremos hasta que cada víctima olvidada tenga la oportunidad de ser escuchada. Porque cuando el sistema falla, cuando las puertas se cierran y los expedientes se archivan, ahí estamos nosotros para levantar la voz."
-            </div>
-            
-            <p>Nuestro compromiso es con la verdad, sin importar a quién incomode. Creemos en el poder de la información para generar cambios reales, en la fuerza de una comunidad que ya no quiere mirar hacia otro lado. Cada caso que abordamos es una promesa: no vamos a soltarlo hasta que la verdad salga a la luz.</p>
-            
-            <p>Este canal es para ti, que has buscado justicia y no la has encontrado. Para ti, que tienes información y no sabes a quién contársela. Para ti, que crees que un mundo más justo es posible. Bienvenido a El Comisario. Aquí las víctimas tienen voz.</p>
-            
-            <div class="firma">
-                <p>— EL COMISARIO</p>
-                <span>Carlos Collao, Comisario (R) PDI - Fundador</span>
-            </div>
-        </div>
-    </section>
 
     <footer class="footer">
         <p>© 2026 El Comisario · Donde las víctimas tienen voz</p>
@@ -682,11 +548,11 @@
         })();
 
         // ========================================================
-        // PARALLAX MOUSE EN FOTO ESPALDA
+        // PARALLAX MOUSE EN FOTO TV
         // ========================================================
         (function() {
-            const hero = document.querySelector('.hero-quienes');
-            const fondo = document.querySelector('.fondo-espalda');
+            const hero = document.querySelector('.hero-episodios');
+            const fondo = document.querySelector('.fondo-tv');
             if (!hero || !fondo) return;
             
             hero.addEventListener('mousemove', function(e) {
@@ -708,10 +574,7 @@
         // ========================================================
         (function() {
             const elementos = document.querySelectorAll(
-                '.hero-contenido h1, .hero-contenido h1 span, ' +
-                '.contenido-principal h2, .contenido-principal p, ' +
-                '.contenido-principal .destacado, .contenido-principal .firma, ' +
-                '.contenido-principal .etiqueta'
+                '.hero-contenido h1, .hero-contenido h1 span, .hero-contenido p'
             );
             
             elementos.forEach(function(el) {
