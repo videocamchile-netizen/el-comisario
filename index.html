@@ -944,6 +944,14 @@
             width: 45%;
             display: flex;
             align-items: stretch;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .caso-imagen:hover {
+            transform: scale(1.03);
         }
         
         .caso-imagen img {
@@ -955,6 +963,56 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.8);
             mask-image: linear-gradient(to right, black 80%, transparent 100%);
             -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        
+        .caso-imagen:hover img {
+            transform: scale(1.08);
+            filter: brightness(1.15) saturate(1.1);
+        }
+        
+        /* Capa de brillo hover sobre la imagen */
+        .caso-imagen::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255,180,0,0) 0%,
+                rgba(255,180,0,0) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transition: background 0.5s ease;
+            pointer-events: none;
+            z-index: 2;
+            border-radius: 6px 0 0 6px;
+        }
+        
+        .caso-imagen:hover::after {
+            background: linear-gradient(
+                135deg,
+                rgba(255,180,0,0.08) 0%,
+                rgba(255,180,0,0.02) 50%,
+                rgba(255,255,255,0.05) 100%
+            );
+        }
+        
+        /* Efecto de luz que sigue al mouse en la imagen */
+        .luz-imagen-caso {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,180,0,0.12) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+            mix-blend-mode: overlay;
+        }
+        .luz-imagen-caso.activo {
+            opacity: 1;
         }
         
         .caso-texto {
@@ -1235,7 +1293,8 @@
         <div class="destello-caso destello-caso-4"></div>
         
         <div class="caso-contenido">
-            <div class="caso-imagen">
+            <div class="caso-imagen" id="caso-imagen">
+                <div class="luz-imagen-caso" id="luz-imagen-caso"></div>
                 <img src="img/sola.jpg" alt="Sola">
             </div>
             <div class="caso-texto" id="caso-texto">
