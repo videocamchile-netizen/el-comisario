@@ -783,62 +783,125 @@
             if (!btnAudio) return;
             
             let reproduciendo = false;
-            let utterance = null;
+            let detener = false;
+            let indiceFragmento = 0;
+            let fragmentos = [];
+            let timeoutSeguridad = null;
+            let utteranceActual = null;
             
-            function obtenerTextoCompleto() {
+            function obtenerFragmentos() {
                 const parrafos = document.querySelectorAll('.contenido-principal p');
                 const destacado = document.querySelector('.contenido-principal .destacado');
                 const firma = document.querySelector('.contenido-principal .firma');
-                let texto = '';
+                const frags = [];
                 
-                parrafos.forEach(function(p) { texto += p.textContent + '. '; });
-                if (destacado) texto += destacado.textContent + '. ';
-                if (firma) texto += firma.textContent + '. ';
+                parrafos.forEach(function(p) {
+                    const t = p.textContent.trim();
+                    if (t) frags.push(t);
+                });
+                if (destacado) {
+                    const t = destacado.textContent.trim();
+                    if (t) frags.push(t);
+                }
+                if (firma) {
+                    const t = firma.textContent.trim();
+                    if (t) frags.push(t);
+                }
                 
-                return texto;
+                return frags;
+            }
+            
+            function detenerReproduccion() {
+                detener = true;
+                reproduciendo = false;
+                window.speechSynthesis.cancel();
+                if (timeoutSeguridad) {
+                    clearTimeout(timeoutSeguridad);
+                    timeoutSeguridad = null;
+                }
+                btnAudio.classList.remove('reproduciendo');
+                btnAudio.querySelector('.icono-audio').textContent = '🔊';
+                btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
+            }
+            
+            function hablarFragmento() {
+                if (detener || indiceFragmento >= fragmentos.length) {
+                    detenerReproduccion();
+                    return;
+                }
+                
+                const texto = fragmentos[indiceFragmento];
+                if (!texto) {
+                    indiceFragmento++;
+                    hablarFragmento();
+                    return;
+                }
+                
+                utteranceActual = new SpeechSynthesisUtterance(texto);
+                utteranceActual.lang = 'es-CL';
+                utteranceActual.rate = 0.9;
+                utteranceActual.pitch = 1;
+                utteranceActual.volume = 1;
+                
+                utteranceActual.onstart = function() {
+                    reproduciendo = true;
+                };
+                
+                utteranceActual.onend = function() {
+                    if (detener) return;
+                    indiceFragmento++;
+                    // Pequeña pausa entre fragmentos para evitar saturación en móviles
+                    setTimeout(function() {
+                        if (!detener) hablarFragmento();
+                    }, 100);
+                };
+                
+                utteranceActual.onerror = function(e) {
+                    // En móviles puede dar error 'interrupted' que no es grave
+                    if (e.error === 'interrupted' && !detener) {
+                        indiceFragmento++;
+                        setTimeout(function() {
+                            if (!detener) hablarFragmento();
+                        }, 150);
+                    } else {
+                        detenerReproduccion();
+                    }
+                };
+                
+                window.speechSynthesis.speak(utteranceActual);
             }
             
             btnAudio.addEventListener('click', function() {
                 if (reproduciendo) {
-                    window.speechSynthesis.cancel();
-                    reproduciendo = false;
-                    btnAudio.classList.remove('reproduciendo');
-                    btnAudio.querySelector('.icono-audio').textContent = '🔊';
-                    btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
+                    detenerReproduccion();
                     return;
                 }
                 
-                const texto = obtenerTextoCompleto();
-                if (!texto) return;
+                // Reiniciar estado
+                detener = false;
+                indiceFragmento = 0;
+                fragmentos = obtenerFragmentos();
                 
-                utterance = new SpeechSynthesisUtterance(texto);
-                utterance.lang = 'es-CL';
-                utterance.rate = 0.9;
-                utterance.pitch = 1;
-                utterance.volume = 1;
+                if (!fragmentos.length) return;
                 
-                utterance.onstart = function() {
-                    reproduciendo = true;
-                    btnAudio.classList.add('reproduciendo');
-                    btnAudio.querySelector('.icono-audio').textContent = '⏹';
-                    btnAudio.querySelector('.texto-audio').textContent = 'DETENER';
-                };
+                btnAudio.classList.add('reproduciendo');
+                btnAudio.querySelector('.icono-audio').textContent = '⏹';
+                btnAudio.querySelector('.texto-audio').textContent = 'DETENER';
                 
-                utterance.onend = function() {
-                    reproduciendo = false;
-                    btnAudio.classList.remove('reproduciendo');
-                    btnAudio.querySelector('.icono-audio').textContent = '🔊';
-                    btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
-                };
+                // Timeout de seguridad: si el audio se traba, lo detenemos después de 2 minutos
+                timeoutSeguridad = setTimeout(function() {
+                    if (reproduciendo) {
+                        detenerReproduccion();
+                    }
+                }, 120000);
                 
-                utterance.onerror = function() {
-                    reproduciendo = false;
-                    btnAudio.classList.remove('reproduciendo');
-                    btnAudio.querySelector('.icono-audio').textContent = '🔊';
-                    btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
-                };
-                
-                window.speechSynthesis.speak(utterance);
+                // Iniciar reproducción por fragmentos
+                hablarFragmento();
+            });
+            
+            // Limpiar al salir de la página
+            window.addEventListener('beforeunload', function() {
+                window.speechSynthesis.cancel();
             });
         })();
 
