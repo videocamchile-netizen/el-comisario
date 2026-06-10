@@ -1383,23 +1383,28 @@
            ======================================================== */
         @media (max-width: 900px) {
             .navbar { 
-                padding: 10px 15px; 
-                gap: 8px; 
+                padding: 6px 10px; 
+                gap: 4px; 
                 flex-wrap: wrap; 
                 justify-content: center; 
             }
             .navbar .logo { width: 100%; text-align: center; }
-            .navbar .logo img { height: 60px !important; }
-            .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; width: 100%; }
-            .navbar .links a { margin: 3px 6px; font-size: 13px; letter-spacing: 0.5px; }
-            .navbar .btn-amarillo { padding: 8px 16px; font-size: 13px; }
+            .navbar .logo img { height: 50px !important; }
+            .navbar .links { display: flex; flex-wrap: nowrap; justify-content: center; gap: 0; width: 100%; }
+            .navbar .links a { margin: 2px 5px; font-size: 11px; letter-spacing: 0.3px; }
+            .navbar .btn-amarillo { padding: 5px 10px; font-size: 11px; }
             .navbar-live {
                 width: 100%;
                 justify-content: center;
-                padding-top: 8px;
-                margin-top: 4px;
+                padding-top: 4px;
+                margin-top: 2px;
                 border-top: 1px solid rgba(255,180,0,0.12);
+                gap: 6px;
             }
+            .navbar-live .indicador-en-vivo { padding: 3px 8px; gap: 4px; }
+            .navbar-live .indicador-en-vivo span { font-size: 10px !important; }
+            .navbar-live .indicador-punto { width: 7px; height: 7px; }
+            .navbar-live .indicador-estado { font-size: 8px; }
             .hero-container { padding: 0 30px; min-height: 70vh; }
             .hero-content h1 { font-size: 3.5rem; }
             .hero-content p { font-size: 1rem; }
