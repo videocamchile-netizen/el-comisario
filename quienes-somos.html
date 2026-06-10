@@ -516,18 +516,20 @@
         .btn-audio {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
             color: #050a14;
             border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 9px;
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            animation: aparecerDifuminado 2.5s ease-out 0.1s forwards, flotarLetras 6s ease-in-out infinite 3s;
         }
         .btn-audio:hover {
             transform: scale(1.05);
@@ -539,7 +541,7 @@
             box-shadow: 0 0 25px rgba(200,0,0,0.3);
         }
         .btn-audio .icono-audio {
-            font-size: 18px;
+            font-size: 10px;
         }
 
         /* ========================================================
