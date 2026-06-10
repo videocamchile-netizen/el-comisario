@@ -323,18 +323,18 @@
         <div class="tarjeta">
             <h2>ENVÍA TU <span>MENSAJE</span></h2>
             <p class="sub">// Todos los campos son confidenciales</p>
-            <form id="form-contacto">
+            <form id="form-contacto" action="https://formspree.io/f/xkoazjwj" method="POST">
                 <div class="campo">
                     <label>> NOMBRE O ALIAS</label>
-                    <input type="text" id="nombre" placeholder="$ ingrese_su_nombre" required>
+                    <input type="text" name="nombre" id="nombre" placeholder="$ ingrese_su_nombre" required>
                 </div>
                 <div class="campo">
                     <label>> CORREO ELECTRÓNICO</label>
-                    <input type="email" id="email" placeholder="$ correo@dominio.cl" required>
+                    <input type="email" name="email" id="email" placeholder="$ correo@dominio.cl" required>
                 </div>
                 <div class="campo">
                     <label>> TIPO DE MENSAJE</label>
-                    <select id="asunto" required>
+                    <select name="asunto" id="asunto" required>
                         <option value="">$ seleccione_opción...</option>
                         <option value="informacion">Información sobre un caso</option>
                         <option value="denuncia">Denuncia anónima</option>
@@ -346,7 +346,7 @@
                 </div>
                 <div class="campo">
                     <label>> MENSAJE</label>
-                    <textarea id="mensaje" placeholder="$ describa_su_caso_aqui..." required></textarea>
+                    <textarea name="mensaje" id="mensaje" placeholder="$ describa_su_caso_aqui..." required></textarea>
                 </div>
                 <button type="submit" class="btn-enviar" id="btn-enviar">[ ENVIAR MENSAJE ]</button>
             </form>
@@ -401,7 +401,25 @@
                 e.preventDefault();
                 btn.disabled = true;
                 btn.textContent = '[ ENVIANDO... ]';
-                setTimeout(() => { form.style.display = 'none'; exito.style.display = 'block'; }, 2000);
+                const data = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                }).then(r => {
+                    if (r.ok) {
+                        form.style.display = 'none';
+                        exito.style.display = 'block';
+                    } else {
+                        alert('Error al enviar. Intenta de nuevo.');
+                        btn.disabled = false;
+                        btn.textContent = '[ ENVIAR MENSAJE ]';
+                    }
+                }).catch(() => {
+                    alert('Error de conexión. Intenta de nuevo.');
+                    btn.disabled = false;
+                    btn.textContent = '[ ENVIAR MENSAJE ]';
+                });
             });
         })();
     </script>
