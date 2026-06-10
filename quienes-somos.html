@@ -511,6 +511,38 @@
         }
 
         /* ========================================================
+           BOTÓN DE AUDIO - LEER EN VOZ ALTA
+           ======================================================== */
+        .btn-audio {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
+            color: #050a14;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .btn-audio:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255,180,0,0.4);
+        }
+        .btn-audio.reproduciendo {
+            background: linear-gradient(135deg, #c00 0%, #a00 100%);
+            color: white;
+            box-shadow: 0 0 25px rgba(200,0,0,0.3);
+        }
+        .btn-audio .icono-audio {
+            font-size: 18px;
+        }
+
+        /* ========================================================
            LUZ QUE SIGUE AL MOUSE (GLOBAL)
            ======================================================== */
         .luz-mouse-global {
@@ -643,6 +675,11 @@
             <span class="etiqueta">— NUESTRA HISTORIA</span>
             <h2>SOMOS LA VOZ DE <span>LOS QUE CALLAN</span></h2>
             
+            <button class="btn-audio" id="btnAudio">
+                <span class="icono-audio">🔊</span>
+                <span class="texto-audio">ESCUCHAR TEXTO</span>
+            </button>
+            
             <p>El Comisario nace de una convicción inquebrantable: la verdad no prescribe y la justicia no debe tener fecha de vencimiento. Somos un canal independiente dedicado a investigar y visibilizar aquellos casos que el sistema ha dejado en el olvido, donde las víctimas han sido silenciadas y los responsables continúan impunes.</p>
             
             <p>Detrás de este proyecto hay un equipo comprometido con el rigor periodístico y la metodología policial. Analizamos cada caso con la mirada de quien conoce los pasillos de la investigación criminal, pero también con la sensibilidad de quien entiende que detrás de cada expediente hay una familia quebrada, una vida destruida y una comunidad que exige respuestas.</p>
@@ -700,6 +737,73 @@
             
             hero.addEventListener('mouseleave', function() {
                 fondo.style.transform = '';
+            });
+        })();
+
+        // ========================================================
+        // SÍNTESIS DE VOZ - LEER TEXTO EN VOZ ALTA
+        // ========================================================
+        (function() {
+            const btnAudio = document.getElementById('btnAudio');
+            if (!btnAudio) return;
+            
+            let reproduciendo = false;
+            let utterance = null;
+            
+            function obtenerTextoCompleto() {
+                const parrafos = document.querySelectorAll('.contenido-principal p');
+                const destacado = document.querySelector('.contenido-principal .destacado');
+                const firma = document.querySelector('.contenido-principal .firma');
+                let texto = '';
+                
+                parrafos.forEach(function(p) { texto += p.textContent + '. '; });
+                if (destacado) texto += destacado.textContent + '. ';
+                if (firma) texto += firma.textContent + '. ';
+                
+                return texto;
+            }
+            
+            btnAudio.addEventListener('click', function() {
+                if (reproduciendo) {
+                    window.speechSynthesis.cancel();
+                    reproduciendo = false;
+                    btnAudio.classList.remove('reproduciendo');
+                    btnAudio.querySelector('.icono-audio').textContent = '🔊';
+                    btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
+                    return;
+                }
+                
+                const texto = obtenerTextoCompleto();
+                if (!texto) return;
+                
+                utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = 'es-CL';
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                utterance.onstart = function() {
+                    reproduciendo = true;
+                    btnAudio.classList.add('reproduciendo');
+                    btnAudio.querySelector('.icono-audio').textContent = '⏹';
+                    btnAudio.querySelector('.texto-audio').textContent = 'DETENER';
+                };
+                
+                utterance.onend = function() {
+                    reproduciendo = false;
+                    btnAudio.classList.remove('reproduciendo');
+                    btnAudio.querySelector('.icono-audio').textContent = '🔊';
+                    btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
+                };
+                
+                utterance.onerror = function() {
+                    reproduciendo = false;
+                    btnAudio.classList.remove('reproduciendo');
+                    btnAudio.querySelector('.icono-audio').textContent = '🔊';
+                    btnAudio.querySelector('.texto-audio').textContent = 'ESCUCHAR TEXTO';
+                };
+                
+                window.speechSynthesis.speak(utterance);
             });
         })();
 
