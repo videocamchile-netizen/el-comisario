@@ -135,7 +135,7 @@
         .navbar a:hover { color: #ffb400; }
         
         /* ========================================================
-           SECCIÓN EN VIVO
+           SECCIÓN EN VIVO - PANTALLA COMPLETA
            ======================================================== */
         @keyframes pulsoRojo {
             0% { opacity: 1; transform: scale(1); }
@@ -143,24 +143,24 @@
             100% { opacity: 1; transform: scale(1); }
         }
         @keyframes brilloEnVivo {
-            0% { box-shadow: 0 0 20px rgba(255,0,0,0.2), 0 0 40px rgba(255,0,0,0.1); }
-            50% { box-shadow: 0 0 30px rgba(255,0,0,0.4), 0 0 60px rgba(255,0,0,0.2); }
-            100% { box-shadow: 0 0 20px rgba(255,0,0,0.2), 0 0 40px rgba(255,0,0,0.1); }
+            0% { box-shadow: 0 0 30px rgba(255,0,0,0.3), 0 0 60px rgba(255,0,0,0.15); }
+            50% { box-shadow: 0 0 50px rgba(255,0,0,0.5), 0 0 80px rgba(255,0,0,0.25); }
+            100% { box-shadow: 0 0 30px rgba(255,0,0,0.3), 0 0 60px rgba(255,0,0,0.15); }
         }
         @keyframes aparecerEnVivo {
             0% { opacity: 0; transform: translateY(-30px) scale(0.95); max-height: 0; }
-            100% { opacity: 1; transform: translateY(0) scale(1); max-height: 800px; }
+            100% { opacity: 1; transform: translateY(0) scale(1); max-height: 2000px; }
         }
         @keyframes desaparecerEnVivo {
-            0% { opacity: 1; transform: translateY(0) scale(1); max-height: 800px; }
+            0% { opacity: 1; transform: translateY(0) scale(1); max-height: 2000px; }
             100% { opacity: 0; transform: translateY(-30px) scale(0.95); max-height: 0; }
         }
         .seccion-en-vivo {
             display: none;
             position: relative;
             z-index: 5;
-            background: linear-gradient(135deg, rgba(40,10,10,0.95) 0%, rgba(20,5,5,0.95) 100%);
-            border-bottom: 2px solid rgba(255,0,0,0.3);
+            background: #000;
+            border-bottom: 3px solid rgba(255,0,0,0.4);
             overflow: hidden;
             animation: aparecerEnVivo 0.6s ease-out forwards;
         }
@@ -175,101 +175,141 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(255,0,0,0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(255,50,0,0.03) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(255,0,0,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,50,0,0.05) 0%, transparent 50%);
             pointer-events: none;
+            z-index: 1;
         }
         .en-vivo-interior {
-            max-width: 1300px;
+            width: 100%;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 20px 50px;
+            padding: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 30px;
+            gap: 0;
             position: relative;
             z-index: 1;
+        }
+        .en-vivo-topbar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 30px;
+            background: linear-gradient(180deg, rgba(20,5,5,0.98) 0%, rgba(10,2,2,0.9) 100%);
+            border-bottom: 1px solid rgba(255,0,0,0.2);
         }
         .en-vivo-indicador {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex-shrink: 0;
         }
         .en-vivo-punto {
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: #ff0000;
             animation: pulsoRojo 1.5s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(255,0,0,0.6);
+            box-shadow: 0 0 15px rgba(255,0,0,0.8);
         }
         .en-vivo-label {
-            font-size: 14px;
+            font-size: 20px;
             font-weight: 900;
             color: #ff0000;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
-        .en-vivo-video {
-            flex: 1;
-            max-width: 400px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            animation: brilloEnVivo 3s ease-in-out infinite;
+        .en-vivo-info-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
-        .en-vivo-video iframe {
-            width: 100%;
-            height: 225px;
-            border: none;
-            display: block;
-        }
-        .en-vivo-info {
-            flex: 1;
-        }
-        .en-vivo-info h3 {
-            color: #ff4444;
-            font-size: 1.2rem;
-            margin: 0 0 5px 0;
+        .en-vivo-info-top h3 {
+            color: #ff6666;
+            font-size: 16px;
+            margin: 0;
             letter-spacing: 1px;
         }
-        .en-vivo-info p {
-            color: #cc9999;
-            font-size: 13px;
-            margin: 0 0 12px 0;
-            line-height: 1.4;
-        }
-        .en-vivo-info .btn-ver-directo {
+        .en-vivo-info-top .btn-ver-directo {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             background: #ff0000;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 24px;
             border-radius: 4px;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             transition: background 0.3s, transform 0.2s;
         }
-        .en-vivo-info .btn-ver-directo:hover {
+        .en-vivo-info-top .btn-ver-directo:hover {
             background: #cc0000;
             transform: scale(1.05);
         }
         .en-vivo-cerrar {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.3);
-            font-size: 20px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.6);
+            font-size: 22px;
             cursor: pointer;
-            transition: color 0.3s;
-            z-index: 2;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .en-vivo-cerrar:hover {
-            color: rgba(255,255,255,0.8);
+            color: white;
+            background: rgba(255,0,0,0.3);
+            border-color: rgba(255,0,0,0.5);
+        }
+        .en-vivo-video {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+            animation: brilloEnVivo 3s ease-in-out infinite;
+        }
+        .en-vivo-video iframe {
+            width: 100%;
+            height: 80vh;
+            min-height: 500px;
+            border: none;
+            display: block;
+        }
+        .en-vivo-info {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .en-vivo-topbar {
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .en-vivo-label {
+                font-size: 16px;
+            }
+            .en-vivo-punto {
+                width: 14px;
+                height: 14px;
+            }
+            .en-vivo-info-top h3 {
+                font-size: 13px;
+            }
+            .en-vivo-info-top .btn-ver-directo {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            .en-vivo-video iframe {
+                height: 50vh;
+                min-height: 300px;
+            }
         }
         /* ========================================================
            INDICADOR EN VIVO ON/OFF (NAVBAR)
@@ -323,24 +363,6 @@
         }
         .indicador-estado.on {
             color: #ff4444;
-        }
-
-        @media (max-width: 900px) {
-            .en-vivo-interior {
-                flex-direction: column;
-                padding: 15px;
-                gap: 15px;
-            }
-            .en-vivo-video {
-                max-width: 100%;
-                width: 100%;
-            }
-            .en-vivo-video iframe {
-                height: 200px;
-            }
-            .en-vivo-info h3 {
-                font-size: 1rem;
-            }
         }
         
         /* ========================================================
@@ -1449,21 +1471,22 @@
 
     </nav>
 
-    <!-- ===== SECCIÓN EN VIVO ===== -->
+    <!-- ===== SECCIÓN EN VIVO - PANTALLA COMPLETA ===== -->
     <div class="seccion-en-vivo" id="seccionEnVivo">
-        <button class="en-vivo-cerrar" id="btnCerrarEnVivo" title="Cerrar">✕</button>
         <div class="en-vivo-interior">
-            <div class="en-vivo-indicador">
-                <div class="en-vivo-punto"></div>
-                <span class="en-vivo-label">EN VIVO</span>
+            <div class="en-vivo-topbar">
+                <div class="en-vivo-indicador">
+                    <div class="en-vivo-punto"></div>
+                    <span class="en-vivo-label">EN VIVO</span>
+                </div>
+                <div class="en-vivo-info-top">
+                    <h3 id="tituloEnVivo">Transmisión en vivo</h3>
+                    <a id="linkEnVivo" href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="btn-ver-directo">▶ VER EN YOUTUBE</a>
+                </div>
+                <button class="en-vivo-cerrar" id="btnCerrarEnVivo" title="Cerrar">✕</button>
             </div>
             <div class="en-vivo-video">
                 <iframe id="iframeEnVivo" src="" allowfullscreen></iframe>
-            </div>
-            <div class="en-vivo-info">
-                <h3 id="tituloEnVivo">Transmisión en vivo</h3>
-                <p id="descEnVivo">Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.</p>
-                <a id="linkEnVivo" href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="btn-ver-directo">▶ VER EN YOUTUBE</a>
             </div>
         </div>
     </div>
