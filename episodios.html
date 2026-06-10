@@ -607,38 +607,9 @@
         }
 
         /* ========================================================
-           BOTÓN FLECHA SUBIR (SOLO MÓVIL)
-           ======================================================== */
-        .btn-subir {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: #ffb400;
-            color: #050a14;
-            border: none;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 9999;
-            box-shadow: 0 4px 15px rgba(255,180,0,0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-        .btn-subir:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(255,180,0,0.6);
-        }
-
-        /* ========================================================
            RESPONSIVE
            ======================================================== */
         @media (max-width: 900px) {
-            .btn-subir { display: flex; }
             .navbar { padding: 10px 15px; gap: 8px; }
             .navbar .logo img { height: 60px !important; }
             .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
@@ -836,6 +807,26 @@
     </footer>
 
     <script>
+        // ========================================================
+        // FLECHA SUBIR - SOLO AL FINAL DE LA PÁGINA
+        // ========================================================
+        (function() {
+            const btn = document.getElementById('btnSubir');
+            if (!btn) return;
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const porcentaje = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                if (porcentaje > 80) {
+                    btn.style.display = 'flex';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+            // Ocultar al cargar
+            btn.style.display = 'none';
+        })();
+
         // ========================================================
         // LUZ QUE SIGUE AL MOUSE (GLOBAL)
         // ========================================================

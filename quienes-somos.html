@@ -632,7 +632,6 @@
            RESPONSIVE
            ======================================================== */
         @media (max-width: 900px) {
-            .btn-subir { display: flex; }
             .navbar { padding: 10px 15px; gap: 8px; }
             .navbar .logo img { height: 60px !important; }
             .navbar .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; }
@@ -841,6 +840,25 @@
                 
                 window.speechSynthesis.speak(utterance);
             });
+        })();
+
+        // ========================================================
+        // FLECHA SUBIR - SOLO AL FINAL DE LA PÁGINA
+        // ========================================================
+        (function() {
+            const btn = document.getElementById('btnSubir');
+            if (!btn) return;
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const porcentaje = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+                if (porcentaje > 80) {
+                    btn.style.display = 'flex';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+            btn.style.display = 'none';
         })();
 
         // ========================================================
