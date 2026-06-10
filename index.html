@@ -1429,6 +1429,112 @@
             }
         }
 
+        /* ========================================================
+           FORMULARIO DE SUSCRIPCIÓN AVISOS EN VIVO
+           ======================================================== */
+        @keyframes pulsoBotonAviso {
+            0% { box-shadow: 0 0 10px rgba(255,180,0,0.2); }
+            50% { box-shadow: 0 0 25px rgba(255,180,0,0.5); }
+            100% { box-shadow: 0 0 10px rgba(255,180,0,0.2); }
+        }
+        .seccion-avisos {
+            position: relative;
+            z-index: 2;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #050a14 0%, #0b1528 50%, #050a14 100%);
+            border-top: 1px solid rgba(255,180,0,0.08);
+            border-bottom: 1px solid rgba(255,180,0,0.08);
+            text-align: center;
+            overflow: hidden;
+        }
+        .seccion-avisos .capa-fluida {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(255,180,0,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(255,180,0,0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .avisos-interior {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .avisos-interior h3 {
+            font-size: 1.8rem;
+            color: #ffb400;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
+        }
+        .avisos-interior p {
+            color: #8890a0;
+            font-size: 14px;
+            margin: 0 0 25px 0;
+            letter-spacing: 1px;
+        }
+        .form-avisos {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .form-avisos input[type="email"] {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            padding: 14px 20px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,180,0,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-avisos input[type="email"]:focus {
+            border-color: #ffb400;
+            box-shadow: 0 0 15px rgba(255,180,0,0.15);
+        }
+        .form-avisos input[type="email"]::placeholder {
+            color: #556;
+        }
+        .form-avisos button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
+            color: #050a14;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulsoBotonAviso 2s ease-in-out infinite;
+            white-space: nowrap;
+        }
+        .form-avisos button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255,180,0,0.4);
+        }
+        .form-avisos button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            animation: none;
+        }
+        .mensaje-aviso {
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 24px;
+            transition: all 0.3s;
+        }
+        .mensaje-aviso.exito {
+            color: #4caf50;
+        }
+        .mensaje-aviso.error {
+            color: #ff5252;
+        }
+
         /* ===== FOOTER ===== */
         .footer { text-align: center; padding: 30px; border-top: 1px solid rgba(255,180,0,0.05); background: #050a14; position: relative; z-index: 2; }
         .footer p { color: #556; font-size: 12px; margin: 0; letter-spacing: 1px; }
@@ -1851,6 +1957,22 @@
 
     </script>
 
+    <!-- ========================================================
+         SECCIÓN DE SUSCRIPCIÓN - AVISOS EN VIVO
+         ======================================================== -->
+    <section class="seccion-avisos" id="seccion-avisos">
+        <div class="capa-fluida"></div>
+        <div class="avisos-interior">
+            <h3>📬 ¿QUIERES QUE TE AVISEMOS?</h3>
+            <p>Déjanos tu correo y te enviaremos un aviso cuando comience el próximo programa EN VIVO.</p>
+            <form class="form-avisos" id="formAvisos">
+                <input type="email" id="emailAviso" placeholder="tu@correo.com" required>
+                <button type="submit" id="btnAviso">✅ AVÍSAME</button>
+            </form>
+            <div class="mensaje-aviso" id="mensajeAviso"></div>
+        </div>
+    </section>
+
     <!-- Botón flecha subir (solo visible en móvil) -->
     <button class="btn-subir" id="btnSubir" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 
@@ -1858,7 +1980,16 @@
         <p>© 2026 El Comisario · Donde las víctimas tienen voz</p>
     </footer>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
+        // ========================================================
+        // INICIALIZAR EMAILJS
+        // ========================================================
+        (function() {
+            emailjs.init('-429pYyHKQ3ndXBEL');
+        })();
+
         // ========================================================
         // FLECHA SUBIR - SOLO AL FINAL DE LA PÁGINA
         // ========================================================
@@ -1876,6 +2007,74 @@
                 }
             });
             btn.style.display = 'none';
+        })();
+
+        // ========================================================
+        // FORMULARIO DE SUSCRIPCIÓN - AVISOS EN VIVO
+        // ========================================================
+        (function() {
+            const form = document.getElementById('formAvisos');
+            const emailInput = document.getElementById('emailAviso');
+            const btnAviso = document.getElementById('btnAviso');
+            const mensaje = document.getElementById('mensajeAviso');
+            
+            if (!form) return;
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = emailInput.value.trim();
+                if (!email) return;
+                
+                // Deshabilitar botón mientras se envía
+                btnAviso.disabled = true;
+                btnAviso.textContent = '⏳ ENVIANDO...';
+                mensaje.textContent = '';
+                mensaje.className = 'mensaje-aviso';
+                
+                // Enviar correo de confirmación al suscriptor
+                emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
+                    to_email: email,
+                    name: email.split('@')[0],
+                    message: 'Gracias por registrarte. Te avisaremos cuando El Comisario esté EN VIVO.',
+                    subject: '✅ Te has registrado para recibir avisos EN VIVO'
+                })
+                .then(function() {
+                    mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
+                    mensaje.className = 'mensaje-aviso exito';
+                    emailInput.value = '';
+                    
+                    // Guardar en localStorage para futuros envíos masivos
+                    guardarSuscriptor(email);
+                })
+                .catch(function(error) {
+                    console.error('Error EmailJS:', error);
+                    mensaje.textContent = '❌ Error al registrarte. Intenta de nuevo.';
+                    mensaje.className = 'mensaje-aviso error';
+                })
+                .finally(function() {
+                    btnAviso.disabled = false;
+                    btnAviso.textContent = '✅ AVÍSAME';
+                    
+                    // Limpiar mensaje después de 5 segundos
+                    setTimeout(function() {
+                        mensaje.textContent = '';
+                        mensaje.className = 'mensaje-aviso';
+                    }, 5000);
+                });
+            });
+            
+            // ========================================================
+            // GESTIÓN DE SUSCRIPTORES EN LOCALSTORAGE
+            // ========================================================
+            function guardarSuscriptor(email) {
+                let suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                if (!suscriptores.includes(email)) {
+                    suscriptores.push(email);
+                    localStorage.setItem('suscriptores', JSON.stringify(suscriptores));
+                }
+            }
+            
         })();
 
         // ========================================================
@@ -1898,6 +2097,9 @@
             // === SIMULACRO: Cambia este ID por el de cualquier video de YouTube ===
             // Cuando tenga un ID, el indicador se pondrá ON y mostrará el video
             const LIVE_ID_MANUAL = 'PbuLasxSBJs'; // Video de prueba (EP 01)
+            
+            // Variable para evitar notificar múltiples veces
+            var liveYaNotificado = false;
             
             // Función para actualizar el indicador ON/OFF
             function actualizarIndicador(encendido) {
@@ -1925,6 +2127,12 @@
                 seccion.classList.remove('ocultando');
                 seccion.classList.add('visible');
                 actualizarIndicador(true);
+                
+                // Notificar a suscriptores cuando se detecta live (solo una vez)
+                if (!liveYaNotificado) {
+                    liveYaNotificado = true;
+                    notificarSuscriptores(videoId);
+                }
             }
             
             // Función para ocultar la sección en vivo
@@ -1942,6 +2150,34 @@
             // Botón cerrar
             if (btnCerrar) {
                 btnCerrar.addEventListener('click', ocultarEnVivo);
+            }
+            
+            // ========================================================
+            // NOTIFICAR A SUSCRIPTORES POR EMAIL
+            // ========================================================
+            function notificarSuscriptores(videoId) {
+                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                
+                if (suscriptores.length === 0) return;
+                
+                var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
+                var linkCanal = 'https://www.youtube.com/@elcomisariotv/streams';
+                
+                // Enviar a cada suscriptor
+                suscriptores.forEach(function(email) {
+                    emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
+                        to_email: email,
+                        name: email.split('@')[0],
+                        message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo,
+                        subject: '🔴 ¡El Comisario está EN VIVO!'
+                    })
+                    .then(function() {
+                        console.log('Notificación enviada a:', email);
+                    })
+                    .catch(function(error) {
+                        console.error('Error notificando a:', email, error);
+                    });
+                });
             }
             
             // ========================================================
