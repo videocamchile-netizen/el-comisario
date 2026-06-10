@@ -539,6 +539,60 @@
         .en-vivo-cerrar:hover {
             color: rgba(255,255,255,0.8);
         }
+        /* ========================================================
+           INDICADOR EN VIVO ON/OFF (NAVBAR)
+           ======================================================== */
+        @keyframes pulsoIndicadorOn {
+            0% { box-shadow: 0 0 4px rgba(255,0,0,0.4); }
+            50% { box-shadow: 0 0 12px rgba(255,0,0,0.8); }
+            100% { box-shadow: 0 0 4px rgba(255,0,0,0.4); }
+        }
+        .indicador-en-vivo {
+            display: flex !important;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .indicador-en-vivo:hover {
+            border-color: rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.03);
+        }
+        .indicador-en-vivo.on {
+            border-color: rgba(255,0,0,0.4);
+            background: rgba(255,0,0,0.06);
+        }
+        .indicador-en-vivo.on:hover {
+            border-color: rgba(255,0,0,0.6);
+            background: rgba(255,0,0,0.1);
+        }
+        .indicador-punto {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #444;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .indicador-punto.on {
+            background: #ff0000;
+            animation: pulsoIndicadorOn 1.5s ease-in-out infinite;
+        }
+        .indicador-estado {
+            font-size: 10px;
+            font-weight: bold;
+            color: #666;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .indicador-estado.on {
+            color: #ff4444;
+        }
+
         @media (max-width: 900px) {
             .en-vivo-interior {
                 flex-direction: column;
@@ -811,7 +865,15 @@
             <a href="quienes-somos.html">QUIÉNES SOMOS</a>
             <a href="contacto.html">CONTACTO</a>
         </div>
-        <a href="index.html" class="btn-amarillo">◄ VOLVER</a>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <!-- Indicador PROGRAMA EN VIVO ON/OFF -->
+            <a href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="indicador-en-vivo" id="indicadorEnVivo" style="display: flex; align-items: center; gap: 8px; text-decoration: none; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;">
+                <span style="font-size: 12px; color: #8890a0; letter-spacing: 1px; white-space: nowrap;">📺 EN VIVO</span>
+                <span class="indicador-punto" id="indicadorPunto" style="width: 10px; height: 10px; border-radius: 50%; background: #444; display: inline-block; transition: all 0.3s ease;"></span>
+                <span class="indicador-estado" id="indicadorEstado" style="font-size: 10px; font-weight: bold; color: #666; letter-spacing: 1px; transition: all 0.3s ease;">OFF</span>
+            </a>
+            <a href="index.html" class="btn-amarillo">◄ VOLVER</a>
+        </div>
     </nav>
 
     <!-- ===== SECCIÓN EN VIVO ===== -->
@@ -1100,28 +1162,42 @@
             const desc = document.getElementById('descEnVivo');
             const link = document.getElementById('linkEnVivo');
             
+            // Elementos del indicador ON/OFF en el navbar
+            const indicador = document.getElementById('indicadorEnVivo');
+            const punto = document.getElementById('indicadorPunto');
+            const estado = document.getElementById('indicadorEstado');
+            
             // ID del último live conocido (para modo manual)
-            // Cambia este ID cuando quieras activar el modo EN VIVO manualmente
-            // Déjalo vacío '' para que intente detectar automáticamente
-            const LIVE_ID_MANUAL = ''; // Ej: 'dQw4w9WgXcQ'
+            // === SIMULACRO: Cambia este ID por el de cualquier video de YouTube ===
+            // Cuando tenga un ID, el indicador se pondrá ON y mostrará el video
+            const LIVE_ID_MANUAL = 'PbuLasxSBJs'; // Video de prueba (EP 01)
+            
+            // Función para actualizar el indicador ON/OFF
+            function actualizarIndicador(encendido) {
+                if (!indicador || !punto || !estado) return;
+                if (encendido) {
+                    indicador.classList.add('on');
+                    punto.classList.add('on');
+                    estado.classList.add('on');
+                    estado.textContent = 'ON';
+                } else {
+                    indicador.classList.remove('on');
+                    punto.classList.remove('on');
+                    estado.classList.remove('on');
+                    estado.textContent = 'OFF';
+                }
+            }
             
             // Función para mostrar la sección en vivo
             function mostrarEnVivo(videoId, tituloTexto, descTexto) {
                 if (!seccion) return;
-                
-                // Configurar el iframe
                 iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1';
-                
-                // Actualizar textos si se proporcionan
                 if (tituloTexto) titulo.textContent = tituloTexto;
                 if (descTexto) desc.textContent = descTexto;
-                
-                // Actualizar link
                 link.href = 'https://www.youtube.com/watch?v=' + videoId;
-                
-                // Mostrar la sección
                 seccion.classList.remove('ocultando');
                 seccion.classList.add('visible');
+                actualizarIndicador(true);
             }
             
             // Función para ocultar la sección en vivo
@@ -1133,6 +1209,7 @@
                     seccion.classList.remove('ocultando');
                     iframe.src = '';
                 }, 500);
+                actualizarIndicador(false);
             }
             
             // Botón cerrar
@@ -1168,6 +1245,9 @@
             function verificarModoManual() {
                 if (LIVE_ID_MANUAL && LIVE_ID_MANUAL.length > 0) {
                     mostrarEnVivo(LIVE_ID_MANUAL, 'Transmisión en vivo', 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
+                } else {
+                    // Sin live activo - asegurar que indicador muestre OFF
+                    actualizarIndicador(false);
                 }
             }
             
