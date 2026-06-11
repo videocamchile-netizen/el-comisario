@@ -142,6 +142,7 @@
         }
         .navbar a:hover, .navbar a.activo { color: #ffb400; }
         .navbar-live {
+                order: 4;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -943,11 +944,12 @@
                 justify-content: center; 
             }
             .navbar .logo { width: 100%; text-align: center; }
-            .navbar .logo img { height: 40px !important; }
+            .navbar .logo img { height: 55px !important; }
             .navbar .links { display: flex; flex-wrap: nowrap; justify-content: center; gap: 0; width: 100%; }
-            .navbar .links a { margin: 1px 4px; font-size: 10px; letter-spacing: 0.2px; }
-            .navbar .btn-amarillo { padding: 3px 8px; font-size: 10px; }
+            .navbar .links a { margin: 1px 6px; font-size: 12px; letter-spacing: 0.5px; }
+            .navbar .btn-amarillo { padding: 5px 12px; font-size: 11px; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
             .navbar-live {
+                order: 4;
                 width: 100%;
                 justify-content: center;
                 padding-top: 3px;
@@ -955,10 +957,11 @@
                 border-top: 1px solid rgba(255,180,0,0.12);
                 gap: 4px;
             }
-            .navbar-live .indicador-en-vivo { padding: 2px 6px; gap: 3px; }
-            .navbar-live .indicador-en-vivo span { font-size: 9px !important; }
-            .navbar-live .indicador-punto { width: 6px; height: 6px; }
-            .navbar-live .indicador-estado { font-size: 7px; }
+            .navbar-live .indicador-en-vivo { padding: 3px 10px; gap: 5px; border-color: rgba(255,255,255,0.25); }
+            .navbar-live .indicador-en-vivo span { font-size: 11px !important; color: #c0c4d0 !important; }
+            .navbar-live .indicador-punto { width: 8px; height: 8px; }
+            .navbar-live .indicador-estado { font-size: 9px; color: #aaa; }
+            .navbar-live .indicador-estado.on { color: #ff4444; }
             .hero-episodios { min-height: 300vh; padding: 60px 15px 40px; }
             .hero-contenido h1 { font-size: 2.8rem; }
             .hero-contenido p { font-size: 1rem; }

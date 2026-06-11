@@ -1382,18 +1382,12 @@
            RESPONSIVE
            ======================================================== */
         @media (max-width: 900px) {
-            .navbar { 
-                padding: 4px 6px; 
-                gap: 2px; 
-                flex-wrap: wrap; 
-                justify-content: center; 
-            }
-            .navbar { flex-wrap: wrap; justify-content: space-between; align-items: center; }
-            .navbar .logo { width: auto; text-align: left; flex: 1; }
+            .navbar { flex-wrap: wrap; justify-content: center; align-items: center; position: relative; padding: 4px 6px; gap: 2px; }
+            .navbar .logo { width: 100%; text-align: center; }
             .navbar .logo img { height: 55px !important; }
             .navbar .links { display: flex; flex-wrap: nowrap; justify-content: center; gap: 0; width: 100%; order: 3; }
             .navbar .links a { margin: 1px 6px; font-size: 12px; letter-spacing: 0.5px; }
-            .navbar .btn-amarillo { padding: 5px 12px; font-size: 11px; margin-left: auto; }
+            .navbar .btn-amarillo { padding: 5px 12px; font-size: 11px; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
             .navbar-live {
                 width: 100%;
                 justify-content: center;
