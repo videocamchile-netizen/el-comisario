@@ -2100,8 +2100,18 @@
                 })
                 .catch(function(error) {
                     console.error('Error Brevo:', error);
-                    mensaje.textContent = '❌ Error al registrarte. Intenta de nuevo.';
-                    mensaje.className = 'mensaje-aviso error';
+                    var msgError = error.message || 'Error al registrarte';
+                    // Si el error es porque ya existe, igual lo damos por registrado
+                    if (msgError.indexOf('already exists') !== -1 || msgError.indexOf('duplicate') !== -1) {
+                        mensaje.textContent = '✅ ¡Ya estabas registrado! Te avisaremos cuando estemos en vivo.';
+                        mensaje.className = 'mensaje-aviso exito';
+                        emailInput.value = '';
+                        guardarSuscriptorLocal(email);
+                        actualizarContador();
+                    } else {
+                        mensaje.textContent = '❌ ' + msgError;
+                        mensaje.className = 'mensaje-aviso error';
+                    }
                 })
                 .finally(function() {
                     btnAviso.disabled = false;
