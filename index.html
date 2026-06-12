@@ -2091,6 +2091,10 @@
                         emailInput.value = '';
                         // Guardar también en localStorage para notificaciones automáticas
                         guardarSuscriptorLocal(email);
+                        // Si hay un live activo, notificar inmediatamente al nuevo suscriptor
+                        if (typeof liveActivo !== 'undefined' && liveActivo) {
+                            notificarSuscriptorUnico(email, videoIdActual);
+                        }
                         actualizarContador();
                     } else {
                         return r.json().then(function(d) {
@@ -2107,6 +2111,10 @@
                         mensaje.className = 'mensaje-aviso exito';
                         emailInput.value = '';
                         guardarSuscriptorLocal(email);
+                        // Si hay un live activo, notificar inmediatamente al nuevo suscriptor
+                        if (typeof liveActivo !== 'undefined' && liveActivo) {
+                            notificarSuscriptorUnico(email, videoIdActual);
+                        }
                         actualizarContador();
                     } else {
                         mensaje.textContent = '❌ ' + msgError;
@@ -2190,6 +2198,7 @@
             // Variable para evitar notificar múltiples veces
             var liveYaNotificado = false;
             var liveActivo = false;
+            var videoIdActual = '';
             
             // Función para actualizar el indicador ON/OFF
             function actualizarIndicador(encendido) {
@@ -2216,6 +2225,8 @@
                 seccion.classList.remove('ocultando');
                 seccion.classList.add('visible');
                 actualizarIndicador(true);
+                liveActivo = true;
+                videoIdActual = videoId;
                 
                 // Notificar a suscriptores cuando se detecta live (solo una vez)
                 if (!liveYaNotificado) {
@@ -2268,6 +2279,31 @@
                     .catch(function(error) {
                         console.error('Error notificando a:', email, error);
                     });
+                });
+            }
+            
+            // ========================================================
+            // NOTIFICAR A UN SOLO SUSCRIPTOR (CUANDO SE REGISTRA Y HAY LIVE)
+            // ========================================================
+            function notificarSuscriptorUnico(email, videoId) {
+                if (!email || !videoId) return;
+                
+                var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
+                var linkCanal = 'https://www.youtube.com/@elcomisariotv/streams';
+                
+                emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
+                    to_email: email,
+                    name: email.split('@')[0],
+                    message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
+                    subject: '🔴 ¡El Comisario está EN VIVO!',
+                    link_video: linkVideo,
+                    link_canal: linkCanal
+                })
+                .then(function() {
+                    console.log('Notificación enviada a nuevo suscriptor:', email);
+                })
+                .catch(function(error) {
+                    console.error('Error notificando a nuevo suscriptor:', email, error);
                 });
             }
             
