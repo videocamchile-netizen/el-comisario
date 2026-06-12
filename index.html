@@ -2052,8 +2052,9 @@
             
             if (!form) return;
             
-            // Configuración Brevo
-            var BREVO_API_KEY = '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';
+            // Configuración Brevo (variables globales)
+            window.BREVO_API_KEY = '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';
+            var BREVO_API_KEY = window.BREVO_API_KEY;
             var LISTA_BREVO_ID = 2; // ID de la lista de suscriptores en Brevo
             
             form.addEventListener('submit', function(e) {
@@ -2253,31 +2254,81 @@
             }
             
             // ========================================================
-            // NOTIFICAR A SUSCRIPTORES POR EMAIL
+            // NOTIFICAR A SUSCRIPTORES POR EMAIL (DESDE BREVO)
             // ========================================================
             function notificarSuscriptores(videoId) {
-                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                
-                if (suscriptores.length === 0) return;
-                
                 var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
                 var linkCanal = 'https://www.youtube.com/@elcomisariotv/streams';
                 
-                // Enviar a cada suscriptor
-                suscriptores.forEach(function(email) {
-                    emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
-                        to_email: email,
-                        name: email.split('@')[0],
-                        message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
-                        subject: '🔴 ¡El Comisario está EN VIVO!',
-                        link_video: linkVideo,
-                        link_canal: linkCanal
-                    })
-                    .then(function() {
-                        console.log('Notificación enviada a:', email);
-                    })
-                    .catch(function(error) {
-                        console.error('Error notificando a:', email, error);
+                // Obtener correos desde Brevo
+                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
+                    method: 'GET',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var suscriptores = [];
+                    if (data && data.contacts) {
+                        data.contacts.forEach(function(c) {
+                            if (c.email) suscriptores.push(c.email);
+                        });
+                    }
+                    
+                    // También agregar los de localStorage por si acaso
+                    var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                    locales.forEach(function(email) {
+                        if (!suscriptores.includes(email)) {
+                            suscriptores.push(email);
+                        }
+                    });
+                    
+                    if (suscriptores.length === 0) {
+                        console.log('No hay suscriptores para notificar');
+                        return;
+                    }
+                    
+                    console.log('Notificando a ' + suscriptores.length + ' suscriptores');
+                    
+                    // Enviar a cada suscriptor
+                    suscriptores.forEach(function(email) {
+                        emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
+                            to_email: email,
+                            name: email.split('@')[0],
+                            message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
+                            subject: '🔴 ¡El Comisario está EN VIVO!',
+                            link_video: linkVideo,
+                            link_canal: linkCanal
+                        })
+                        .then(function() {
+                            console.log('Notificación enviada a:', email);
+                        })
+                        .catch(function(error) {
+                            console.error('Error notificando a:', email, error);
+                        });
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Error obteniendo suscriptores de Brevo:', error);
+                    // Fallback: notificar solo desde localStorage
+                    var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                    suscriptores.forEach(function(email) {
+                        emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
+                            to_email: email,
+                            name: email.split('@')[0],
+                            message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
+                            subject: '🔴 ¡El Comisario está EN VIVO!',
+                            link_video: linkVideo,
+                            link_canal: linkCanal
+                        })
+                        .then(function() {
+                            console.log('Notificación enviada a:', email);
+                        })
+                        .catch(function(error) {
+                            console.error('Error notificando a:', email, error);
+                        });
                     });
                 });
             }
