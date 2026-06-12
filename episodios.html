@@ -1093,7 +1093,7 @@
             <!-- Video 1 -->
             <div class="tv-card">
                 <div class="tv-marco">
-                    <iframe src="https://www.youtube.com/embed/PbuLasxSBJs" allowfullscreen loading="lazy"></iframe>
+                    <iframe src="https://www.youtube.com/embed/PbuLasxSBJs?rel=0" allowfullscreen loading="lazy"></iframe>
                 </div>
                 <div class="tv-info">
                     <h3>EP 01: Javier y Damian</h3>
@@ -1439,13 +1439,17 @@
             const punto = document.getElementById('indicadorPunto');
             const estado = document.getElementById('indicadorEstado');
             
-            // ID del último live conocido (para modo manual)
-            // === SIMULACRO: Cambia este ID por el de cualquier video de YouTube ===
-            // Cuando tenga un ID, el indicador se pondrá ON y mostrará el video
-            const LIVE_ID_MANUAL = 'PbuLasxSBJs'; // Video de prueba (EP 01)
+            // ID del canal de YouTube
+            var CHANNEL_ID = 'UC439PHkUfNl5MjOGGGf4jkQ';
+            
+            // === MODO PRUEBA ===
+            // Cambia a true para probar con un video específico
+            var MODO_PRUEBA = true;
+            var VIDEO_PRUEBA_ID = 'PbuLasxSBJs'; // Video de prueba
             
             // Variable para evitar notificar múltiples veces
             var liveYaNotificado = false;
+            var liveActivo = false;
             
             // Función para actualizar el indicador ON/OFF
             function actualizarIndicador(encendido) {
@@ -1527,44 +1531,104 @@
             }
             
             // ========================================================
-            // DETECCIÓN AUTOMÁTICA
+            // DETECCIÓN AUTOMÁTICA DE LIVE VÍA API PÚBLICA
             // ========================================================
             function verificarLiveAutomatico() {
-                var url = 'https://www.youtube.com/@elcomisariotv/live';
+                // Usamos la API pública de YouTube (no requiere API Key)
+                var url = 'https://www.youtube.com/channel/' + CHANNEL_ID + '/live';
                 
-                fetch(url, { method: 'HEAD' })
+                fetch(url, { method: 'HEAD', mode: 'no-cors' })
                     .then(function(response) {
-                        if (response.url && response.url.indexOf('/live') === -1 && response.url.indexOf('watch?v=') !== -1) {
-                            var match = response.url.match(/watch\?v=([^&]+)/);
-                            if (match && match[1]) {
-                                mostrarEnVivo(match[1], 'Transmisión en vivo', 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
-                            }
-                        } else {
-                            verificarModoManual();
-                        }
+                        // Con no-cors no podemos leer la URL, intentamos con modo manual
+                        verificarLiveConAPI();
                     })
                     .catch(function() {
-                        verificarModoManual();
+                        verificarLiveConAPI();
                     });
             }
             
             // ========================================================
-            // MODO MANUAL
+            // VERIFICAR CON API PÚBLICA DE YOUTUBE
             // ========================================================
-            function verificarModoManual() {
-                if (LIVE_ID_MANUAL && LIVE_ID_MANUAL.length > 0) {
-                    mostrarEnVivo(LIVE_ID_MANUAL, 'Transmisión en vivo', 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
-                } else {
-                    // Sin live activo - asegurar que indicador muestre OFF
-                    actualizarIndicador(false);
-                }
+            function verificarLiveConAPI() {
+                // Usamos un proxy público para obtener datos del canal
+                var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/channel/' + CHANNEL_ID + '/live&format=json';
+                
+                fetch(url)
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        if (data && data.title && data.author_name) {
+                            // Si hay respuesta, el canal tiene contenido en vivo
+                            // Extraemos el video ID de la URL del oembed
+                            var videoUrl = data.url || '';
+                            var match = videoUrl.match(/watch\?v=([^&]+)/);
+                            if (match && match[1]) {
+                                mostrarEnVivo(match[1], '🔴 ' + data.title, 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
+                            } else {
+                                // No se pudo extraer ID, modo OFF
+                                actualizarIndicador(false);
+                            }
+                        } else {
+                            actualizarIndicador(false);
+                        }
+                    })
+                    .catch(function() {
+                        // Si falla la API, intentamos con el método alternativo
+                        verificarLiveConRSS();
+                    });
+            }
+            
+            // ========================================================
+            // VERIFICAR CON RSS (FALLBACK)
+            // ========================================================
+            function verificarLiveConRSS() {
+                var url = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+                
+                fetch(url)
+                    .then(function(r) { return r.text(); })
+                    .then(function(xmlText) {
+                        // Buscar si hay un video en vivo en el feed
+                        var parser = new DOMParser();
+                        var xml = parser.parseFromString(xmlText, 'text/xml');
+                        var entries = xml.querySelectorAll('entry');
+                        
+                        var liveEncontrado = false;
+                        entries.forEach(function(entry) {
+                            var title = entry.querySelector('title')?.textContent || '';
+                            var link = entry.querySelector('link')?.getAttribute('href') || '';
+                            
+                            // Los videos en vivo suelen tener "live" en el título o son los más recientes
+                            if (title.toLowerCase().indexOf('en vivo') !== -1 || 
+                                title.toLowerCase().indexOf('live') !== -1 ||
+                                title.toLowerCase().indexOf('estreno') !== -1) {
+                                var match = link.match(/watch\?v=([^&]+)/);
+                                if (match && match[1]) {
+                                    mostrarEnVivo(match[1], '🔴 ' + title, 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
+                                    liveEncontrado = true;
+                                }
+                            }
+                        });
+                        
+                        if (!liveEncontrado) {
+                            actualizarIndicador(false);
+                        }
+                    })
+                    .catch(function() {
+                        // Si todo falla, indicador OFF
+                        actualizarIndicador(false);
+                    });
             }
             
             // ========================================================
             // INICIAR VERIFICACIÓN
             // ========================================================
-            verificarLiveAutomatico();
-            setInterval(verificarLiveAutomatico, 5 * 60 * 1000);
+            // Si modo prueba está activo, mostrar video de prueba
+            if (MODO_PRUEBA && VIDEO_PRUEBA_ID) {
+                mostrarEnVivo(VIDEO_PRUEBA_ID, '🔴 PRUEBA - Transmisión en vivo', 'Esto es una prueba del sistema de detección de live.');
+            } else {
+                verificarLiveAutomatico();
+                setInterval(verificarLiveAutomatico, 3 * 60 * 1000); // Cada 3 minutos
+            }
             
         })();
     </script>
