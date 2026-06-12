@@ -2149,7 +2149,6 @@
             const iframe = document.getElementById('iframeEnVivo');
             const btnCerrar = document.getElementById('btnCerrarEnVivo');
             const titulo = document.getElementById('tituloEnVivo');
-            const desc = document.getElementById('descEnVivo');
             const link = document.getElementById('linkEnVivo');
             
             // Elementos del indicador ON/OFF en el navbar
@@ -2190,7 +2189,6 @@
                 if (!seccion) return;
                 iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1';
                 if (tituloTexto) titulo.textContent = tituloTexto;
-                if (descTexto) desc.textContent = descTexto;
                 link.href = 'https://www.youtube.com/watch?v=' + videoId;
                 seccion.classList.remove('ocultando');
                 seccion.classList.add('visible');
