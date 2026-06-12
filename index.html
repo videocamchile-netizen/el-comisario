@@ -2160,6 +2160,11 @@
             // ID del canal de YouTube
             var CHANNEL_ID = 'UC439PHkUfNl5MjOGGGf4jkQ';
             
+            // === MODO PRUEBA ===
+            // Cambia a true para probar con un video específico
+            var MODO_PRUEBA = true;
+            var VIDEO_PRUEBA_ID = 'PbuLasxSBJs'; // Video de prueba
+            
             // Variable para evitar notificar múltiples veces
             var liveYaNotificado = false;
             var liveActivo = false;
@@ -2335,8 +2340,13 @@
             // ========================================================
             // INICIAR VERIFICACIÓN
             // ========================================================
-            verificarLiveAutomatico();
-            setInterval(verificarLiveAutomatico, 3 * 60 * 1000); // Cada 3 minutos
+            // Si modo prueba está activo, mostrar video de prueba
+            if (MODO_PRUEBA && VIDEO_PRUEBA_ID) {
+                mostrarEnVivo(VIDEO_PRUEBA_ID, '🔴 PRUEBA - Transmisión en vivo', 'Esto es una prueba del sistema de detección de live.');
+            } else {
+                verificarLiveAutomatico();
+                setInterval(verificarLiveAutomatico, 3 * 60 * 1000); // Cada 3 minutos
+            }
             
         })();
     </script>
