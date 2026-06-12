@@ -2089,6 +2089,8 @@
                         mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
                         mensaje.className = 'mensaje-aviso exito';
                         emailInput.value = '';
+                        // Guardar también en localStorage para notificaciones automáticas
+                        guardarSuscriptorLocal(email);
                         actualizarContador();
                     } else {
                         return r.json().then(function(d) {
@@ -2116,6 +2118,17 @@
             // ========================================================
             // ACTUALIZAR CONTADOR DE SUSCRIPTORES DESDE BREVO
             // ========================================================
+            // ========================================================
+            // GUARDAR SUSCRIPTOR EN LOCALSTORAGE
+            // ========================================================
+            function guardarSuscriptorLocal(email) {
+                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                if (!suscriptores.includes(email)) {
+                    suscriptores.push(email);
+                    localStorage.setItem('suscriptores', JSON.stringify(suscriptores));
+                }
+            }
+            
             function actualizarContador() {
                 if (!numSpan) return;
                 
