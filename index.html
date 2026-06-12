@@ -2253,6 +2253,45 @@
             }
             
             // ========================================================
+            // GENERAR HTML DEL CORREO PROFESIONAL
+            // ========================================================
+            function generarHtmlCorreo(linkVideo, linkCanal) {
+                return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>' +
+                '<body style="margin:0;padding:0;background-color:#0a0f1e;font-family:\'Helvetica Neue\',Arial,sans-serif">' +
+                '<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0f1e"><tr><td align="center" style="padding:40px 20px">' +
+                '<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#111827;border-radius:16px;overflow:hidden;border:1px solid rgba(255,180,0,0.12)">' +
+                
+                // HEADER
+                '<tr><td style="padding:40px 30px 25px;text-align:center;background:linear-gradient(135deg,#1a1200 0%,#2a2000 50%,#1a1200 100%)">' +
+                '<div style="width:60px;height:60px;border-radius:50%;background:#ffb400;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:60px">🔴</div>' +
+                '<h1 style="color:#ffb400;font-size:32px;margin:0;letter-spacing:3px;font-weight:900">EL COMISARIO</h1>' +
+                '<p style="color:#ff4444;font-size:14px;margin:12px 0 0;letter-spacing:2px;text-transform:uppercase;font-weight:bold">🔴 Transmisión en vivo · Ahora</p>' +
+                '</td></tr>' +
+                
+                // CUERPO
+                '<tr><td style="padding:35px 30px;text-align:center;background-color:#111827">' +
+                '<p style="color:#e0e4ea;font-size:17px;line-height:1.7;margin:0 0 8px">¡Hola!</p>' +
+                '<p style="color:#c0c8d8;font-size:16px;line-height:1.6;margin:0 0 25px">Te informamos que <strong style="color:#ffb400">El Comisario</strong> está transmitiendo <strong style="color:#ff6666">EN VIVO</strong> ahora mismo.<br>No te pierdas este nuevo programa.</p>' +
+                
+                // BOTÓN PRINCIPAL
+                '<table cellpadding="0" cellspacing="0" style="margin:0 auto 25px"><tr><td style="background:#ff0000;border-radius:8px;padding:0">' +
+                '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:#ffffff;padding:18px 50px;border-radius:8px;text-decoration:none;font-size:18px;font-weight:bold;letter-spacing:1px;border:1px solid rgba(255,255,255,0.1)">▶ VER TRANSMISIÓN</a>' +
+                '</td></tr></table>' +
+                
+                // ENLACE SECUNDARIO
+                '<p style="color:#8890a0;font-size:13px;margin:0">O visita nuestro canal:<br>' +
+                '<a href="' + linkCanal + '" style="color:#ffb400;text-decoration:none;font-size:14px">youtube.com/@elcomisariotv</a></p>' +
+                '</td></tr>' +
+                
+                // FOOTER
+                '<tr><td style="padding:25px 30px;text-align:center;background-color:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
+                '<p style="color:#556;font-size:12px;margin:0 0 5px;letter-spacing:1px">© 2026 El Comisario</p>' +
+                '<p style="color:#445;font-size:11px;margin:0;letter-spacing:0.5px">Donde las víctimas tienen voz, la verdad no prescribe y la justicia no descansa.</p>' +
+                '<p style="color:#334;font-size:10px;margin:15px 0 0;letter-spacing:0.5px">Si no deseas recibir estos avisos, ignora este correo.</p>' +
+                '</td></tr></table></td></tr></table></body></html>';
+            }
+            
+            // ========================================================
             // NOTIFICAR A SUSCRIPTORES POR EMAIL (VÍA BREVO TRANSACTIONAL)
             // ========================================================
             function notificarSuscriptores(videoId) {
@@ -2297,21 +2336,7 @@
                             sender: { name: 'El Comisario', email: 'toppolicialtv@gmail.com' },
                             to: [{ email: email }],
                             subject: '🔴 ¡El Comisario está EN VIVO!',
-                            htmlContent: '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#0a0f1e;font-family:Arial,sans-serif">' +
-                                '<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:30px 20px">' +
-                                '<table width="600" cellpadding="0" cellspacing="0" style="background:#111827;border-radius:12px;overflow:hidden;border:1px solid rgba(255,180,0,0.15)">' +
-                                '<tr><td style="padding:30px;text-align:center;background:linear-gradient(135deg,#1a1200,#2a2000)">' +
-                                '<h1 style="color:#ffb400;font-size:28px;margin:0;letter-spacing:2px">🔴 EL COMISARIO</h1>' +
-                                '<p style="color:#ff6666;font-size:16px;margin:10px 0 0 0;letter-spacing:1px">¡TRANSMISIÓN EN VIVO!</p>' +
-                                '</td></tr>' +
-                                '<tr><td style="padding:30px;text-align:center">' +
-                                '<p style="color:#d1d5dc;font-size:16px;line-height:1.6">Estamos al aire ahora mismo.<br>No te pierdas este nuevo programa.</p>' +
-                                '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:white;padding:16px 40px;border-radius:6px;text-decoration:none;font-size:18px;font-weight:bold;margin:20px 0">▶ VER EN YOUTUBE</a>' +
-                                '<p style="color:#8890a0;font-size:13px;margin-top:15px">O visita nuestro canal: <a href="' + linkCanal + '" style="color:#ffb400">' + linkCanal + '</a></p>' +
-                                '</td></tr>' +
-                                '<tr><td style="padding:20px;text-align:center;background:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
-                                '<p style="color:#556;font-size:12px;margin:0">© 2026 El Comisario · Donde las víctimas tienen voz</p>' +
-                                '</td></tr></table></td></tr></table></body></html>'
+                            htmlContent: generarHtmlCorreo(linkVideo, linkCanal)
                         };
                         
                         fetch('https://api.brevo.com/v3/smtp/email', {
@@ -2354,21 +2379,7 @@
                     sender: { name: 'El Comisario', email: 'toppolicialtv@gmail.com' },
                     to: [{ email: email }],
                     subject: '🔴 ¡El Comisario está EN VIVO!',
-                    htmlContent: '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#0a0f1e;font-family:Arial,sans-serif">' +
-                        '<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:30px 20px">' +
-                        '<table width="600" cellpadding="0" cellspacing="0" style="background:#111827;border-radius:12px;overflow:hidden;border:1px solid rgba(255,180,0,0.15)">' +
-                        '<tr><td style="padding:30px;text-align:center;background:linear-gradient(135deg,#1a1200,#2a2000)">' +
-                        '<h1 style="color:#ffb400;font-size:28px;margin:0;letter-spacing:2px">🔴 EL COMISARIO</h1>' +
-                        '<p style="color:#ff6666;font-size:16px;margin:10px 0 0 0;letter-spacing:1px">¡TRANSMISIÓN EN VIVO!</p>' +
-                        '</td></tr>' +
-                        '<tr><td style="padding:30px;text-align:center">' +
-                        '<p style="color:#d1d5dc;font-size:16px;line-height:1.6">Estamos al aire ahora mismo.<br>No te pierdas este nuevo programa.</p>' +
-                        '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:white;padding:16px 40px;border-radius:6px;text-decoration:none;font-size:18px;font-weight:bold;margin:20px 0">▶ VER EN YOUTUBE</a>' +
-                        '<p style="color:#8890a0;font-size:13px;margin-top:15px">O visita nuestro canal: <a href="' + linkCanal + '" style="color:#ffb400">' + linkCanal + '</a></p>' +
-                        '</td></tr>' +
-                        '<tr><td style="padding:20px;text-align:center;background:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
-                        '<p style="color:#556;font-size:12px;margin:0">© 2026 El Comisario · Donde las víctimas tienen voz</p>' +
-                        '</td></tr></table></td></tr></table></body></html>'
+                    htmlContent: generarHtmlCorreo(linkVideo, linkCanal)
                 };
                 
                 fetch('https://api.brevo.com/v3/smtp/email', {
