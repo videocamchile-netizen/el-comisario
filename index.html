@@ -2235,7 +2235,9 @@
                         to_email: email,
                         name: email.split('@')[0],
                         message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo,
-                        subject: '🔴 ¡El Comisario está EN VIVO!'
+                        subject: '🔴 ¡El Comisario está EN VIVO!',
+                        link_video: linkVideo,
+                        link_canal: linkCanal
                     })
                     .then(function() {
                         console.log('Notificación enviada a:', email);
