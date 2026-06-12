@@ -2254,7 +2254,7 @@
             }
             
             // ========================================================
-            // NOTIFICAR A SUSCRIPTORES POR EMAIL (DESDE BREVO)
+            // NOTIFICAR A SUSCRIPTORES POR EMAIL (VÍA BREVO TRANSACTIONAL)
             // ========================================================
             function notificarSuscriptores(videoId) {
                 var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
@@ -2292,44 +2292,53 @@
                     
                     console.log('Notificando a ' + suscriptores.length + ' suscriptores');
                     
-                    // Enviar a cada suscriptor
+                    // Enviar a cada suscriptor usando la API Transactional de Brevo
                     suscriptores.forEach(function(email) {
-                        emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
-                            to_email: email,
-                            name: email.split('@')[0],
-                            message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
+                        var datosCorreo = {
+                            sender: { name: 'El Comisario', email: 'toppolicialtv@gmail.com' },
+                            to: [{ email: email }],
                             subject: '🔴 ¡El Comisario está EN VIVO!',
-                            link_video: linkVideo,
-                            link_canal: linkCanal
+                            htmlContent: '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#0a0f1e;font-family:Arial,sans-serif">' +
+                                '<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:30px 20px">' +
+                                '<table width="600" cellpadding="0" cellspacing="0" style="background:#111827;border-radius:12px;overflow:hidden;border:1px solid rgba(255,180,0,0.15)">' +
+                                '<tr><td style="padding:30px;text-align:center;background:linear-gradient(135deg,#1a1200,#2a2000)">' +
+                                '<h1 style="color:#ffb400;font-size:28px;margin:0;letter-spacing:2px">🔴 EL COMISARIO</h1>' +
+                                '<p style="color:#ff6666;font-size:16px;margin:10px 0 0 0;letter-spacing:1px">¡TRANSMISIÓN EN VIVO!</p>' +
+                                '</td></tr>' +
+                                '<tr><td style="padding:30px;text-align:center">' +
+                                '<p style="color:#d1d5dc;font-size:16px;line-height:1.6">Estamos al aire ahora mismo.<br>No te pierdas este nuevo programa.</p>' +
+                                '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:white;padding:16px 40px;border-radius:6px;text-decoration:none;font-size:18px;font-weight:bold;margin:20px 0">▶ VER EN YOUTUBE</a>' +
+                                '<p style="color:#8890a0;font-size:13px;margin-top:15px">O visita nuestro canal: <a href="' + linkCanal + '" style="color:#ffb400">' + linkCanal + '</a></p>' +
+                                '</td></tr>' +
+                                '<tr><td style="padding:20px;text-align:center;background:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
+                                '<p style="color:#556;font-size:12px;margin:0">© 2026 El Comisario · Donde las víctimas tienen voz</p>' +
+                                '</td></tr></table></td></tr></table></body></html>'
+                        };
+                        
+                        fetch('https://api.brevo.com/v3/smtp/email', {
+                            method: 'POST',
+                            headers: {
+                                'api-key': BREVO_API_KEY,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(datosCorreo)
                         })
-                        .then(function() {
-                            console.log('Notificación enviada a:', email);
+                        .then(function(r) {
+                            if (r.status === 201 || r.status === 200) {
+                                console.log('Notificación enviada a:', email);
+                            } else {
+                                return r.json().then(function(d) {
+                                    console.error('Error Brevo transactional:', d);
+                                });
+                            }
                         })
                         .catch(function(error) {
-                            console.error('Error notificando a:', email, error);
+                            console.error('Error enviando a:', email, error);
                         });
                     });
                 })
                 .catch(function(error) {
                     console.error('Error obteniendo suscriptores de Brevo:', error);
-                    // Fallback: notificar solo desde localStorage
-                    var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                    suscriptores.forEach(function(email) {
-                        emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
-                            to_email: email,
-                            name: email.split('@')[0],
-                            message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
-                            subject: '🔴 ¡El Comisario está EN VIVO!',
-                            link_video: linkVideo,
-                            link_canal: linkCanal
-                        })
-                        .then(function() {
-                            console.log('Notificación enviada a:', email);
-                        })
-                        .catch(function(error) {
-                            console.error('Error notificando a:', email, error);
-                        });
-                    });
                 });
             }
             
@@ -2342,19 +2351,46 @@
                 var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
                 var linkCanal = 'https://www.youtube.com/@elcomisariotv/streams';
                 
-                emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
-                    to_email: email,
-                    name: email.split('@')[0],
-                    message: '¡El Comisario está EN VIVO ahora mismo! Míralo aquí: ' + linkVideo + ' (o en nuestro canal: ' + linkCanal + ')',
+                var datosCorreo = {
+                    sender: { name: 'El Comisario', email: 'toppolicialtv@gmail.com' },
+                    to: [{ email: email }],
                     subject: '🔴 ¡El Comisario está EN VIVO!',
-                    link_video: linkVideo,
-                    link_canal: linkCanal
+                    htmlContent: '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#0a0f1e;font-family:Arial,sans-serif">' +
+                        '<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:30px 20px">' +
+                        '<table width="600" cellpadding="0" cellspacing="0" style="background:#111827;border-radius:12px;overflow:hidden;border:1px solid rgba(255,180,0,0.15)">' +
+                        '<tr><td style="padding:30px;text-align:center;background:linear-gradient(135deg,#1a1200,#2a2000)">' +
+                        '<h1 style="color:#ffb400;font-size:28px;margin:0;letter-spacing:2px">🔴 EL COMISARIO</h1>' +
+                        '<p style="color:#ff6666;font-size:16px;margin:10px 0 0 0;letter-spacing:1px">¡TRANSMISIÓN EN VIVO!</p>' +
+                        '</td></tr>' +
+                        '<tr><td style="padding:30px;text-align:center">' +
+                        '<p style="color:#d1d5dc;font-size:16px;line-height:1.6">Estamos al aire ahora mismo.<br>No te pierdas este nuevo programa.</p>' +
+                        '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:white;padding:16px 40px;border-radius:6px;text-decoration:none;font-size:18px;font-weight:bold;margin:20px 0">▶ VER EN YOUTUBE</a>' +
+                        '<p style="color:#8890a0;font-size:13px;margin-top:15px">O visita nuestro canal: <a href="' + linkCanal + '" style="color:#ffb400">' + linkCanal + '</a></p>' +
+                        '</td></tr>' +
+                        '<tr><td style="padding:20px;text-align:center;background:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
+                        '<p style="color:#556;font-size:12px;margin:0">© 2026 El Comisario · Donde las víctimas tienen voz</p>' +
+                        '</td></tr></table></td></tr></table></body></html>'
+                };
+                
+                fetch('https://api.brevo.com/v3/smtp/email', {
+                    method: 'POST',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datosCorreo)
                 })
-                .then(function() {
-                    console.log('Notificación enviada a nuevo suscriptor:', email);
+                .then(function(r) {
+                    if (r.status === 201 || r.status === 200) {
+                        console.log('Notificación enviada a nuevo suscriptor:', email);
+                    } else {
+                        return r.json().then(function(d) {
+                            console.error('Error Brevo transactional:', d);
+                        });
+                    }
                 })
                 .catch(function(error) {
-                    console.error('Error notificando a nuevo suscriptor:', email, error);
+                    console.error('Error enviando a nuevo suscriptor:', email, error);
                 });
             }
             
