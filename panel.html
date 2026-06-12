@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - El Comisario</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #050a14;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Fondo animado */
+        @keyframes fluidoOlas {
+            0% { background-position: 0% 50%, 0% 50%, 0% 50%, 0% 50%, 0% 50%, 0% 50%; }
+            15% { background-position: 60% 20%, 20% 80%, 80% 15%, 40% 85%, 10% 30%, 90% 70%; }
+            30% { background-position: 100% 50%, 70% 20%, 30% 85%, 80% 30%, 50% 10%, 20% 90%; }
+            45% { background-position: 40% 80%, 90% 40%, 60% 10%, 20% 70%, 80% 50%, 60% 20%; }
+            60% { background-position: 80% 20%, 30% 70%, 90% 50%, 60% 20%, 30% 80%, 80% 40%; }
+            75% { background-position: 20% 60%, 60% 30%, 10% 80%, 40% 10%, 70% 30%, 10% 60%; }
+            100% { background-position: 0% 50%, 0% 50%, 0% 50%, 0% 50%, 0% 50%, 0% 50%; }
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(20,50,100,0.85) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(10,30,70,0.75) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 20%, rgba(40,70,120,0.45) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 80%, rgba(255,180,0,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(100,150,220,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,200,100,0.06) 0%, transparent 50%);
+            background-size: 300% 300%, 300% 300%, 300% 300%, 300% 300%, 300% 300%, 300% 300%;
+            animation: fluidoOlas 12s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .panel-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+        
+        /* LOGIN */
+        .login-box {
+            background: linear-gradient(145deg, #0f1a30 0%, #0b1528 100%);
+            border-radius: 14px;
+            padding: 40px 35px;
+            border-top: 6px solid #ffb400;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+        }
+        .login-box h1 {
+            text-align: center;
+            color: #ffb400;
+            font-size: 1.8rem;
+            margin: 0 0 5px 0;
+            letter-spacing: 2px;
+        }
+        .login-box p {
+            text-align: center;
+            color: #8890a0;
+            font-size: 14px;
+            margin: 0 0 30px 0;
+        }
+        .campo {
+            margin-bottom: 20px;
+        }
+        .campo label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8890a0;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .campo input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(5,10,20,0.7);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .campo input:focus {
+            border-color: #ffb400;
+        }
+        .btn-ingresar {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ffb400 0%, #d49400 100%);
+            color: #1a1200;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-ingresar:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255,180,0,0.3);
+        }
+        .error-login {
+            color: #ff5252;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 15px;
+            min-height: 20px;
+        }
+        
+        /* PANEL INTERNO */
+        .panel-interno {
+            display: none;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .panel-header h2 {
+            color: #ffb400;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .btn-cerrar-sesion {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.6);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        .btn-cerrar-sesion:hover {
+            color: white;
+            background: rgba(255,0,0,0.2);
+            border-color: rgba(255,0,0,0.3);
+        }
+        
+        .stats-box {
+            background: rgba(255,180,0,0.05);
+            border: 1px solid rgba(255,180,0,0.15);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .stats-box .numero {
+            font-size: 3rem;
+            color: #ffb400;
+            font-weight: 900;
+        }
+        .stats-box .label {
+            color: #8890a0;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        
+        .acciones {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn-avisar {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulsoBoton 2s ease-in-out infinite;
+        }
+        @keyframes pulsoBoton {
+            0% { box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+            50% { box-shadow: 0 0 30px rgba(255,0,0,0.6); }
+            100% { box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        }
+        .btn-avisar:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(255,0,0,0.5);
+        }
+        .btn-avisar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            animation: none;
+            transform: none !important;
+        }
+        
+        .mensaje-panel {
+            text-align: center;
+            font-size: 14px;
+            min-height: 24px;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .mensaje-panel.exito {
+            color: #4caf50;
+        }
+        .mensaje-panel.error {
+            color: #ff5252;
+        }
+        
+        .info-ayuda {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255,180,0,0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255,180,0,0.08);
+        }
+        .info-ayuda h4 {
+            color: #ffb400;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .info-ayuda p {
+            color: #8890a0;
+            font-size: 12px;
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .volver-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #8890a0;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+        .volver-link:hover {
+            color: #ffb400;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel-container">
+        <!-- LOGIN -->
+        <div class="login-box" id="loginBox">
+            <h1>🔐 PANEL</h1>
+            <p>Acceso restringido · El Comisario</p>
+            <div class="campo">
+                <label>USUARIO</label>
+                <input type="text" id="usuario" placeholder="Ingresa tu usuario" autocomplete="off">
+            </div>
+            <div class="campo">
+                <label>CONTRASEÑA</label>
+                <input type="password" id="clave" placeholder="Ingresa tu contraseña">
+            </div>
+            <button class="btn-ingresar" id="btnIngresar">INGRESAR</button>
+            <div class="error-login" id="errorLogin"></div>
+            <a href="index.html" class="volver-link">← Volver al inicio</a>
+        </div>
+        
+        <!-- PANEL INTERNO -->
+        <div class="login-box panel-interno" id="panelInterno">
+            <div class="panel-header">
+                <h2>📡 PANEL DE CONTROL</h2>
+                <button class="btn-cerrar-sesion" id="btnCerrarSesion">SALIR</button>
+            </div>
+            
+            <div class="stats-box">
+                <div class="numero" id="numSuscriptoresPanel">0</div>
+                <div class="label">SUSCRIPTORES REGISTRADOS</div>
+            </div>
+            
+            <div class="acciones">
+                <button class="btn-avisar" id="btnAvisarAhora">
+                    📢 AVISAR SUSCRIPTORES
+                </button>
+            </div>
+            
+            <div class="mensaje-panel" id="mensajePanel"></div>
+            
+            <div class="info-ayuda">
+                <h4>📋 INSTRUCCIONES</h4>
+                <p>1. Sube el nuevo episodio a YouTube.<br>
+                2. Presiona "AVISAR SUSCRIPTORES".<br>
+                3. Se enviará un correo a todos los registrados avisando que el nuevo programa está disponible.<br>
+                4. El correo se envía desde: elcomisariotv@gmail.com</p>
+            </div>
+            
+            <a href="index.html" class="volver-link">← Volver al inicio</a>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================
+        // CONFIGURACIÓN
+        // ========================================================
+        var USUARIOS = {
+            'cristian': 'clave456@',
+            'carlos': 'clave123@'
+        };
+        
+        var BREVO_API_KEY = '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';
+        var CORREO_REMITENTE = 'elcomisariotv@gmail.com';
+        var NOMBRE_REMITENTE = 'El Comisario';
+        
+        // ========================================================
+        // LOGIN
+        // ========================================================
+        (function() {
+            var loginBox = document.getElementById('loginBox');
+            var panelInterno = document.getElementById('panelInterno');
+            var btnIngresar = document.getElementById('btnIngresar');
+            var btnCerrar = document.getElementById('btnCerrarSesion');
+            var inputUsuario = document.getElementById('usuario');
+            var inputClave = document.getElementById('clave');
+            var errorLogin = document.getElementById('errorLogin');
+            
+            // Verificar si ya hay sesión activa
+            if (sessionStorage.getItem('panelSesion') === 'activa') {
+                loginBox.style.display = 'none';
+                panelInterno.style.display = 'block';
+                cargarSuscriptores();
+            }
+            
+            btnIngresar.addEventListener('click', function() {
+                var usuario = inputUsuario.value.trim().toLowerCase();
+                var clave = inputClave.value.trim();
+                
+                if (!usuario || !clave) {
+                    errorLogin.textContent = '❌ Ingresa usuario y contraseña.';
+                    return;
+                }
+                
+                if (USUARIOS[usuario] && USUARIOS[usuario] === clave) {
+                    errorLogin.textContent = '';
+                    sessionStorage.setItem('panelSesion', 'activa');
+                    sessionStorage.setItem('panelUsuario', usuario);
+                    loginBox.style.display = 'none';
+                    panelInterno.style.display = 'block';
+                    cargarSuscriptores();
+                } else {
+                    errorLogin.textContent = '❌ Usuario o contraseña incorrectos.';
+                }
+            });
+            
+            // Permitir ingresar con Enter
+            inputClave.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') btnIngresar.click();
+            });
+            inputUsuario.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') btnIngresar.click();
+            });
+            
+            btnCerrar.addEventListener('click', function() {
+                sessionStorage.removeItem('panelSesion');
+                sessionStorage.removeItem('panelUsuario');
+                loginBox.style.display = 'block';
+                panelInterno.style.display = 'none';
+                inputUsuario.value = '';
+                inputClave.value = '';
+            });
+        })();
+        
+        // ========================================================
+        // CARGAR SUSCRIPTORES DESDE BREVO
+        // ========================================================
+        function cargarSuscriptores() {
+            var numSpan = document.getElementById('numSuscriptoresPanel');
+            
+            fetch('https://api.brevo.com/v3/contacts', {
+                method: 'GET',
+                headers: {
+                    'api-key': BREVO_API_KEY,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                var total = data.contacts ? data.contacts.length : 0;
+                numSpan.textContent = total;
+            })
+            .catch(function() {
+                numSpan.textContent = '?';
+            });
+        }
+        
+        // ========================================================
+        // ENVIAR AVISO A SUSCRIPTORES
+        // ========================================================
+        (function() {
+            var btnAvisar = document.getElementById('btnAvisarAhora');
+            var mensajePanel = document.getElementById('mensajePanel');
+            
+            btnAvisar.addEventListener('click', function() {
+                btnAvisar.disabled = true;
+                btnAvisar.textContent = '⏳ ENVIANDO...';
+                mensajePanel.textContent = '';
+                mensajePanel.className = 'mensaje-panel';
+                
+                // 1. Obtener todos los contactos de Brevo
+                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
+                    method: 'GET',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var contactos = data.contacts || [];
+                    var emails = contactos.map(function(c) { return c.email; });
+                    
+                    if (emails.length === 0) {
+                        mensajePanel.textContent = '⚠️ No hay suscriptores registrados.';
+                        mensajePanel.className = 'mensaje-panel error';
+                        btnAvisar.disabled = false;
+                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                        return;
+                    }
+                    
+                    // 2. Enviar campaña por Brevo (usando SMTP para envío transaccional)
+                    return enviarCorreoMasivo(emails);
+                })
+                .then(function(resultado) {
+                    if (resultado) {
+                        mensajePanel.textContent = '✅ ¡Aviso enviado a todos los suscriptores!';
+                        mensajePanel.className = 'mensaje-panel exito';
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error:', error);
+                    mensajePanel.textContent = '❌ Error al enviar. Revisa la consola.';
+                    mensajePanel.className = 'mensaje-panel error';
+                })
+                .finally(function() {
+                    btnAvisar.disabled = false;
+                    btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                    
+                    setTimeout(function() {
+                        mensajePanel.textContent = '';
+                        mensajePanel.className = 'mensaje-panel';
+                    }, 8000);
+                });
+            });
+            
+            function enviarCorreoMasivo(emails) {
+                var linkCanal = 'https://www.youtube.com/@elcomisariotv';
+                
+                // Brevo API para enviar email transaccional
+                var promesas = emails.map(function(email) {
+                    var data = {
+                        sender: {
+                            name: NOMBRE_REMITENTE,
+                            email: CORREO_REMITENTE
+                        },
+                        to: [{ email: email }],
+                        subject: '🔴 ¡Nuevo programa de El Comisario ya disponible!',
+                        htmlContent: `
+                            <div style="background:#050a14;padding:30px;font-family:Arial,sans-serif;">
+                                <div style="max-width:600px;margin:0 auto;background:#0f1a30;border-radius:10px;padding:30px;border-top:4px solid #ffb400;">
+                                    <h1 style="color:#ffb400;text-align:center;font-size:28px;">🔴 EL COMISARIO</h1>
+                                    <h2 style="color:white;text-align:center;font-size:22px;">¡Nuevo programa disponible!</h2>
+                                    <p style="color:#a0a5b0;text-align:center;font-size:16px;line-height:1.6;">
+                                        Ya está disponible el nuevo programa de <strong style="color:#ffb400;">El Comisario</strong> en YouTube.
+                                    </p>
+                                    <div style="text-align:center;margin:30px 0;">
+                                        <a href="${linkCanal}" style="background:#ff0000;color:white;padding:15px 35px;border-radius:6px;text-decoration:none;font-size:18px;font-weight:bold;display:inline-block;">
+                                            ▶ VER EN YOUTUBE
+                                        </a>
+                                    </div>
+                                    <p style="color:#8890a0;text-align:center;font-size:13px;">
+                                        No te pierdas este nuevo programa. La verdad no prescribe.
+                                    </p>
+                                    <hr style="border:none;border-top:1px solid rgba(255,180,0,0.1);margin:20px 0;">
+                                    <p style="color:#556;text-align:center;font-size:11px;">
+                                        El Comisario · Donde las víctimas tienen voz<br>
+                                        <a href="${linkCanal}" style="color:#ffb400;text-decoration:none;">youtube.com/@elcomisariotv</a>
+                                    </p>
+                                </div>
+                            </div>
+                        `
+                    };
+                    
+                    return fetch('https://api.brevo.com/v3/smtp/email', {
+                        method: 'POST',
+                        headers: {
+                            'api-key': BREVO_API_KEY,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                });
+                
+                return Promise.all(promesas).then(function(respuestas) {
+                    var ok = respuestas.filter(function(r) { return r.ok; }).length;
+                    var fallos = respuestas.filter(function(r) { return !r.ok; }).length;
+                    if (fallos > 0) {
+                        console.warn(fallos + ' correos fallaron');
+                    }
+                    return ok > 0;
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

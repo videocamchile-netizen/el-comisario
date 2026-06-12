@@ -2041,15 +2041,20 @@
         })();
 
         // ========================================================
-        // FORMULARIO DE SUSCRIPCIÓN - AVISOS EN VIVO
+        // FORMULARIO DE SUSCRIPCIÓN - AVISOS EN VIVO (BREVO)
         // ========================================================
         (function() {
             const form = document.getElementById('formAvisos');
             const emailInput = document.getElementById('emailAviso');
             const btnAviso = document.getElementById('btnAviso');
             const mensaje = document.getElementById('mensajeAviso');
+            const numSpan = document.getElementById('numSuscriptores');
             
             if (!form) return;
+            
+            // Configuración Brevo
+            var BREVO_API_KEY = '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';
+            var LISTA_BREVO_ID = 2; // ID de la lista de suscriptores en Brevo
             
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -2059,27 +2064,40 @@
                 
                 // Deshabilitar botón mientras se envía
                 btnAviso.disabled = true;
-                btnAviso.textContent = '⏳ ENVIANDO...';
+                btnAviso.textContent = '⏳ REGISTRANDO...';
                 mensaje.textContent = '';
                 mensaje.className = 'mensaje-aviso';
                 
-                // Enviar correo de confirmación al suscriptor
-                emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
-                    to_email: email,
-                    name: email.split('@')[0],
-                    message: 'Gracias por registrarte. Te avisaremos cuando El Comisario esté EN VIVO.',
-                    subject: '✅ Te has registrado para recibir avisos EN VIVO'
+                // Guardar en Brevo (crear contacto)
+                fetch('https://api.brevo.com/v3/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        listIds: [LISTA_BREVO_ID],
+                        attributes: {
+                            NOMBRE: email.split('@')[0]
+                        }
+                    })
                 })
-                .then(function() {
-                    mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
-                    mensaje.className = 'mensaje-aviso exito';
-                    emailInput.value = '';
-                    
-                    // Guardar en localStorage para futuros envíos masivos
-                    guardarSuscriptor(email);
+                .then(function(r) {
+                    // 201 = creado, 204 = ya existía (actualizado)
+                    if (r.status === 201 || r.status === 204) {
+                        mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
+                        mensaje.className = 'mensaje-aviso exito';
+                        emailInput.value = '';
+                        actualizarContador();
+                    } else {
+                        return r.json().then(function(d) {
+                            throw new Error(d.message || 'Error al registrar');
+                        });
+                    }
                 })
                 .catch(function(error) {
-                    console.error('Error EmailJS:', error);
+                    console.error('Error Brevo:', error);
                     mensaje.textContent = '❌ Error al registrarte. Intenta de nuevo.';
                     mensaje.className = 'mensaje-aviso error';
                 })
@@ -2096,29 +2114,31 @@
             });
             
             // ========================================================
-            // GESTIÓN DE SUSCRIPTORES EN LOCALSTORAGE
-            // ========================================================
-            function guardarSuscriptor(email) {
-                let suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                if (!suscriptores.includes(email)) {
-                    suscriptores.push(email);
-                    localStorage.setItem('suscriptores', JSON.stringify(suscriptores));
-                }
-                actualizarContador();
-            }
-            
-            // ========================================================
-            // ACTUALIZAR CONTADOR DE SUSCRIPTORES
+            // ACTUALIZAR CONTADOR DE SUSCRIPTORES DESDE BREVO
             // ========================================================
             function actualizarContador() {
-                var numSpan = document.getElementById('numSuscriptores');
                 if (!numSpan) return;
-                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                numSpan.textContent = suscriptores.length;
+                
+                fetch('https://api.brevo.com/v3/contacts?limit=1', {
+                    method: 'GET',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var total = data.contacts ? data.contacts.length : 0;
+                    numSpan.textContent = total;
+                })
+                .catch(function() {
+                    // Si falla, no actualiza
+                });
             }
             actualizarContador();
             
         })();
+
 
         // ========================================================
         // SISTEMA DE DETECCIÓN DE TRANSMISIÓN EN VIVO
