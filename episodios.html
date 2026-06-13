@@ -1443,8 +1443,8 @@
             
             // === MODO PRUEBA ===
             // Cambia a true para probar con un video específico
-            var MODO_PRUEBA = true;
-            var VIDEO_PRUEBA_ID = 'Scns7X4LGsg'; // Video de prueba (EP 07)
+            var MODO_PRUEBA = false;
+            var VIDEO_PRUEBA_ID = ''; // Vacío para que no haya video de prueba
             
             // Variable para evitar notificar múltiples veces
             var liveYaNotificado = false;
@@ -1469,6 +1469,12 @@
             // Función para mostrar la sección en vivo
             function mostrarEnVivo(videoId, tituloTexto, descTexto) {
                 if (!seccion) return;
+                // Si el usuario ya cerró el video antes, no lo mostramos automáticamente
+                if (localStorage.getItem('live_cerrado') === 'true') {
+                    actualizarIndicador(true);
+                    liveActivo = true;
+                    return;
+                }
                 iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
                 if (tituloTexto) titulo.textContent = tituloTexto;
                 link.href = 'https://www.youtube.com/watch?v=' + videoId;
@@ -1487,6 +1493,8 @@
             function ocultarEnVivo() {
                 if (!seccion) return;
                 seccion.classList.add('ocultando');
+                // Guardar en localStorage que el usuario cerró el video
+                localStorage.setItem('live_cerrado', 'true');
                 setTimeout(function() {
                     seccion.classList.remove('visible');
                     seccion.classList.remove('ocultando');
