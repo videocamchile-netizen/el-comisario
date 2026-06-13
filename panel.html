@@ -420,18 +420,7 @@
         var CHANNEL_ID_PANEL = 'UC439PHkUfNl5MjOGGGf4jkQ';
         
         function detectarLiveYouTube() {
-            // Si modo prueba está activo, devolver el video de prueba
-            if (MODO_PRUEBA_PANEL && VIDEO_PRUEBA_PANEL_ID) {
-                console.log('[PANEL] MODO PRUEBA ACTIVO - Usando video:', LINK_PRUEBA_PANEL);
-                return new Promise(function(resolve) {
-                    resolve({
-                        id: VIDEO_PRUEBA_PANEL_ID,
-                        titulo: '🔴 PRUEBA - Transmisión en vivo (EP 07)',
-                        url: LINK_PRUEBA_PANEL
-                    });
-                });
-            }
-            
+            // Siempre intentar detectar LIVE real primero
             var url = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID_PANEL;
             return fetch(url)
                 .then(function(r) { return r.text(); })
@@ -530,89 +519,64 @@
             
             btnAvisar.addEventListener('click', function() {
                 btnAvisar.disabled = true;
-                btnAvisar.textContent = '⏳ PREPARANDO...';
+                btnAvisar.textContent = '⏳ DETECTANDO LIVE...';
                 mensajePanel.textContent = '';
                 mensajePanel.className = 'mensaje-panel';
                 
-                // ========================================================
-                // PASO 1: Determinar el link del video
-                // ========================================================
-                var linkVideo, linkCanal, tituloVideo;
+                var linkCanal = 'https://www.youtube.com/@elcomisariotv';
                 
-                if (MODO_PRUEBA_PANEL) {
-                    // MODO PRUEBA: usar video de prueba directamente
-                    linkVideo = LINK_PRUEBA_PANEL;
-                    linkCanal = 'https://www.youtube.com/@elcomisariotv';
-                    tituloVideo = '🔴 PRUEBA - EP 07';
-                    console.log('[PANEL] MODO PRUEBA - Link video:', linkVideo);
-                    console.log('[PANEL] MODO PRUEBA - Link canal:', linkCanal);
-                    
-                    // Ir directo a obtener contactos y enviar
-                    btnAvisar.textContent = '⏳ ENVIANDO...';
-                    obtenerContactosYEnviar(linkVideo, linkCanal);
-                    return;
-                }
-                
-                // MODO REAL: detectar LIVE automáticamente
-                btnAvisar.textContent = '⏳ DETECTANDO LIVE...';
+                // PASO 1: Detectar LIVE automáticamente desde YouTube
                 detectarLiveYouTube()
                 .then(function(liveInfo) {
-                    if (!liveInfo) {
-                        mensajePanel.textContent = '⚠️ No se detectó ningún LIVE activo. Inicia una transmisión en YouTube primero.';
+                    var linkVideo;
+                    var esModoPrueba = false;
+                    
+                    if (liveInfo && liveInfo.url) {
+                        // ✅ LIVE real detectado
+                        linkVideo = liveInfo.url;
+                        console.log('[PANEL] ✅ LIVE REAL detectado:', linkVideo);
+                        console.log('[PANEL]    Título:', liveInfo.titulo);
+                    } else if (MODO_PRUEBA_PANEL) {
+                        // ⚠️ No hay LIVE, usar video de prueba como fallback
+                        linkVideo = LINK_PRUEBA_PANEL;
+                        esModoPrueba = true;
+                        console.log('[PANEL] ⚠️ Sin LIVE real. Usando video de PRUEBA:', linkVideo);
+                    } else {
+                        // ❌ No hay LIVE y modo prueba desactivado
+                        mensajePanel.textContent = '⚠️ No hay LIVE activo en YouTube. Inicia una transmisión en vivo primero.';
                         mensajePanel.className = 'mensaje-panel error';
                         btnAvisar.disabled = false;
                         btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
                         return;
                     }
                     
-                    linkVideo = liveInfo.url;
-                    linkCanal = 'https://www.youtube.com/@elcomisariotv';
-                    tituloVideo = liveInfo.titulo;
+                    // Validar que linkVideo sea válido
+                    if (linkVideo.indexOf('youtube.com/watch') === -1) {
+                        console.error('[PANEL] ERROR: linkVideo inválido:', linkVideo);
+                        mensajePanel.textContent = '❌ Error: Link de video inválido.';
+                        mensajePanel.className = 'mensaje-panel error';
+                        btnAvisar.disabled = false;
+                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                        return;
+                    }
                     
-                    console.log('[PANEL] LIVE detectado - Link video:', linkVideo);
-                    console.log('[PANEL] LIVE detectado - Link canal:', linkCanal);
+                    if (linkVideo === linkCanal) {
+                        console.error('[PANEL] ERROR: linkVideo igual a linkCanal');
+                        mensajePanel.textContent = '❌ Error: Link del video es igual al del canal.';
+                        mensajePanel.className = 'mensaje-panel error';
+                        btnAvisar.disabled = false;
+                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                        return;
+                    }
+                    
+                    console.log('[PANEL] Enviando correos con linkVideo:', linkVideo);
+                    if (esModoPrueba) {
+                        console.log('[PANEL] ⚠️ MODO PRUEBA - No había LIVE real');
+                    }
                     
                     btnAvisar.textContent = '⏳ ENVIANDO...';
-                    obtenerContactosYEnviar(linkVideo, linkCanal);
-                })
-                .catch(function(error) {
-                    console.error('[PANEL] Error detectando LIVE:', error);
-                    mensajePanel.textContent = '❌ Error al detectar LIVE. Revisa la consola.';
-                    mensajePanel.className = 'mensaje-panel error';
-                    btnAvisar.disabled = false;
-                    btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                });
-                
-                // ========================================================
-                // PASO 2: Obtener contactos y enviar correos
-                // ========================================================
-                function obtenerContactosYEnviar(linkVid, linkCan) {
-                    // Validar que linkVideo NO sea igual a linkCanal
-                    if (linkVid === linkCan) {
-                        console.error('[PANEL] ERROR CRÍTICO: linkVideo es IGUAL a linkCanal!');
-                        console.error('[PANEL] linkVideo:', linkVid);
-                        console.error('[PANEL] linkCanal:', linkCan);
-                        mensajePanel.textContent = '❌ Error: El link del video es igual al del canal. Revisa la configuración.';
-                        mensajePanel.className = 'mensaje-panel error';
-                        btnAvisar.disabled = false;
-                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                        return;
-                    }
                     
-                    // Verificar que linkVideo sea un watch de YouTube válido
-                    if (linkVid.indexOf('youtube.com/watch') === -1) {
-                        console.error('[PANEL] ERROR: linkVideo no es un watch de YouTube válido:', linkVid);
-                        mensajePanel.textContent = '❌ Error: El link del video no es válido.';
-                        mensajePanel.className = 'mensaje-panel error';
-                        btnAvisar.disabled = false;
-                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                        return;
-                    }
-                    
-                    console.log('[PANEL] Enviando correos con:');
-                    console.log('[PANEL]   - linkVideo:', linkVid);
-                    console.log('[PANEL]   - linkCanal:', linkCan);
-                    
+                    // PASO 2: Obtener contactos de Brevo
                     fetch('https://api.brevo.com/v3/contacts?limit=1000', {
                         method: 'GET',
                         headers: {
@@ -635,82 +599,73 @@
                             return;
                         }
                         
-                        enviarCorreoMasivoPanel(emails, linkVid, linkCan)
-                        .then(function(resultado) {
-                            if (resultado) {
-                                mensajePanel.textContent = '✅ ¡Aviso enviado a ' + emails.length + ' suscriptores!';
+                        // PASO 3: Enviar correos
+                        var promesas = emails.map(function(email) {
+                            var data = {
+                                sender: {
+                                    name: NOMBRE_REMITENTE,
+                                    email: CORREO_REMITENTE
+                                },
+                                to: [{ email: email }],
+                                subject: '🔴 ¡Nuevo programa de El Comisario ya disponible!',
+                                htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
+                            };
+                            
+                            return fetch('https://api.brevo.com/v3/smtp/email', {
+                                method: 'POST',
+                                headers: {
+                                    'api-key': BREVO_API_KEY,
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            })
+                            .then(function(r) {
+                                if (!r.ok) {
+                                    return r.json().then(function(d) {
+                                        console.error('[PANEL] Error Brevo para', email, ':', d);
+                                    });
+                                }
+                                return r;
+                            });
+                        });
+                        
+                        return Promise.all(promesas).then(function(respuestas) {
+                            var ok = respuestas.filter(function(r) { return r && r.ok; }).length;
+                            var fallos = emails.length - ok;
+                            console.log('[PANEL] Resultado:', ok, 'enviados,', fallos, 'fallos');
+                            
+                            if (ok > 0) {
+                                var modoTexto = esModoPrueba ? ' (MODO PRUEBA)' : '';
+                                mensajePanel.textContent = '✅ ¡Aviso enviado a ' + ok + ' suscriptores!' + modoTexto;
                                 mensajePanel.className = 'mensaje-panel exito';
-                                console.log('[PANEL] Correos enviados exitosamente a', emails.length, 'suscriptores');
                             } else {
-                                mensajePanel.textContent = '⚠️ Algunos correos fallaron. Revisa la consola.';
+                                mensajePanel.textContent = '❌ Error al enviar correos. Revisa la consola.';
                                 mensajePanel.className = 'mensaje-panel error';
                             }
-                        })
-                        .catch(function(error) {
-                            console.error('[PANEL] Error enviando correos:', error);
-                            mensajePanel.textContent = '❌ Error al enviar correos. Revisa la consola.';
-                            mensajePanel.className = 'mensaje-panel error';
-                        })
-                        .finally(function() {
-                            btnAvisar.disabled = false;
-                            btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                            setTimeout(function() {
-                                mensajePanel.textContent = '';
-                                mensajePanel.className = 'mensaje-panel';
-                            }, 8000);
                         });
                     })
                     .catch(function(error) {
                         console.error('[PANEL] Error obteniendo contactos de Brevo:', error);
                         mensajePanel.textContent = '❌ Error al obtener suscriptores de Brevo.';
                         mensajePanel.className = 'mensaje-panel error';
+                    })
+                    .finally(function() {
                         btnAvisar.disabled = false;
                         btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                        setTimeout(function() {
+                            mensajePanel.textContent = '';
+                            mensajePanel.className = 'mensaje-panel';
+                        }, 8000);
                     });
-                }
+                })
+                .catch(function(error) {
+                    console.error('[PANEL] Error detectando LIVE:', error);
+                    mensajePanel.textContent = '❌ Error al detectar LIVE. Revisa la consola.';
+                    mensajePanel.className = 'mensaje-panel error';
+                    btnAvisar.disabled = false;
+                    btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                });
             });
-            
-            function enviarCorreoMasivoPanel(emails, linkVideo, linkCanal) {
-                console.log('[PANEL] Enviando a', emails.length, 'suscriptores...');
-                console.log('[PANEL] Link en botón VER PROGRAMA:', linkVideo);
-                
-                // Brevo API para enviar email transaccional
-                var promesas = emails.map(function(email) {
-                    var data = {
-                        sender: {
-                            name: NOMBRE_REMITENTE,
-                            email: CORREO_REMITENTE
-                        },
-                        to: [{ email: email }],
-                        subject: '🔴 ¡Nuevo programa de El Comisario ya disponible!',
-                        htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
-                    };
-                    
-                    return fetch('https://api.brevo.com/v3/smtp/email', {
-                        method: 'POST',
-                        headers: {
-                            'api-key': BREVO_API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    })
-                    .then(function(r) {
-                        if (!r.ok) {
-                            return r.json().then(function(d) {
-                                console.error('[PANEL] Error Brevo para', email, ':', d);
-                            });
-                        }
-                        return r;
-                    });
-                });
-                
-                return Promise.all(promesas).then(function(respuestas) {
-                    var ok = respuestas.filter(function(r) { return r && r.ok; }).length;
-                    var fallos = emails.length - ok;
-                    console.log('[PANEL] Resultado:', ok, 'enviados,', fallos, 'fallos');
-                    return ok > 0;
-                });
-            }
         })();
     </script>
 </body>
