@@ -2041,6 +2041,12 @@
         })();
 
         // ========================================================
+        // CONFIGURACIÓN GLOBAL BREVO
+        // ========================================================
+        var BREVO_API_KEY = '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';
+        var LISTA_BREVO_ID = 2; // ID de la lista de suscriptores en Brevo
+
+        // ========================================================
         // FORMULARIO DE SUSCRIPCIÓN - AVISOS EN VIVO (BREVO)
         // ========================================================
         (function() {
@@ -2052,9 +2058,9 @@
             
             if (!form) return;
             
-            // Configuración Brevo
-            var BREVO_API_KEY = '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';
-            var LISTA_BREVO_ID = 2; // ID de la lista de suscriptores en Brevo
+            // Configuración Brevo (ya está global)
+            // var BREVO_API_KEY = ... (movida a scope global)
+            // var LISTA_BREVO_ID = ... (movida a scope global)
             
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
