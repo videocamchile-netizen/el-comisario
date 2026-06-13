@@ -17,7 +17,6 @@
             justify-content: center;
         }
         
-        /* Fondo animado */
         @keyframes fluidoOlas {
             0% { background-position: 0% 50%, 0% 50%, 0% 50%, 0% 50%, 0% 50%, 0% 50%; }
             15% { background-position: 60% 20%, 20% 80%, 80% 15%, 40% 85%, 10% 30%, 90% 70%; }
@@ -52,7 +51,6 @@
             padding: 20px;
         }
         
-        /* LOGIN */
         .login-box {
             background: linear-gradient(145deg, #0f1a30 0%, #0b1528 100%);
             border-radius: 14px;
@@ -125,7 +123,6 @@
             min-height: 20px;
         }
         
-        /* PANEL INTERNO */
         .panel-interno {
             display: none;
         }
@@ -302,10 +299,10 @@
             
             <div class="info-ayuda">
                 <h4>📋 INSTRUCCIONES</h4>
-                <p>1. Sube el nuevo episodio a YouTube.<br>
+                <p>1. Inicia un LIVE en YouTube o sube un nuevo episodio.<br>
                 2. Presiona "AVISAR SUSCRIPTORES".<br>
-                3. Se enviará un correo a todos los registrados avisando que el nuevo programa está disponible.<br>
-                4. El correo se envía desde: elcomisariotv@gmail.com</p>
+                3. Se enviará un correo a todos los suscriptores con el link:<br>
+                   <strong>youtube.com/@elcomisariotv/live</strong></p>
             </div>
             
             <a href="index.html" class="volver-link">← Volver al inicio</a>
@@ -324,7 +321,8 @@
         var BREVO_API_KEY = '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';
         var CORREO_REMITENTE = 'toppolicialtv@gmail.com';
         var NOMBRE_REMITENTE = 'El Comisario';
-
+        var LINK_LIVE_COMISARIO = 'https://www.youtube.com/@elcomisariotv/live';
+        var LINK_CANAL_COMISARIO = 'https://www.youtube.com/@elcomisariotv';
         
         // ========================================================
         // LOGIN
@@ -338,7 +336,6 @@
             var inputClave = document.getElementById('clave');
             var errorLogin = document.getElementById('errorLogin');
             
-            // Verificar si ya hay sesión activa
             if (sessionStorage.getItem('panelSesion') === 'activa') {
                 loginBox.style.display = 'none';
                 panelInterno.style.display = 'block';
@@ -366,7 +363,6 @@
                 }
             });
             
-            // Permitir ingresar con Enter
             inputClave.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') btnIngresar.click();
             });
@@ -408,71 +404,7 @@
         }
         
         // ========================================================
-        // MODO PRUEBA
-        // ========================================================
-        var MODO_PRUEBA_PANEL = true;
-        var VIDEO_PRUEBA_PANEL_ID = 'PbuLasxSBJs'; // Video más reciente del canal
-        var LINK_PRUEBA_PANEL = 'https://www.youtube.com/watch?v=' + VIDEO_PRUEBA_PANEL_ID;
-        
-        // ========================================================
-        // DETECTAR LIVE EN YOUTUBE VÍA RSS
-        // ========================================================
-        var CHANNEL_ID_PANEL = 'UC439PHkUfNl5MjOGGGf4jkQ';
-        
-        function detectarLiveYouTube() {
-            // Siempre intentar detectar LIVE real primero
-            var url = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID_PANEL;
-            return fetch(url)
-                .then(function(r) { return r.text(); })
-                .then(function(xmlText) {
-                    var parser = new DOMParser();
-                    var xml = parser.parseFromString(xmlText, 'text/xml');
-                    var entries = xml.querySelectorAll('entry');
-                    
-                    var liveEncontrado = null;
-                    entries.forEach(function(entry) {
-                        var title = entry.querySelector('title')?.textContent || '';
-                        var link = entry.querySelector('link')?.getAttribute('href') || '';
-                        
-                        // Buscar videos que sean LIVE o ESTRENO
-                        if (title.toLowerCase().indexOf('en vivo') !== -1 || 
-                            title.toLowerCase().indexOf('live') !== -1 ||
-                            title.toLowerCase().indexOf('estreno') !== -1) {
-                            var match = link.match(/watch\?v=([^&]+)/);
-                            if (match && match[1]) {
-                                liveEncontrado = {
-                                    id: match[1],
-                                    titulo: title,
-                                    url: 'https://www.youtube.com/watch?v=' + match[1]
-                                };
-                            }
-                        }
-                    });
-                    
-                    // Si no encontró LIVE, tomar el primer video del feed (el más reciente)
-                    if (!liveEncontrado && entries.length > 0) {
-                        var primerEntry = entries[0];
-                        var title = primerEntry.querySelector('title')?.textContent || 'Nuevo programa';
-                        var link = primerEntry.querySelector('link')?.getAttribute('href') || '';
-                        var match = link.match(/watch\?v=([^&]+)/);
-                        if (match && match[1]) {
-                            liveEncontrado = {
-                                id: match[1],
-                                titulo: title,
-                                url: 'https://www.youtube.com/watch?v=' + match[1]
-                            };
-                        }
-                    }
-                    
-                    return liveEncontrado;
-                })
-                .catch(function() {
-                    return null;
-                });
-        }
-        
-        // ========================================================
-        // GENERAR HTML DEL CORREO PROFESIONAL
+        // GENERAR HTML DEL CORREO
         // ========================================================
         function generarHtmlCorreoPanel(linkVideo, linkCanal) {
             return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>' +
@@ -480,29 +412,24 @@
             '<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0f1e"><tr><td align="center" style="padding:40px 20px">' +
             '<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#111827;border-radius:16px;overflow:hidden;border:1px solid rgba(255,180,0,0.12)">' +
             
-            // HEADER
             '<tr><td style="padding:40px 30px 25px;text-align:center;background:linear-gradient(135deg,#1a1200 0%,#2a2000 50%,#1a1200 100%)">' +
             '<div style="width:60px;height:60px;border-radius:50%;background:#ffb400;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:60px">🔴</div>' +
             '<h1 style="color:#ffb400;font-size:32px;margin:0;letter-spacing:3px;font-weight:900">EL COMISARIO</h1>' +
-            '<p style="color:#ff4444;font-size:14px;margin:12px 0 0;letter-spacing:2px;text-transform:uppercase;font-weight:bold">🔴 Nuevo programa disponible</p>' +
+            '<p style="color:#ff4444;font-size:14px;margin:12px 0 0;letter-spacing:2px;text-transform:uppercase;font-weight:bold">🔴 EN VIVO · Nuevo programa disponible</p>' +
             '</td></tr>' +
             
-            // CUERPO
             '<tr><td style="padding:35px 30px;text-align:center;background-color:#111827">' +
             '<p style="color:#e0e4ea;font-size:17px;line-height:1.7;margin:0 0 8px">¡Hola!</p>' +
             '<p style="color:#c0c8d8;font-size:16px;line-height:1.6;margin:0 0 25px">Te informamos que <strong style="color:#ffb400">El Comisario</strong> tiene un nuevo programa disponible.<br>No te lo pierdas.</p>' +
             
-            // BOTÓN PRINCIPAL
             '<table cellpadding="0" cellspacing="0" style="margin:0 auto 25px"><tr><td style="background:#ff0000;border-radius:8px;padding:0">' +
-            '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:#ffffff;padding:18px 50px;border-radius:8px;text-decoration:none;font-size:18px;font-weight:bold;letter-spacing:1px;border:1px solid rgba(255,255,255,0.1)">▶ VER PROGRAMA</a>' +
+            '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:#ffffff;padding:18px 50px;border-radius:8px;text-decoration:none;font-size:18px;font-weight:bold;letter-spacing:1px;border:1px solid rgba(255,255,255,0.1)">▶ VER EN VIVO</a>' +
             '</td></tr></table>' +
             
-            // ENLACE SECUNDARIO
             '<p style="color:#8890a0;font-size:13px;margin:0">O visita nuestro canal:<br>' +
             '<a href="' + linkCanal + '" style="color:#ffb400;text-decoration:none;font-size:14px">youtube.com/@elcomisariotv</a></p>' +
             '</td></tr>' +
             
-            // FOOTER
             '<tr><td style="padding:25px 30px;text-align:center;background-color:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
             '<p style="color:#556;font-size:12px;margin:0 0 5px;letter-spacing:1px">© 2026 El Comisario</p>' +
             '<p style="color:#445;font-size:11px;margin:0;letter-spacing:0.5px">Donde las víctimas tienen voz, la verdad no prescribe y la justicia no descansa.</p>' +
@@ -519,151 +446,88 @@
             
             btnAvisar.addEventListener('click', function() {
                 btnAvisar.disabled = true;
-                btnAvisar.textContent = '⏳ DETECTANDO LIVE...';
+                btnAvisar.textContent = '⏳ ENVIANDO...';
                 mensajePanel.textContent = '';
                 mensajePanel.className = 'mensaje-panel';
                 
-                var linkCanal = 'https://www.youtube.com/@elcomisariotv';
+                var linkVideo = LINK_LIVE_COMISARIO;
+                var linkCanal = LINK_CANAL_COMISARIO;
                 
-                // PASO 1: Detectar LIVE automáticamente desde YouTube
-                detectarLiveYouTube()
-                .then(function(liveInfo) {
-                    var linkVideo;
-                    var esModoPrueba = false;
+                // Obtener contactos de Brevo
+                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
+                    method: 'GET',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    var contactos = data.contacts || [];
+                    var emails = contactos.map(function(c) { return c.email; });
                     
-                    if (liveInfo && liveInfo.url) {
-                        // ✅ LIVE real detectado
-                        linkVideo = liveInfo.url;
-                        console.log('[PANEL] ✅ LIVE REAL detectado:', linkVideo);
-                        console.log('[PANEL]    Título:', liveInfo.titulo);
-                    } else if (MODO_PRUEBA_PANEL) {
-                        // ⚠️ No hay LIVE, usar video de prueba como fallback
-                        linkVideo = LINK_PRUEBA_PANEL;
-                        esModoPrueba = true;
-                        console.log('[PANEL] ⚠️ Sin LIVE real. Usando video de PRUEBA:', linkVideo);
-                    } else {
-                        // ❌ No hay LIVE y modo prueba desactivado
-                        mensajePanel.textContent = '⚠️ No hay LIVE activo en YouTube. Inicia una transmisión en vivo primero.';
+                    if (emails.length === 0) {
+                        mensajePanel.textContent = '⚠️ No hay suscriptores registrados.';
                         mensajePanel.className = 'mensaje-panel error';
                         btnAvisar.disabled = false;
                         btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
                         return;
                     }
                     
-                    // Validar que linkVideo sea válido
-                    if (linkVideo.indexOf('youtube.com/watch') === -1) {
-                        console.error('[PANEL] ERROR: linkVideo inválido:', linkVideo);
-                        mensajePanel.textContent = '❌ Error: Link de video inválido.';
-                        mensajePanel.className = 'mensaje-panel error';
-                        btnAvisar.disabled = false;
-                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                        return;
-                    }
-                    
-                    if (linkVideo === linkCanal) {
-                        console.error('[PANEL] ERROR: linkVideo igual a linkCanal');
-                        mensajePanel.textContent = '❌ Error: Link del video es igual al del canal.';
-                        mensajePanel.className = 'mensaje-panel error';
-                        btnAvisar.disabled = false;
-                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                        return;
-                    }
-                    
-                    console.log('[PANEL] Enviando correos con linkVideo:', linkVideo);
-                    if (esModoPrueba) {
-                        console.log('[PANEL] ⚠️ MODO PRUEBA - No había LIVE real');
-                    }
-                    
-                    btnAvisar.textContent = '⏳ ENVIANDO...';
-                    
-                    // PASO 2: Obtener contactos de Brevo
-                    fetch('https://api.brevo.com/v3/contacts?limit=1000', {
-                        method: 'GET',
-                        headers: {
-                            'api-key': BREVO_API_KEY,
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    .then(function(r) { return r.json(); })
-                    .then(function(data) {
-                        var contactos = data.contacts || [];
-                        var emails = contactos.map(function(c) { return c.email; });
+                    // Enviar correos
+                    var promesas = emails.map(function(email) {
+                        var data = {
+                            sender: {
+                                name: NOMBRE_REMITENTE,
+                                email: CORREO_REMITENTE
+                            },
+                            to: [{ email: email }],
+                            subject: 'El Comisario - Nuevo programa en directo disponible',
+                            htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
+                        };
                         
-                        console.log('[PANEL] Suscriptores encontrados:', emails.length);
-                        
-                        if (emails.length === 0) {
-                            mensajePanel.textContent = '⚠️ No hay suscriptores registrados.';
-                            mensajePanel.className = 'mensaje-panel error';
-                            btnAvisar.disabled = false;
-                            btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                            return;
-                        }
-                        
-                        // PASO 3: Enviar correos
-                        var promesas = emails.map(function(email) {
-                            var data = {
-                                sender: {
-                                    name: NOMBRE_REMITENTE,
-                                    email: CORREO_REMITENTE
-                                },
-                                to: [{ email: email }],
-                                subject: '🔴 ¡Nuevo programa de El Comisario ya disponible!',
-                                htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
-                            };
-                            
-                            return fetch('https://api.brevo.com/v3/smtp/email', {
-                                method: 'POST',
-                                headers: {
-                                    'api-key': BREVO_API_KEY,
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(data)
-                            })
-                            .then(function(r) {
-                                if (!r.ok) {
-                                    return r.json().then(function(d) {
-                                        console.error('[PANEL] Error Brevo para', email, ':', d);
-                                    });
-                                }
-                                return r;
-                            });
-                        });
-                        
-                        return Promise.all(promesas).then(function(respuestas) {
-                            var ok = respuestas.filter(function(r) { return r && r.ok; }).length;
-                            var fallos = emails.length - ok;
-                            console.log('[PANEL] Resultado:', ok, 'enviados,', fallos, 'fallos');
-                            
-                            if (ok > 0) {
-                                var modoTexto = esModoPrueba ? ' (MODO PRUEBA)' : '';
-                                mensajePanel.textContent = '✅ ¡Aviso enviado a ' + ok + ' suscriptores!' + modoTexto;
-                                mensajePanel.className = 'mensaje-panel exito';
-                            } else {
-                                mensajePanel.textContent = '❌ Error al enviar correos. Revisa la consola.';
-                                mensajePanel.className = 'mensaje-panel error';
+                        return fetch('https://api.brevo.com/v3/smtp/email', {
+                            method: 'POST',
+                            headers: {
+                                'api-key': BREVO_API_KEY,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(function(r) {
+                            if (!r.ok) {
+                                return r.json().then(function(d) {
+                                    console.error('[PANEL] Error Brevo para', email, ':', d);
+                                });
                             }
+                            return r;
                         });
-                    })
-                    .catch(function(error) {
-                        console.error('[PANEL] Error obteniendo contactos de Brevo:', error);
-                        mensajePanel.textContent = '❌ Error al obtener suscriptores de Brevo.';
-                        mensajePanel.className = 'mensaje-panel error';
-                    })
-                    .finally(function() {
-                        btnAvisar.disabled = false;
-                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
-                        setTimeout(function() {
-                            mensajePanel.textContent = '';
-                            mensajePanel.className = 'mensaje-panel';
-                        }, 8000);
+                    });
+                    
+                    return Promise.all(promesas).then(function(respuestas) {
+                        var ok = respuestas.filter(function(r) { return r && r.ok; }).length;
+                        
+                        if (ok > 0) {
+                            mensajePanel.textContent = '✅ ¡Aviso enviado a ' + ok + ' suscriptores!';
+                            mensajePanel.className = 'mensaje-panel exito';
+                        } else {
+                            mensajePanel.textContent = '❌ Error al enviar correos. Revisa la consola.';
+                            mensajePanel.className = 'mensaje-panel error';
+                        }
                     });
                 })
                 .catch(function(error) {
-                    console.error('[PANEL] Error detectando LIVE:', error);
-                    mensajePanel.textContent = '❌ Error al detectar LIVE. Revisa la consola.';
+                    console.error('[PANEL] Error:', error);
+                    mensajePanel.textContent = '❌ Error al obtener suscriptores de Brevo.';
                     mensajePanel.className = 'mensaje-panel error';
+                })
+                .finally(function() {
                     btnAvisar.disabled = false;
                     btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                    setTimeout(function() {
+                        mensajePanel.textContent = '';
+                        mensajePanel.className = 'mensaje-panel';
+                    }, 8000);
                 });
             });
         })();
