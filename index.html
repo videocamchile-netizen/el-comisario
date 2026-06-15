@@ -435,21 +435,21 @@
         .hero-container {
             position: relative;
             overflow: hidden; 
-            min-height: 90vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             padding: 0 80px;
         }
         
-        /* --- FONDO PRINCIPAL CON RESPIRACIÓN --- */
+        /* --- FONDO PRINCIPAL CON EFECTO PARALLAX (ANCLADO) --- */
         .fondo-vivo {
-            position: absolute;
-            top: -15px; left: -15px; width: 105%; height: 105%;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
             background-image: url('img/pdi.png'); 
             background-size: cover;
             background-position: center;
             animation: respiracionCine 28s ease-in-out infinite; 
-            z-index: 0;
+            z-index: -1;
             filter: saturate(1.1) contrast(1.05);
             mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
             -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
