@@ -407,36 +407,40 @@
         }
         
         // ========================================================
-        // GENERAR HTML DEL CORREO
+        // GENERAR HTML DEL CORREO (versión simple para evitar Promociones)
         // ========================================================
         function generarHtmlCorreoPanel(linkVideo, linkCanal) {
             return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>' +
-            '<body style="margin:0;padding:0;background-color:#0a0f1e;font-family:\'Helvetica Neue\',Arial,sans-serif">' +
-            '<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0f1e"><tr><td align="center" style="padding:40px 20px">' +
-            '<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#111827;border-radius:16px;overflow:hidden;border:1px solid rgba(255,180,0,0.12)">' +
+            '<body style="margin:0;padding:0;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;color:#333333">' +
+            '<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#ffffff"><tr><td align="center" style="padding:30px 20px">' +
+            '<table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background-color:#ffffff;border:1px solid #e0e0e0;border-radius:4px">' +
             
-            '<tr><td style="padding:40px 30px 25px;text-align:center;background:linear-gradient(135deg,#1a1200 0%,#2a2000 50%,#1a1200 100%)">' +
-            '<div style="width:60px;height:60px;border-radius:50%;background:#ffb400;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:60px">🔴</div>' +
-            '<h1 style="color:#ffb400;font-size:32px;margin:0;letter-spacing:3px;font-weight:900">EL COMISARIO</h1>' +
-            '<p style="color:#ff4444;font-size:14px;margin:12px 0 0;letter-spacing:2px;text-transform:uppercase;font-weight:bold">🔴 EN VIVO · Nuevo programa disponible</p>' +
+            // HEADER SIMPLE
+            '<tr><td style="padding:30px 25px 15px;text-align:center;background-color:#f5f5f5;border-bottom:2px solid #d4a800">' +
+            '<h1 style="color:#d4a800;font-size:26px;margin:0;font-weight:bold">EL COMISARIO</h1>' +
+            '<p style="color:#cc0000;font-size:13px;margin:8px 0 0;font-weight:bold">Nuevo programa disponible</p>' +
             '</td></tr>' +
             
-            '<tr><td style="padding:35px 30px;text-align:center;background-color:#111827">' +
-            '<p style="color:#e0e4ea;font-size:17px;line-height:1.7;margin:0 0 8px">¡Hola!</p>' +
-            '<p style="color:#c0c8d8;font-size:16px;line-height:1.6;margin:0 0 25px">Te informamos que <strong style="color:#ffb400">El Comisario</strong> tiene un nuevo programa disponible.<br>No te lo pierdas.</p>' +
+            // CUERPO SENCILLO
+            '<tr><td style="padding:25px 25px;text-align:left;background-color:#ffffff">' +
+            '<p style="color:#333333;font-size:15px;line-height:1.5;margin:0 0 15px">Estimado suscriptor,</p>' +
+            '<p style="color:#333333;font-size:15px;line-height:1.5;margin:0 0 15px">Le informamos que <strong>El Comisario</strong> tiene un nuevo programa disponible. Puede verlo en el siguiente enlace:</p>' +
             
-            '<table cellpadding="0" cellspacing="0" style="margin:0 auto 25px"><tr><td style="background:#ff0000;border-radius:8px;padding:0">' +
-            '<a href="' + linkVideo + '" style="display:inline-block;background:#ff0000;color:#ffffff;padding:18px 50px;border-radius:8px;text-decoration:none;font-size:18px;font-weight:bold;letter-spacing:1px;border:1px solid rgba(255,255,255,0.1)">▶ VER EN VIVO</a>' +
-            '</td></tr></table>' +
+            // ENLACE TEXTO (sin botón llamativo)
+            '<p style="margin:0 0 15px;text-align:center">' +
+            '<a href="' + linkVideo + '" style="color:#d4a800;font-size:16px;font-weight:bold">Ver programa en YouTube</a></p>' +
             
-            '<p style="color:#8890a0;font-size:13px;margin:0">O visita nuestro canal:<br>' +
-            '<a href="' + linkCanal + '" style="color:#ffb400;text-decoration:none;font-size:14px">youtube.com/@elcomisariotv</a></p>' +
+            '<p style="color:#333333;font-size:15px;line-height:1.5;margin:0 0 5px">O visite nuestro canal:</p>' +
+            '<p style="margin:0 0 20px"><a href="' + linkCanal + '" style="color:#d4a800;font-size:14px">youtube.com/@elcomisariotv</a></p>' +
+            
+            '<p style="color:#666666;font-size:13px;line-height:1.4;margin:0;border-top:1px solid #e0e0e0;padding-top:15px">' +
+            'Atentamente,<br><strong>El Comisario</strong><br>' +
+            'Donde las víctimas tienen voz, la verdad no prescribe y la justicia no descansa.</p>' +
             '</td></tr>' +
             
-            '<tr><td style="padding:25px 30px;text-align:center;background-color:#0a0f1e;border-top:1px solid rgba(255,180,0,0.08)">' +
-            '<p style="color:#556;font-size:12px;margin:0 0 5px;letter-spacing:1px">© 2026 El Comisario</p>' +
-            '<p style="color:#445;font-size:11px;margin:0;letter-spacing:0.5px">Donde las víctimas tienen voz, la verdad no prescribe y la justicia no descansa.</p>' +
-            '<p style="color:#334;font-size:10px;margin:15px 0 0;letter-spacing:0.5px">Si no deseas recibir estos avisos, ignora este correo.</p>' +
+            // FOOTER
+            '<tr><td style="padding:15px 25px;text-align:center;background-color:#f5f5f5;border-top:1px solid #e0e0e0">' +
+            '<p style="color:#999999;font-size:11px;margin:0">© 2026 El Comisario</p>' +
             '</td></tr></table></td></tr></table></body></html>';
         }
         
@@ -502,7 +506,7 @@
                                 email: CORREO_REMITENTE
                             },
                             to: [{ email: email }],
-                            subject: '🔴 ¡El Comisario está EN VIVO!',
+                            subject: 'El Comisario - Nuevo programa disponible',
                             htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
                         };
                         
