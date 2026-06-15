@@ -2922,7 +2922,7 @@
         })();
 
         // ========================================================
-        // MODAL DE VIDEO BIENVENIDOS (MP4 directo - optimizado)
+        // MODAL DE VIDEO BIENVENIDOS (MP4 escritorio / YouTube Short móvil)
         // ========================================================
         (function() {
             var btn = document.getElementById('btnBienvenidos');
@@ -2930,15 +2930,28 @@
             var video = document.getElementById('videoBienvenidos');
             var btnCerrar = document.getElementById('btnCerrarBienvenidos');
             var timeoutFinVideo = null;
+            var YOUTUBE_SHORT_ID = '1ZKFBsmHWCw';
             
             if (!btn || !modal || !video) return;
             
-            // Asignar fuente del video (versión comprimida para móvil)
-            video.src = 'img/video-movil.mp4';
-            video.load();
+            // Detectar si es móvil (táctil, pantalla pequeña)
+            var esMovil = window.innerWidth < 900 || 'ontouchstart' in window;
+            
+            if (!esMovil) {
+                // Escritorio: cargar MP4 local
+                video.src = 'img/video.mp4';
+                video.load();
+            }
             
             // Abrir modal al hacer clic en el botón
             btn.addEventListener('click', function() {
+                if (esMovil) {
+                    // Móvil: abrir YouTube Short directamente
+                    window.location.href = 'https://www.youtube.com/shorts/' + YOUTUBE_SHORT_ID;
+                    return;
+                }
+                
+                // Escritorio: mostrar modal con MP4
                 modal.classList.remove('ocultando');
                 modal.classList.add('visible');
                 
