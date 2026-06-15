@@ -532,6 +532,20 @@
             max-height: 90vh;
             object-fit: contain;
         }
+        .video-wrapper-bienvenidos {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: #000;
+        }
+        .video-wrapper-bienvenidos iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
         .modal-cerrar-bienvenidos {
             position: absolute;
             top: 15px;
@@ -2268,11 +2282,13 @@
         </div>
     </section>
 
-    <!-- ===== MODAL DE VIDEO BIENVENIDOS ===== -->
+    <!-- ===== MODAL DE VIDEO BIENVENIDOS (YouTube) ===== -->
     <div class="modal-bienvenidos" id="modalBienvenidos">
         <div class="modal-contenido">
             <button class="modal-cerrar-bienvenidos" id="btnCerrarBienvenidos" title="Cerrar">✕</button>
-            <video id="videoBienvenidos" src="img/video.mp4" playsinline webkit-playsinline preload="auto"></video>
+            <div class="video-wrapper-bienvenidos">
+                <iframe id="iframeBienvenidos" src="" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+            </div>
             <div class="modal-leyenda">🎬 El Comisario</div>
         </div>
     </div>
@@ -2905,31 +2921,25 @@
         })();
 
         // ========================================================
-        // MODAL DE VIDEO BIENVENIDOS (compatible con móvil)
+        // MODAL DE VIDEO BIENVENIDOS (YouTube iframe)
         // ========================================================
         (function() {
             var btn = document.getElementById('btnBienvenidos');
             var modal = document.getElementById('modalBienvenidos');
-            var video = document.getElementById('videoBienvenidos');
+            var iframe = document.getElementById('iframeBienvenidos');
             var btnCerrar = document.getElementById('btnCerrarBienvenidos');
             var timeoutFinVideo = null;
+            var YOUTUBE_ID = 'zjtRnVuezeA';
             
-            if (!btn || !modal || !video) return;
-            
-            // Detectar si es móvil
-            var esMovil = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (!btn || !modal || !iframe) return;
             
             // Abrir modal al hacer clic en el botón
             btn.addEventListener('click', function() {
                 modal.classList.remove('ocultando');
                 modal.classList.add('visible');
-                video.currentTime = 0;
                 
-                // Reproducir con sonido (el usuario hizo clic, los navegadores lo permiten)
-                video.muted = false;
-                video.play().catch(function(err) {
-                    console.log('Error al reproducir video:', err);
-                });
+                // Cargar el video de YouTube con autoplay y sonido
+                iframe.src = 'https://www.youtube.com/embed/' + YOUTUBE_ID + '?autoplay=1&rel=0&modestbranding=1';
                 
                 // Timeout de seguridad: si el video no termina en 5 minutos, cerrar igual
                 if (timeoutFinVideo) clearTimeout(timeoutFinVideo);
@@ -2946,7 +2956,8 @@
                     clearTimeout(timeoutFinVideo);
                     timeoutFinVideo = null;
                 }
-                video.pause();
+                // Limpiar el iframe para detener el video
+                iframe.src = '';
                 modal.classList.add('ocultando');
                 setTimeout(function() {
                     modal.classList.remove('visible');
@@ -2964,11 +2975,6 @@
                 if (e.target === modal) {
                     cerrarModal();
                 }
-            });
-            
-            // Cerrar automáticamente cuando el video termina
-            video.addEventListener('ended', function() {
-                cerrarModal();
             });
             
             // Cerrar con tecla ESC
