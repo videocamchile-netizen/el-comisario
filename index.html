@@ -107,15 +107,12 @@
             100% { transform: translate(0, 0) scale(1); opacity: 0; }
         }
         .particula-global {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 9998;
             background: #ffb400;
             box-shadow: 0 0 12px 4px rgba(255,180,0,0.4), 0 0 25px 8px rgba(255,180,0,0.15);
-        }
-        body {
-            position: relative;
         }
         /* Las posiciones de las partículas se asignan por JavaScript */
         
@@ -2074,13 +2071,13 @@
         var tamanos = [3, 4, 5, 6, 7];
         
         function posicionarParticulas() {
-            var alturaTotal = Math.max(
-                document.documentElement.scrollHeight,
-                document.body.scrollHeight
-            );
+            var vw = window.innerWidth;
+            var vh = window.innerHeight;
+            var scrollY = window.scrollY || document.documentElement.scrollTop || 0;
             
             particulas.forEach(function(p, i) {
-                var top = Math.random() * alturaTotal;
+                // Distribuir en toda la altura del documento usando scroll
+                var top = scrollY + Math.random() * vh;
                 var left = Math.random() * 100;
                 var tamano = tamanos[i % tamanos.length];
                 var anim = animaciones[i % animaciones.length];
@@ -2097,8 +2094,14 @@
         
         posicionarParticulas();
         
-        // Reposicionar al cambiar tamaño de ventana
+        // Reposicionar al hacer scroll para que siempre haya partículas visibles
         var timeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(timeout);
+            timeout = setTimeout(posicionarParticulas, 200);
+        });
+        
+        // Reposicionar al cambiar tamaño de ventana
         window.addEventListener('resize', function() {
             clearTimeout(timeout);
             timeout = setTimeout(posicionarParticulas, 300);
