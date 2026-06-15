@@ -901,16 +901,15 @@
         /* Brillo específico para el hero (fondo fijo) */
         #brilloHero {
             position: fixed;
-            width: 300px;
-            height: 300px;
+            width: 500px;
+            height: 500px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,180,0,0.1) 0%, rgba(255,200,100,0.04) 30%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,200,100,0.25) 0%, rgba(255,180,0,0.12) 20%, rgba(255,180,0,0.04) 40%, transparent 70%);
             pointer-events: none;
             transform: translate(-50%, -50%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 9997;
-            mix-blend-mode: overlay;
         }
         #brilloHero.activo {
             opacity: 1;
