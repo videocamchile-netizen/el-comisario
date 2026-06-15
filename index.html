@@ -2922,7 +2922,7 @@
         })();
 
         // ========================================================
-        // MODAL DE VIDEO BIENVENIDOS (MP4 con precarga completa)
+        // MODAL DE VIDEO BIENVENIDOS (MP4 directo - optimizado)
         // ========================================================
         (function() {
             var btn = document.getElementById('btnBienvenidos');
@@ -2930,49 +2930,17 @@
             var video = document.getElementById('videoBienvenidos');
             var btnCerrar = document.getElementById('btnCerrarBienvenidos');
             var timeoutFinVideo = null;
-            var videoPrecargado = false;
-            var blobUrl = null;
             
             if (!btn || !modal || !video) return;
             
-            // Precargar el video completo al cargar la página
-            function precargarVideo() {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'img/video.mp4', true);
-                xhr.responseType = 'blob';
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        var blob = xhr.response;
-                        blobUrl = URL.createObjectURL(blob);
-                        video.src = blobUrl;
-                        video.load();
-                        videoPrecargado = true;
-                        console.log('Video precargado completamente');
-                    }
-                };
-                xhr.onerror = function() {
-                    console.log('Error al precargar video, se cargará al abrir');
-                    video.src = 'img/video.mp4';
-                };
-                xhr.send();
-            }
-            
-            // Iniciar precarga cuando el DOM esté listo
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', precargarVideo);
-            } else {
-                precargarVideo();
-            }
+            // Asignar fuente del video (versión comprimida para móvil)
+            video.src = 'img/video-movil.mp4';
+            video.load();
             
             // Abrir modal al hacer clic en el botón
             btn.addEventListener('click', function() {
                 modal.classList.remove('ocultando');
                 modal.classList.add('visible');
-                
-                // Si no está precargado, cargar directamente
-                if (!videoPrecargado && !video.src) {
-                    video.src = 'img/video.mp4';
-                }
                 
                 video.currentTime = 0;
                 video.muted = false;
