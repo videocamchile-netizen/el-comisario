@@ -2334,6 +2334,8 @@
                 seccion.classList.add('ocultando');
                 // Guardar en localStorage que el usuario cerró el video
                 localStorage.setItem('live_cerrado', 'true');
+                // También desactivar el flag del panel para que no reaparezca
+                localStorage.setItem('elcomisario_live_activo', 'false');
                 setTimeout(function() {
                     seccion.classList.remove('visible');
                     seccion.classList.remove('ocultando');
