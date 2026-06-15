@@ -1622,6 +1622,7 @@
                 <div class="en-vivo-info-top">
                     <h3 id="tituloEnVivo">Transmisión en vivo</h3>
                     <a id="linkEnVivo" href="https://www.youtube.com/@elcomisariotv/streams" target="_blank" class="btn-ver-directo">▶ VER EN YOUTUBE</a>
+                    <a id="btnWhatsAppLive" href="#" target="_blank" class="btn-ver-directo" style="background:#25D366;font-size:13px;padding:10px 18px;">📱 COMPARTIR</a>
                 </div>
                 <button class="en-vivo-cerrar" id="btnCerrarEnVivo" title="Cerrar">✕</button>
             </div>
@@ -2304,12 +2305,28 @@
                 liveActivo = true;
                 videoIdActual = videoId;
                 
+                // Actualizar botón WhatsApp con el link del live
+                actualizarBotonWhatsApp(videoId);
+                
                 // Notificar a suscriptores cuando se detecta live (solo una vez)
                 if (!liveYaNotificado) {
                     liveYaNotificado = true;
                     notificarSuscriptores(videoId);
                 }
             }
+            
+            // ========================================================
+            // BOTÓN COMPARTIR EN WHATSAPP
+            // ========================================================
+            function actualizarBotonWhatsApp(videoId) {
+                var btnWA = document.getElementById('btnWhatsAppLive');
+                if (!btnWA) return;
+                var urlVideo = videoId ? 'https://www.youtube.com/watch?v=' + videoId : 'https://www.youtube.com/@elcomisariotv/live';
+                var mensaje = '¡El Comisario est\u00e1 en vivo! M\u00edralo ac\u00e1: ' + urlVideo;
+                btnWA.href = 'https://wa.me/?text=' + encodeURIComponent(mensaje);
+            }
+            // Inicializar el botón WhatsApp
+            actualizarBotonWhatsApp('');
             
             // Función para ocultar la sección en vivo
             function ocultarEnVivo() {
