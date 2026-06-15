@@ -538,27 +538,14 @@
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             background: #000;
         }
-        .video-wrapper-bienvenidos iframe {
+        .video-wrapper-bienvenidos video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
-        }
-        .video-wrapper-bienvenidos #contenedorVideoBienvenidos {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .video-wrapper-bienvenidos #contenedorVideoBienvenidos iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            object-fit: contain;
+            background: #000;
         }
         .modal-cerrar-bienvenidos {
             position: absolute;
@@ -2296,12 +2283,12 @@
         </div>
     </section>
 
-    <!-- ===== MODAL DE VIDEO BIENVENIDOS (YouTube) ===== -->
+    <!-- ===== MODAL DE VIDEO BIENVENIDOS (MP4 con precarga) ===== -->
     <div class="modal-bienvenidos" id="modalBienvenidos">
         <div class="modal-contenido">
             <button class="modal-cerrar-bienvenidos" id="btnCerrarBienvenidos" title="Cerrar">✕</button>
             <div class="video-wrapper-bienvenidos">
-                <div id="contenedorVideoBienvenidos"></div>
+                <video id="videoBienvenidos" playsinline webkit-playsinline preload="auto"></video>
             </div>
             <div class="modal-leyenda">🎬 El Comisario</div>
         </div>
@@ -2935,66 +2922,46 @@
         })();
 
         // ========================================================
-        // MODAL DE VIDEO BIENVENIDOS (YouTube IFrame Player API)
+        // MODAL DE VIDEO BIENVENIDOS (MP4 con precarga completa)
         // ========================================================
         (function() {
             var btn = document.getElementById('btnBienvenidos');
             var modal = document.getElementById('modalBienvenidos');
-            var contenedorVideo = document.getElementById('contenedorVideoBienvenidos');
+            var video = document.getElementById('videoBienvenidos');
             var btnCerrar = document.getElementById('btnCerrarBienvenidos');
             var timeoutFinVideo = null;
-            var YOUTUBE_ID = 'zjtRnVuezeA';
-            var reproductor = null;
-            var apiCargada = false;
+            var videoPrecargado = false;
+            var blobUrl = null;
             
-            if (!btn || !modal || !contenedorVideo) return;
+            if (!btn || !modal || !video) return;
             
-            // Cargar la API de YouTube si no está cargada
-            function cargarAPIYouTube() {
-                if (apiCargada) return;
-                apiCargada = true;
-                var tag = document.createElement('script');
-                tag.src = 'https://www.youtube.com/iframe_api';
-                var firstScript = document.getElementsByTagName('script')[0];
-                firstScript.parentNode.insertBefore(tag, firstScript);
+            // Precargar el video completo al cargar la página
+            function precargarVideo() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'img/video.mp4', true);
+                xhr.responseType = 'blob';
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        var blob = xhr.response;
+                        blobUrl = URL.createObjectURL(blob);
+                        video.src = blobUrl;
+                        video.load();
+                        videoPrecargado = true;
+                        console.log('Video precargado completamente');
+                    }
+                };
+                xhr.onerror = function() {
+                    console.log('Error al precargar video, se cargará al abrir');
+                    video.src = 'img/video.mp4';
+                };
+                xhr.send();
             }
             
-            // Función que llama la API cuando está lista (global)
-            window.onYouTubeIframeAPIReady = function() {
-                // La API está lista, no hacemos nada hasta que se abra el modal
-            };
-            
-            // Crear el reproductor
-            function crearReproductor() {
-                if (reproductor) {
-                    reproductor.destroy();
-                    reproductor = null;
-                }
-                reproductor = new YT.Player('contenedorVideoBienvenidos', {
-                    videoId: YOUTUBE_ID,
-                    playerVars: {
-                        autoplay: 1,
-                        rel: 0,
-                        modestbranding: 1,
-                        playsinline: 1,
-                        controls: 1,
-                        fs: 1
-                    },
-                    events: {
-                        'onReady': function(event) {
-                            event.target.playVideo();
-                        },
-                        'onStateChange': function(event) {
-                            // 0 = terminado
-                            if (event.data === 0) {
-                                cerrarModal();
-                            }
-                        },
-                        'onError': function(event) {
-                            console.log('Error de YouTube:', event.data);
-                        }
-                    }
-                });
+            // Iniciar precarga cuando el DOM esté listo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', precargarVideo);
+            } else {
+                precargarVideo();
             }
             
             // Abrir modal al hacer clic en el botón
@@ -3002,19 +2969,16 @@
                 modal.classList.remove('ocultando');
                 modal.classList.add('visible');
                 
-                // Cargar API si no está cargada
-                if (typeof YT === 'undefined' || !YT.Player) {
-                    cargarAPIYouTube();
-                    // Esperar a que la API cargue y luego crear reproductor
-                    var checkAPI = setInterval(function() {
-                        if (typeof YT !== 'undefined' && YT.Player) {
-                            clearInterval(checkAPI);
-                            crearReproductor();
-                        }
-                    }, 200);
-                } else {
-                    crearReproductor();
+                // Si no está precargado, cargar directamente
+                if (!videoPrecargado && !video.src) {
+                    video.src = 'img/video.mp4';
                 }
+                
+                video.currentTime = 0;
+                video.muted = false;
+                video.play().catch(function(err) {
+                    console.log('Error al reproducir:', err);
+                });
                 
                 // Timeout de seguridad: si el video no termina en 5 minutos, cerrar igual
                 if (timeoutFinVideo) clearTimeout(timeoutFinVideo);
@@ -3031,12 +2995,7 @@
                     clearTimeout(timeoutFinVideo);
                     timeoutFinVideo = null;
                 }
-                // Detener y destruir el reproductor
-                if (reproductor) {
-                    try { reproductor.stopVideo(); } catch(e) {}
-                    try { reproductor.destroy(); } catch(e) {}
-                    reproductor = null;
-                }
+                video.pause();
                 modal.classList.add('ocultando');
                 setTimeout(function() {
                     modal.classList.remove('visible');
@@ -3054,6 +3013,11 @@
                 if (e.target === modal) {
                     cerrarModal();
                 }
+            });
+            
+            // Cerrar automáticamente cuando el video termina
+            video.addEventListener('ended', function() {
+                cerrarModal();
             });
             
             // Cerrar con tecla ESC
