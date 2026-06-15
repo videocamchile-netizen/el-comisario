@@ -2946,8 +2946,8 @@
             // Abrir modal al hacer clic en el botón
             btn.addEventListener('click', function() {
                 if (esMovil) {
-                    // Móvil: abrir YouTube Short directamente
-                    window.location.href = 'https://www.youtube.com/shorts/' + YOUTUBE_SHORT_ID;
+                    // Móvil: abrir YouTube Short en nueva pestaña/app
+                    window.open('https://www.youtube.com/shorts/' + YOUTUBE_SHORT_ID, '_blank');
                     return;
                 }
                 
