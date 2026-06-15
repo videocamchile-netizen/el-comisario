@@ -897,6 +897,24 @@
         .brillo-cursor.activo {
             opacity: 1;
         }
+        
+        /* Brillo específico para el hero (fondo fijo) */
+        #brilloHero {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,180,0,0.1) 0%, rgba(255,200,100,0.04) 30%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 9997;
+            mix-blend-mode: overlay;
+        }
+        #brilloHero.activo {
+            opacity: 1;
+        }
 
         /* ========================================================
            CARLOS COLLAO - FOTO GRANDE SIN RECUADRO
@@ -1687,6 +1705,9 @@
         <!-- Canvas para partículas -->
         <canvas id="canvas-particulas"></canvas>
         
+        <!-- Brillo que sigue al mouse en el hero (fondo fijo) -->
+        <div id="brilloHero"></div>
+        
         <!-- Contenido principal -->
         <div class="hero-content">
             <h1><span>EL</span> COMISARIO</h1>
@@ -1954,6 +1975,26 @@
                 
                 casoTexto.addEventListener('mouseleave', function() {
                     brilloTexto.classList.remove('activo');
+                });
+            }
+        })();
+
+        // ========================================================
+        // BRILLO QUE SIGUE AL MOUSE EN EL HERO (FONDO FIJO)
+        // ========================================================
+        (function() {
+            var brilloHero = document.getElementById('brilloHero');
+            var hero = document.getElementById('hero');
+            if (brilloHero && hero) {
+                hero.addEventListener('mouseenter', function() {
+                    brilloHero.classList.add('activo');
+                });
+                hero.addEventListener('mousemove', function(e) {
+                    brilloHero.style.left = e.clientX + 'px';
+                    brilloHero.style.top = e.clientY + 'px';
+                });
+                hero.addEventListener('mouseleave', function() {
+                    brilloHero.classList.remove('activo');
                 });
             }
         })();
