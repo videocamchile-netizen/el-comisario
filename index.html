@@ -2272,7 +2272,7 @@
     <div class="modal-bienvenidos" id="modalBienvenidos">
         <div class="modal-contenido">
             <button class="modal-cerrar-bienvenidos" id="btnCerrarBienvenidos" title="Cerrar">✕</button>
-            <video id="videoBienvenidos" src="img/video.mp4" playsinline webkit-playsinline muted preload="auto"></video>
+            <video id="videoBienvenidos" src="img/video.mp4" playsinline webkit-playsinline preload="auto"></video>
             <div class="modal-leyenda">🎬 El Comisario</div>
         </div>
     </div>
@@ -2925,20 +2925,11 @@
                 modal.classList.add('visible');
                 video.currentTime = 0;
                 
-                // En móvil: quitar muted justo antes de play para que tenga sonido
-                // (en móvil el autoplay requiere muted, pero como el usuario hizo clic, podemos reproducir con sonido)
+                // Reproducir con sonido (el usuario hizo clic, los navegadores lo permiten)
                 video.muted = false;
-                
-                var promesa = video.play();
-                if (promesa !== undefined) {
-                    promesa.catch(function() {
-                        // Si falló, intentar con muted (algunos móviles lo exigen)
-                        video.muted = true;
-                        video.play().catch(function(err) {
-                            console.log('No se pudo reproducir el video:', err);
-                        });
-                    });
-                }
+                video.play().catch(function(err) {
+                    console.log('Error al reproducir video:', err);
+                });
                 
                 // Timeout de seguridad: si el video no termina en 5 minutos, cerrar igual
                 if (timeoutFinVideo) clearTimeout(timeoutFinVideo);
