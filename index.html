@@ -1381,6 +1381,36 @@
         /* ========================================================
            RESPONSIVE
            ======================================================== */
+        /* ========================================================
+           BOTÓN SUBIR (siempre visible, no solo en móvil)
+           ======================================================== */
+        .btn-subir {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: #c00;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 26px;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(200,0,0,0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            line-height: 55px;
+            text-align: center;
+        }
+        .btn-subir:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(200,0,0,0.7);
+        }
+
         @media (max-width: 900px) {
             .navbar { flex-wrap: wrap; justify-content: center; align-items: center; position: relative; padding: 4px 6px; gap: 2px; }
             .navbar .logo { width: 100%; text-align: center; }
@@ -1423,32 +1453,6 @@
             .caso-texto h2 { font-size: 1.6rem; }
             .caso-texto p { font-size: 0.95rem; margin: 15px 0 20px 0; }
             .caso-texto .btn-amarillo { font-size: 13px; padding: 10px 18px; }
-            .btn-subir {
-                display: none;
-                position: fixed;
-                bottom: 30px;
-                right: 20px;
-                width: 55px;
-                height: 55px;
-                background: #c00;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                font-size: 26px;
-                cursor: pointer;
-                z-index: 9999;
-                box-shadow: 0 4px 20px rgba(200,0,0,0.5);
-                transition: transform 0.3s, box-shadow 0.3s;
-                align-items: center;
-                justify-content: center;
-                text-decoration: none;
-                line-height: 55px;
-                text-align: center;
-            }
-            .btn-subir:hover {
-                transform: scale(1.1);
-                box-shadow: 0 6px 30px rgba(200,0,0,0.7);
-            }
         }
 
         /* ========================================================
@@ -2156,8 +2160,8 @@
             function actualizarContador() {
                 if (!numSpan) return;
                 
+                // Intentar obtener de Brevo
                 fetch('https://api.brevo.com/v3/contacts?limit=1000', {
-
                     method: 'GET',
                     headers: {
                         'api-key': BREVO_API_KEY,
@@ -2170,13 +2174,73 @@
                     numSpan.textContent = total;
                 })
                 .catch(function() {
-                    // Si falla, no actualiza
+                    // Fallback: mostrar los de localStorage
+                    var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                    numSpan.textContent = locales.length;
                 });
             }
             actualizarContador();
             
         })();
 
+
+        // ========================================================
+        // SISTEMA DE SINCRONIZACIÓN CON PANEL DE CONTROL
+        // ========================================================
+        // Escucha cambios en localStorage hechos desde panel.html
+        (function() {
+            // Revisar cada 2 segundos si el panel activó/desactivó el live
+            setInterval(function() {
+                var estadoLive = localStorage.getItem('elcomisario_live_activo');
+                if (estadoLive === 'true') {
+                    // El panel activó el live
+                    var seccion = document.getElementById('seccionEnVivo');
+                    var iframe = document.getElementById('iframeEnVivo');
+                    var indicador = document.getElementById('indicadorEnVivo');
+                    var punto = document.getElementById('indicadorPunto');
+                    var estado = document.getElementById('indicadorEstado');
+                    
+                    if (seccion && !seccion.classList.contains('visible')) {
+                        // Mostrar el live con el link del canal
+                        iframe.src = 'https://www.youtube.com/embed/live_stream?channel=UC439PHkUfNl5MjOGGGf4jkQ&autoplay=1';
+                        seccion.classList.remove('ocultando');
+                        seccion.classList.add('visible');
+                    }
+                    
+                    // Encender indicador ON
+                    if (indicador) indicador.classList.add('on');
+                    if (punto) punto.classList.add('on');
+                    if (estado) {
+                        estado.classList.add('on');
+                        estado.textContent = 'ON';
+                    }
+                } else if (estadoLive === 'false') {
+                    // El panel desactivó el live
+                    var seccion = document.getElementById('seccionEnVivo');
+                    var iframe = document.getElementById('iframeEnVivo');
+                    var indicador = document.getElementById('indicadorEnVivo');
+                    var punto = document.getElementById('indicadorPunto');
+                    var estado = document.getElementById('indicadorEstado');
+                    
+                    if (seccion && seccion.classList.contains('visible')) {
+                        seccion.classList.add('ocultando');
+                        setTimeout(function() {
+                            seccion.classList.remove('visible');
+                            seccion.classList.remove('ocultando');
+                            if (iframe) iframe.src = '';
+                        }, 500);
+                    }
+                    
+                    // Apagar indicador
+                    if (indicador) indicador.classList.remove('on');
+                    if (punto) punto.classList.remove('on');
+                    if (estado) {
+                        estado.classList.remove('on');
+                        estado.textContent = 'OFF';
+                    }
+                }
+            }, 2000);
+        })();
 
         // ========================================================
         // SISTEMA DE DETECCIÓN DE TRANSMISIÓN EN VIVO
@@ -2197,9 +2261,8 @@
             var CHANNEL_ID = 'UC439PHkUfNl5MjOGGGf4jkQ';
             
             // === MODO PRUEBA ===
-            // Cambia a true para probar con un video específico
             var MODO_PRUEBA = false;
-            var VIDEO_PRUEBA_ID = ''; // Vacío para que no haya video de prueba
+            var VIDEO_PRUEBA_ID = '';
             
             // Variable para evitar notificar múltiples veces
             var liveYaNotificado = false;
@@ -2423,12 +2486,10 @@
             // DETECCIÓN AUTOMÁTICA DE LIVE VÍA API PÚBLICA
             // ========================================================
             function verificarLiveAutomatico() {
-                // Usamos la API pública de YouTube (no requiere API Key)
                 var url = 'https://www.youtube.com/channel/' + CHANNEL_ID + '/live';
                 
                 fetch(url, { method: 'HEAD', mode: 'no-cors' })
                     .then(function(response) {
-                        // Con no-cors no podemos leer la URL, intentamos con modo manual
                         verificarLiveConAPI();
                     })
                     .catch(function() {
@@ -2440,21 +2501,17 @@
             // VERIFICAR CON API PÚBLICA DE YOUTUBE
             // ========================================================
             function verificarLiveConAPI() {
-                // Usamos un proxy público para obtener datos del canal
                 var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/channel/' + CHANNEL_ID + '/live&format=json';
                 
                 fetch(url)
                     .then(function(r) { return r.json(); })
                     .then(function(data) {
                         if (data && data.title && data.author_name) {
-                            // Si hay respuesta, el canal tiene contenido en vivo
-                            // Extraemos el video ID de la URL del oembed
                             var videoUrl = data.url || '';
                             var match = videoUrl.match(/watch\?v=([^&]+)/);
                             if (match && match[1]) {
                                 mostrarEnVivo(match[1], '🔴 ' + data.title, 'Estamos al aire. Acompáñanos en este nuevo programa de El Comisario.');
                             } else {
-                                // No se pudo extraer ID, modo OFF
                                 actualizarIndicador(false);
                             }
                         } else {
@@ -2462,7 +2519,6 @@
                         }
                     })
                     .catch(function() {
-                        // Si falla la API, intentamos con el método alternativo
                         verificarLiveConRSS();
                     });
             }
@@ -2476,7 +2532,6 @@
                 fetch(url)
                     .then(function(r) { return r.text(); })
                     .then(function(xmlText) {
-                        // Buscar si hay un video en vivo en el feed
                         var parser = new DOMParser();
                         var xml = parser.parseFromString(xmlText, 'text/xml');
                         var entries = xml.querySelectorAll('entry');
@@ -2486,7 +2541,6 @@
                             var title = entry.querySelector('title')?.textContent || '';
                             var link = entry.querySelector('link')?.getAttribute('href') || '';
                             
-                            // Los videos en vivo suelen tener "live" en el título o son los más recientes
                             if (title.toLowerCase().indexOf('en vivo') !== -1 || 
                                 title.toLowerCase().indexOf('live') !== -1 ||
                                 title.toLowerCase().indexOf('estreno') !== -1) {
@@ -2503,7 +2557,6 @@
                         }
                     })
                     .catch(function() {
-                        // Si todo falla, indicador OFF
                         actualizarIndicador(false);
                     });
             }

@@ -293,6 +293,9 @@
                 <button class="btn-avisar" id="btnAvisarAhora">
                     📢 AVISAR SUSCRIPTORES
                 </button>
+                <button class="btn-avisar" id="btnFinalizarLive" style="background: linear-gradient(135deg, #666 0%, #444 100%); animation: none; margin-top: 10px;">
+                    ⏹️ FINALIZAR TRANSMISIÓN
+                </button>
             </div>
             
             <div class="mensaje-panel" id="mensajePanel"></div>
@@ -438,22 +441,31 @@
         }
         
         // ========================================================
-        // ENVIAR AVISO A SUSCRIPTORES
+        // ENVIAR AVISO A SUSCRIPTORES + ACTIVAR LIVE EN INDEX
         // ========================================================
         (function() {
             var btnAvisar = document.getElementById('btnAvisarAhora');
+            var btnFinalizar = document.getElementById('btnFinalizarLive');
             var mensajePanel = document.getElementById('mensajePanel');
             
+            // ========================================================
+            // ACTIVAR LIVE (avisar suscriptores + encender en index)
+            // ========================================================
             btnAvisar.addEventListener('click', function() {
                 btnAvisar.disabled = true;
                 btnAvisar.textContent = '⏳ ENVIANDO...';
                 mensajePanel.textContent = '';
                 mensajePanel.className = 'mensaje-panel';
                 
+                // 1. ACTIVAR EL LIVE EN INDEX.HTML (vía localStorage)
+                localStorage.setItem('elcomisario_live_activo', 'true');
+                // Limpiar el flag de cerrado para que se muestre automáticamente
+                localStorage.removeItem('live_cerrado');
+                
                 var linkVideo = LINK_LIVE_COMISARIO;
                 var linkCanal = LINK_CANAL_COMISARIO;
                 
-                // Obtener contactos de Brevo
+                // 2. Obtener contactos de Brevo
                 fetch('https://api.brevo.com/v3/contacts?limit=1000', {
                     method: 'GET',
                     headers: {
@@ -466,15 +478,23 @@
                     var contactos = data.contacts || [];
                     var emails = contactos.map(function(c) { return c.email; });
                     
+                    // También agregar los de localStorage
+                    var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                    locales.forEach(function(email) {
+                        if (!emails.includes(email)) {
+                            emails.push(email);
+                        }
+                    });
+                    
                     if (emails.length === 0) {
-                        mensajePanel.textContent = '⚠️ No hay suscriptores registrados.';
-                        mensajePanel.className = 'mensaje-panel error';
+                        mensajePanel.textContent = '⚠️ No hay suscriptores registrados. Live activado.';
+                        mensajePanel.className = 'mensaje-panel exito';
                         btnAvisar.disabled = false;
                         btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
                         return;
                     }
                     
-                    // Enviar correos
+                    // 3. Enviar correos
                     var promesas = emails.map(function(email) {
                         var data = {
                             sender: {
@@ -482,7 +502,7 @@
                                 email: CORREO_REMITENTE
                             },
                             to: [{ email: email }],
-                            subject: 'El Comisario - Nuevo programa en directo disponible',
+                            subject: '🔴 ¡El Comisario está EN VIVO!',
                             htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
                         };
                         
@@ -508,17 +528,17 @@
                         var ok = respuestas.filter(function(r) { return r && r.ok; }).length;
                         
                         if (ok > 0) {
-                            mensajePanel.textContent = '✅ ¡Aviso enviado a ' + ok + ' suscriptores!';
+                            mensajePanel.textContent = '✅ ¡Aviso enviado a ' + ok + ' suscriptores! Live activado.';
                             mensajePanel.className = 'mensaje-panel exito';
                         } else {
-                            mensajePanel.textContent = '❌ Error al enviar correos. Revisa la consola.';
+                            mensajePanel.textContent = '⚠️ Live activado. Error al enviar correos. Revisa consola.';
                             mensajePanel.className = 'mensaje-panel error';
                         }
                     });
                 })
                 .catch(function(error) {
                     console.error('[PANEL] Error:', error);
-                    mensajePanel.textContent = '❌ Error al obtener suscriptores de Brevo.';
+                    mensajePanel.textContent = '⚠️ Live activado. Error al obtener suscriptores de Brevo.';
                     mensajePanel.className = 'mensaje-panel error';
                 })
                 .finally(function() {
@@ -529,6 +549,24 @@
                         mensajePanel.className = 'mensaje-panel';
                     }, 8000);
                 });
+            });
+            
+            // ========================================================
+            // FINALIZAR TRANSMISIÓN (apagar live en index)
+            // ========================================================
+            btnFinalizar.addEventListener('click', function() {
+                // Desactivar el live en index.html
+                localStorage.setItem('elcomisario_live_activo', 'false');
+                // Limpiar el flag de cerrado para que el próximo live se muestre
+                localStorage.removeItem('live_cerrado');
+                
+                mensajePanel.textContent = '⏹️ Transmisión finalizada. Live apagado.';
+                mensajePanel.className = 'mensaje-panel exito';
+                
+                setTimeout(function() {
+                    mensajePanel.textContent = '';
+                    mensajePanel.className = 'mensaje-panel';
+                }, 5000);
             });
         })();
     </script>
