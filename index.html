@@ -422,61 +422,30 @@
         }
 
         /* ========================================================
-           BOTÓN BIENVENIDOS - DESTACADO
+           BOTÓN BIENVENIDOS - MISMA FORMA QUE LOS OTROS BOTONES
            ======================================================== */
-        @keyframes pulsoBienvenidos {
-            0% { box-shadow: 0 0 15px rgba(255,180,0,0.3), 0 0 30px rgba(255,180,0,0.1); }
-            50% { box-shadow: 0 0 30px rgba(255,180,0,0.6), 0 0 60px rgba(255,180,0,0.2); }
-            100% { box-shadow: 0 0 15px rgba(255,180,0,0.3), 0 0 30px rgba(255,180,0,0.1); }
-        }
-        @keyframes brilloBienvenidos {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
         .btn-bienvenidos {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, #ffb400 0%, #ff8c00 50%, #ffb400 100%);
-            background-size: 200% 100%;
-            animation: pulsoBienvenidos 2s ease-in-out infinite, brilloBienvenidos 3s linear infinite;
-            color: #0a0a1a;
-            padding: 16px 32px;
-            font-weight: 900;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            background: linear-gradient(135deg, #ffb400 0%, #e6a200 100%);
+            color: #050a14;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 6px;
             text-decoration: none;
-            border: 2px solid rgba(255,200,100,0.4);
+            border: none;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
             white-space: nowrap;
         }
         .btn-bienvenidos:hover {
-            transform: scale(1.08);
-            border-color: rgba(255,255,255,0.6);
-            box-shadow: 0 0 40px rgba(255,180,0,0.5), 0 0 80px rgba(255,180,0,0.2);
-        }
-        .btn-bienvenidos::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        .btn-bienvenidos:hover::after {
-            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 180, 0, 0.4);
         }
         .btn-bienvenidos .icono-bienvenida {
-            font-size: 1.4rem;
+            font-size: 1rem;
             line-height: 1;
         }
 
@@ -586,8 +555,8 @@
 
         @media (max-width: 900px) {
             .btn-bienvenidos {
-                padding: 14px 24px;
-                font-size: 1rem;
+                padding: 12px 24px;
+                font-size: 14px;
                 gap: 8px;
                 display: inline-flex !important;
                 opacity: 1 !important;
@@ -596,9 +565,10 @@
                 justify-content: center;
                 margin-top: 8px;
                 white-space: normal;
+                border-radius: 6px;
             }
             .btn-bienvenidos .icono-bienvenida {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             .hero-content div[style*="display: flex"] {
                 flex-direction: column !important;
