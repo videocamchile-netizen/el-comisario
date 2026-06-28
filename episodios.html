@@ -1224,15 +1224,12 @@
         <p>© 2026 El Comisario · Donde las víctimas tienen voz</p>
     </footer>
 
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         // ========================================================
-        // INICIALIZAR EMAILJS
+        // CONFIGURACIÓN GLOBAL BREVO
         // ========================================================
-        (function() {
-            emailjs.init('-429pYyHKQ3ndXBEL');
-        })();
+        var BREVO_API_KEY = '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';
+        var LISTA_BREVO_ID = 2;
 
         // ========================================================
         // FLECHA SUBIR - SOLO AL FINAL DE LA PÁGINA
@@ -1344,83 +1341,99 @@
         })();
 
         // ========================================================
-        // FORMULARIO DE SUSCRIPCIÓN - AVISOS EN VIVO
+        // FORMULARIO DE SUSCRIPCIÓN - AVISOS EN VIVO (BREVO)
         // ========================================================
         (function() {
             const form = document.getElementById('formAvisos');
             const emailInput = document.getElementById('emailAviso');
             const btnAviso = document.getElementById('btnAviso');
             const mensaje = document.getElementById('mensajeAviso');
-            
+            const numSpan = document.getElementById('numSuscriptores');
+
             if (!form) return;
-            
+
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 const email = emailInput.value.trim();
                 if (!email) return;
-                
-                // Deshabilitar botón mientras se envía
+
                 btnAviso.disabled = true;
-                btnAviso.textContent = '⏳ ENVIANDO...';
+                btnAviso.textContent = '⏳ REGISTRANDO...';
                 mensaje.textContent = '';
                 mensaje.className = 'mensaje-aviso';
-                
-                // Enviar correo de confirmación al suscriptor
-                emailjs.send('service_8xfx8ud', 'template_7enw6gd', {
-                    to_email: email,
-                    name: email.split('@')[0],
-                    message: 'Gracias por registrarte. Te avisaremos cuando El Comisario esté EN VIVO.',
-                    subject: '✅ Te has registrado para recibir avisos EN VIVO'
+
+                fetch('https://api.brevo.com/v3/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'api-key': BREVO_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        listIds: [LISTA_BREVO_ID],
+                        attributes: { NOMBRE: email.split('@')[0] }
+                    })
                 })
-                .then(function() {
-                    mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
-                    mensaje.className = 'mensaje-aviso exito';
-                    emailInput.value = '';
-                    
-                    // Guardar en localStorage para futuros envíos masivos
-                    guardarSuscriptor(email);
+                .then(function(r) {
+                    if (r.status === 201 || r.status === 204) {
+                        mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
+                        mensaje.className = 'mensaje-aviso exito';
+                        emailInput.value = '';
+                        guardarSuscriptorLocal(email);
+                        actualizarContador();
+                    } else {
+                        return r.json().then(function(d) { throw new Error(d.message || 'Error al registrar'); });
+                    }
                 })
                 .catch(function(error) {
-                    console.error('Error EmailJS:', error);
-                    mensaje.textContent = '❌ Error al registrarte. Intenta de nuevo.';
-                    mensaje.className = 'mensaje-aviso error';
+                    var msgError = error.message || 'Error al registrarte';
+                    if (msgError.indexOf('already exists') !== -1 || msgError.indexOf('duplicate') !== -1) {
+                        mensaje.textContent = '✅ ¡Ya estabas registrado! Te avisaremos cuando estemos en vivo.';
+                        mensaje.className = 'mensaje-aviso exito';
+                        emailInput.value = '';
+                        guardarSuscriptorLocal(email);
+                        actualizarContador();
+                    } else {
+                        mensaje.textContent = '❌ ' + msgError;
+                        mensaje.className = 'mensaje-aviso error';
+                    }
                 })
                 .finally(function() {
                     btnAviso.disabled = false;
                     btnAviso.textContent = '✅ AVÍSAME';
-                    
-                    // Limpiar mensaje después de 5 segundos
                     setTimeout(function() {
                         mensaje.textContent = '';
                         mensaje.className = 'mensaje-aviso';
                     }, 5000);
                 });
             });
-            
-            // ========================================================
-            // GESTIÓN DE SUSCRIPTORES EN LOCALSTORAGE
-            // ========================================================
-            function guardarSuscriptor(email) {
-                let suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+
+            function guardarSuscriptorLocal(email) {
+                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
                 if (!suscriptores.includes(email)) {
                     suscriptores.push(email);
                     localStorage.setItem('suscriptores', JSON.stringify(suscriptores));
                 }
-                actualizarContador();
             }
-            
-            // ========================================================
-            // ACTUALIZAR CONTADOR DE SUSCRIPTORES
-            // ========================================================
+
             function actualizarContador() {
-                var numSpan = document.getElementById('numSuscriptores');
                 if (!numSpan) return;
-                var suscriptores = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                numSpan.textContent = suscriptores.length;
+                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
+                    method: 'GET',
+                    headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json' }
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    numSpan.textContent = data.contacts ? data.contacts.length : 0;
+                })
+                .catch(function() {
+                    var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');
+                    numSpan.textContent = locales.length;
+                });
             }
             actualizarContador();
-            
+
         })();
 
         // ========================================================
