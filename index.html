@@ -1664,12 +1664,16 @@
             .hero-container { padding: 0 30px 50px; min-height: 100vh; align-items: flex-end; }
             .hero-content h1 { font-size: 3.5rem; }
             .hero-content p { font-size: 1rem; }
-            .fondo-vivo { background-position: 25% center; }
+            .fondo-vivo {
+                background-position: 25% center;
+                mask-image: radial-gradient(ellipse at center, black 80%, transparent 100%);
+                -webkit-mask-image: radial-gradient(ellipse at center, black 80%, transparent 100%);
+            }
             .capa-iluminacion {
                 background:
-                    radial-gradient(ellipse at 20% 40%, rgba(10, 30, 60, 0.15) 0%, transparent 60%),
-                    radial-gradient(ellipse at 80% 60%, rgba(5, 15, 35, 0.2) 0%, transparent 50%),
-                    radial-gradient(ellipse at 50% 70%, rgba(5, 10, 20, 0.55) 0%, rgba(5, 10, 20, 0.95) 100%);
+                    radial-gradient(ellipse at 20% 40%, rgba(10, 30, 60, 0.08) 0%, transparent 60%),
+                    radial-gradient(ellipse at 80% 60%, rgba(5, 15, 35, 0.1) 0%, transparent 50%),
+                    radial-gradient(ellipse at 50% 85%, rgba(5, 10, 20, 0.2) 0%, rgba(5, 10, 20, 0.65) 100%);
             }
             .seccion-stats { flex-wrap: wrap; gap: 20px; }
             .stat-box { width: 45%; }
