@@ -1226,10 +1226,9 @@
 
     <script>
         // ========================================================
-        // CONFIGURACIÓN GLOBAL BREVO
+        // CONFIGURACIÓN GLOBAL - BACKEND SEGURO (Apps Script)
         // ========================================================
-        var BREVO_API_KEY = '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';
-        var LISTA_BREVO_ID = 2;
+        var BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxR97YsEPrSlhZERj2jFGKrg8YqUFl7TueffdOLaj9BTwfaBd8khUFvIegsuMXlk7cw/exec';
 
         // ========================================================
         // FLECHA SUBIR - SOLO AL FINAL DE LA PÁGINA
@@ -1363,41 +1362,29 @@
                 mensaje.textContent = '';
                 mensaje.className = 'mensaje-aviso';
 
-                fetch('https://api.brevo.com/v3/contacts', {
+                fetch(BACKEND_URL, {
                     method: 'POST',
-                    headers: {
-                        'api-key': BREVO_API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        listIds: [LISTA_BREVO_ID],
-                        attributes: { NOMBRE: email.split('@')[0] }
-                    })
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: 'subscribe', email: email })
                 })
-                .then(function(r) {
-                    if (r.status === 201 || r.status === 204) {
-                        mensaje.textContent = '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.ok) {
+                        mensaje.textContent = d.mensaje === 'Ya estaba registrado'
+                            ? '✅ ¡Ya estabas registrado! Te avisaremos cuando estemos en vivo.'
+                            : '✅ ¡Registrado! Te avisaremos cuando estemos en vivo.';
                         mensaje.className = 'mensaje-aviso exito';
                         emailInput.value = '';
                         guardarSuscriptorLocal(email);
                         actualizarContador();
                     } else {
-                        return r.json().then(function(d) { throw new Error(d.message || 'Error al registrar'); });
-                    }
-                })
-                .catch(function(error) {
-                    var msgError = error.message || 'Error al registrarte';
-                    if (msgError.indexOf('already exists') !== -1 || msgError.indexOf('duplicate') !== -1) {
-                        mensaje.textContent = '✅ ¡Ya estabas registrado! Te avisaremos cuando estemos en vivo.';
-                        mensaje.className = 'mensaje-aviso exito';
-                        emailInput.value = '';
-                        guardarSuscriptorLocal(email);
-                        actualizarContador();
-                    } else {
-                        mensaje.textContent = '❌ ' + msgError;
+                        mensaje.textContent = '❌ ' + (d.mensaje || 'Error al registrarte');
                         mensaje.className = 'mensaje-aviso error';
                     }
+                })
+                .catch(function() {
+                    mensaje.textContent = '❌ Error al registrarte, intenta de nuevo.';
+                    mensaje.className = 'mensaje-aviso error';
                 })
                 .finally(function() {
                     btnAviso.disabled = false;
@@ -1419,13 +1406,10 @@
 
             function actualizarContador() {
                 if (!numSpan) return;
-                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
-                    method: 'GET',
-                    headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json' }
-                })
+                fetch(BACKEND_URL + '?action=count')
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
-                    numSpan.textContent = data.contacts ? data.contacts.length : 0;
+                    numSpan.textContent = data.total || 0;
                 })
                 .catch(function() {
                     var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');

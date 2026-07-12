@@ -321,11 +321,8 @@
             'carlos': 'clave123@'
         };
         
-        var BREVO_API_KEY = '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';
-        var CORREO_REMITENTE = 'toppolicialtv@gmail.com';
-        var NOMBRE_REMITENTE = 'El Comisario';
-        var LINK_LIVE_COMISARIO = 'https://www.youtube.com/@elcomisariotv/live';
-        var LINK_CANAL_COMISARIO = 'https://www.youtube.com/@elcomisariotv';
+        var BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxR97YsEPrSlhZERj2jFGKrg8YqUFl7TueffdOLaj9BTwfaBd8khUFvIegsuMXlk7cw/exec';
+        var BROADCAST_SECRET = 'picocaballo2026'; // debe ser igual al valor guardado en Propiedades del Script (BROADCAST_SECRET)
         
         // ========================================================
         // LOGIN
@@ -389,17 +386,10 @@
         function cargarSuscriptores() {
             var numSpan = document.getElementById('numSuscriptoresPanel');
             
-            fetch('https://api.brevo.com/v3/contacts', {
-                method: 'GET',
-                headers: {
-                    'api-key': BREVO_API_KEY,
-                    'Content-Type': 'application/json'
-                }
-            })
+            fetch(BACKEND_URL + '?action=count')
             .then(function(r) { return r.json(); })
             .then(function(data) {
-                var total = data.contacts ? data.contacts.length : 0;
-                numSpan.textContent = total;
+                numSpan.textContent = data.total || 0;
             })
             .catch(function() {
                 numSpan.textContent = '?';
@@ -466,83 +456,30 @@
                 // Limpiar el flag de cerrado para que se muestre automáticamente
                 localStorage.removeItem('live_cerrado');
                 
-                var linkVideo = LINK_LIVE_COMISARIO;
-                var linkCanal = LINK_CANAL_COMISARIO;
-                
-                // 2. Obtener contactos de Brevo
-                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
-                    method: 'GET',
-                    headers: {
-                        'api-key': BREVO_API_KEY,
-                        'Content-Type': 'application/json'
-                    }
+                // 2. Pedirle al backend que mande el aviso a todos los suscriptores
+                fetch(BACKEND_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: 'broadcast', secret: BROADCAST_SECRET })
                 })
                 .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    var contactos = data.contacts || [];
-                    var emails = contactos.map(function(c) { return c.email; });
-                    
-                    // También agregar los de localStorage
-                    var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                    locales.forEach(function(email) {
-                        if (!emails.includes(email)) {
-                            emails.push(email);
-                        }
-                    });
-                    
-                    if (emails.length === 0) {
-                        mensajePanel.textContent = '⚠️ No hay suscriptores registrados. Live activado.';
-                        mensajePanel.className = 'mensaje-panel exito';
-                        btnAvisar.disabled = false;
-                        btnAvisar.textContent = '📢 AVISAR SUSCRIPTORES';
+                .then(function(d) {
+                    if (d.error) {
+                        mensajePanel.textContent = '⚠️ Live activado. ' + d.error;
+                        mensajePanel.className = 'mensaje-panel error';
                         return;
                     }
-                    
-                    // 3. Enviar correos
-                    var promesas = emails.map(function(email) {
-                        var data = {
-                            sender: {
-                                name: NOMBRE_REMITENTE,
-                                email: CORREO_REMITENTE
-                            },
-                            to: [{ email: email }],
-                            subject: 'El Comisario - Nuevo programa disponible',
-                            htmlContent: generarHtmlCorreoPanel(linkVideo, linkCanal)
-                        };
-                        
-                        return fetch('https://api.brevo.com/v3/smtp/email', {
-                            method: 'POST',
-                            headers: {
-                                'api-key': BREVO_API_KEY,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        })
-                        .then(function(r) {
-                            if (!r.ok) {
-                                return r.json().then(function(d) {
-                                    console.error('[PANEL] Error Brevo para', email, ':', d);
-                                });
-                            }
-                            return r;
-                        });
-                    });
-                    
-                    return Promise.all(promesas).then(function(respuestas) {
-                        var ok = respuestas.filter(function(r) { return r && r.ok; }).length;
-                        
-                        if (ok > 0) {
-                            mensajePanel.textContent = '✅ ¡Aviso enviado a ' + ok + ' suscriptores! Live activado.';
-                            mensajePanel.className = 'mensaje-panel exito';
-                        } else {
-                            mensajePanel.textContent = '⚠️ Live activado. Error al enviar correos. Revisa consola.';
-                            mensajePanel.className = 'mensaje-panel error';
-                        }
-                    });
+                    if (d.enviados > 0) {
+                        mensajePanel.textContent = '✅ ¡Aviso enviado a ' + d.enviados + ' de ' + d.total + ' suscriptores! Live activado.';
+                        mensajePanel.className = 'mensaje-panel exito';
+                    } else {
+                        mensajePanel.textContent = '⚠️ Live activado. No se envió a nadie (revisa suscriptores).';
+                        mensajePanel.className = 'mensaje-panel error';
+                    }
                 })
                 .catch(function(error) {
                     console.error('[PANEL] Error:', error);
-                    mensajePanel.textContent = '⚠️ Live activado. Error al obtener suscriptores de Brevo.';
+                    mensajePanel.textContent = '⚠️ Live activado. Error al contactar el backend.';
                     mensajePanel.className = 'mensaje-panel error';
                 })
                 .finally(function() {
