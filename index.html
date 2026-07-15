@@ -2381,9 +2381,8 @@
         // ========================================================
         // CONFIGURACIÓN GLOBAL BREVO
         // ========================================================
-        var BREVO_API_KEY = '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';
-        var LISTA_BREVO_ID = 2; // ID de la lista de suscriptores en Brevo
-        // Backend seguro (Apps Script) para el registro y el contador — mismo backend que episodios.html/panel.html
+        // Backend seguro (Apps Script) — la key de Brevo vive solo ahí, nunca en este archivo.
+        // Mismo backend que episodios.html/panel.html.
         var BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxR97YsEPrSlhZERj2jFGKrg8YqUFl7TueffdOLaj9BTwfaBd8khUFvIegsuMXlk7cw/exec';
 
         // ========================================================
@@ -2397,11 +2396,7 @@
             const numSpan = document.getElementById('numSuscriptores');
             
             if (!form) return;
-            
-            // Configuración Brevo (ya está global)
-            // var BREVO_API_KEY = ... (movida a scope global)
-            // var LISTA_BREVO_ID = ... (movida a scope global)
-            
+
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -2430,10 +2425,6 @@
                         emailInput.value = '';
                         // Guardar también en localStorage para notificaciones automáticas
                         guardarSuscriptorLocal(email);
-                        // Si hay un live activo, notificar inmediatamente al nuevo suscriptor
-                        if (typeof liveActivo !== 'undefined' && liveActivo) {
-                            notificarSuscriptorUnico(email, videoIdActual);
-                        }
                         actualizarContador();
                     } else {
                         mensaje.textContent = '❌ ' + (d.mensaje || 'Error al registrarte');
@@ -2571,8 +2562,6 @@
             var MODO_PRUEBA = false;
             var VIDEO_PRUEBA_ID = '';
             
-            // Variable para evitar notificar múltiples veces
-            var liveYaNotificado = false;
             var liveActivo = false;
             var videoIdActual = '';
             
@@ -2613,12 +2602,10 @@
                 
                 // Actualizar botón WhatsApp con el link del live
                 actualizarBotonWhatsApp(videoId);
-                
-                // Notificar a suscriptores cuando se detecta live (solo una vez)
-                if (!liveYaNotificado) {
-                    liveYaNotificado = true;
-                    notificarSuscriptores(videoId);
-                }
+
+                // El aviso a suscriptores YA NO se dispara desde acá (index.html es
+                // público, cualquier visitante lo ejecutaría). Se envía solo desde
+                // el botón "AVISAR SUSCRIPTORES" del panel, vía backend seguro.
             }
             
             // ========================================================
@@ -2653,157 +2640,6 @@
             // Botón cerrar
             if (btnCerrar) {
                 btnCerrar.addEventListener('click', ocultarEnVivo);
-            }
-            
-            // ========================================================
-            // GENERAR HTML DEL CORREO (versión simple para evitar Promociones)
-            // ========================================================
-            function generarHtmlCorreo(linkVideo, linkCanal) {
-                return '<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>' +
-                '<body style="margin:0;padding:0;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;color:#333333">' +
-                '<table width="100%" cellpadding="0" cellspacing="0" style="background-color:#ffffff"><tr><td align="center" style="padding:30px 20px">' +
-                '<table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background-color:#ffffff;border:1px solid #e0e0e0;border-radius:4px">' +
-                
-                // HEADER SIMPLE
-                '<tr><td style="padding:30px 25px 15px;text-align:center;background-color:#f5f5f5;border-bottom:2px solid #d4a800">' +
-                '<h1 style="color:#d4a800;font-size:26px;margin:0;font-weight:bold">EL COMISARIO</h1>' +
-                '<p style="color:#cc0000;font-size:13px;margin:8px 0 0;font-weight:bold">Nuevo programa disponible</p>' +
-                '</td></tr>' +
-                
-                // CUERPO SENCILLO
-                '<tr><td style="padding:25px 25px;text-align:left;background-color:#ffffff">' +
-                '<p style="color:#333333;font-size:15px;line-height:1.5;margin:0 0 15px">Estimado suscriptor,</p>' +
-                '<p style="color:#333333;font-size:15px;line-height:1.5;margin:0 0 15px">Le informamos que <strong>El Comisario</strong> tiene un nuevo programa disponible. Puede verlo en el siguiente enlace:</p>' +
-                
-                // ENLACE TEXTO (sin botón llamativo)
-                '<p style="margin:0 0 15px;text-align:center">' +
-                '<a href="' + linkVideo + '" style="color:#d4a800;font-size:16px;font-weight:bold">Ver programa en YouTube</a></p>' +
-                
-                '<p style="color:#333333;font-size:15px;line-height:1.5;margin:0 0 5px">O visite nuestro canal:</p>' +
-                '<p style="margin:0 0 20px"><a href="' + linkCanal + '" style="color:#d4a800;font-size:14px">youtube.com/@elcomisariotv</a></p>' +
-                
-                '<p style="color:#666666;font-size:13px;line-height:1.4;margin:0;border-top:1px solid #e0e0e0;padding-top:15px">' +
-                'Atentamente,<br><strong>El Comisario</strong><br>' +
-                'Donde las víctimas tienen voz, la verdad no prescribe y la justicia no descansa.</p>' +
-                '</td></tr>' +
-                
-                // FOOTER
-                '<tr><td style="padding:15px 25px;text-align:center;background-color:#f5f5f5;border-top:1px solid #e0e0e0">' +
-                '<p style="color:#999999;font-size:11px;margin:0">© 2026 El Comisario</p>' +
-                '</td></tr></table></td></tr></table></body></html>';
-            }
-            
-            // ========================================================
-            // NOTIFICAR A SUSCRIPTORES POR EMAIL (VÍA BREVO TRANSACTIONAL)
-            // ========================================================
-            function notificarSuscriptores(videoId) {
-                var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
-                var linkCanal = 'https://www.youtube.com/@elcomisariotv/streams';
-                
-                // Obtener correos desde Brevo
-                fetch('https://api.brevo.com/v3/contacts?limit=1000', {
-                    method: 'GET',
-                    headers: {
-                        'api-key': BREVO_API_KEY,
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(function(r) { return r.json(); })
-                .then(function(data) {
-                    var suscriptores = [];
-                    if (data && data.contacts) {
-                        data.contacts.forEach(function(c) {
-                            if (c.email) suscriptores.push(c.email);
-                        });
-                    }
-                    
-                    // También agregar los de localStorage por si acaso
-                    var locales = JSON.parse(localStorage.getItem('suscriptores') || '[]');
-                    locales.forEach(function(email) {
-                        if (!suscriptores.includes(email)) {
-                            suscriptores.push(email);
-                        }
-                    });
-                    
-                    if (suscriptores.length === 0) {
-                        console.log('No hay suscriptores para notificar');
-                        return;
-                    }
-                    
-                    console.log('Notificando a ' + suscriptores.length + ' suscriptores');
-                    
-                    // Enviar a cada suscriptor usando la API Transactional de Brevo
-                    suscriptores.forEach(function(email) {
-                        var datosCorreo = {
-                            sender: { name: 'El Comisario', email: 'contacto@elcomisario.cl' },
-                            to: [{ email: email }],
-                            subject: 'El Comisario - Nuevo programa disponible',
-                            htmlContent: generarHtmlCorreo(linkVideo, linkCanal)
-                        };
-                        
-                        fetch('https://api.brevo.com/v3/smtp/email', {
-                            method: 'POST',
-                            headers: {
-                                'api-key': BREVO_API_KEY,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(datosCorreo)
-                        })
-                        .then(function(r) {
-                            if (r.status === 201 || r.status === 200) {
-                                console.log('Notificación enviada a:', email);
-                            } else {
-                                return r.json().then(function(d) {
-                                    console.error('Error Brevo transactional:', d);
-                                });
-                            }
-                        })
-                        .catch(function(error) {
-                            console.error('Error enviando a:', email, error);
-                        });
-                    });
-                })
-                .catch(function(error) {
-                    console.error('Error obteniendo suscriptores de Brevo:', error);
-                });
-            }
-            
-            // ========================================================
-            // NOTIFICAR A UN SOLO SUSCRIPTOR (CUANDO SE REGISTRA Y HAY LIVE)
-            // ========================================================
-            function notificarSuscriptorUnico(email, videoId) {
-                if (!email || !videoId) return;
-                
-                var linkVideo = 'https://www.youtube.com/watch?v=' + videoId;
-                var linkCanal = 'https://www.youtube.com/@elcomisariotv/streams';
-                
-                var datosCorreo = {
-                    sender: { name: 'El Comisario', email: 'contacto@elcomisario.cl' },
-                    to: [{ email: email }],
-                            subject: 'El Comisario - Nuevo programa disponible',
-                    htmlContent: generarHtmlCorreo(linkVideo, linkCanal)
-                };
-                
-                fetch('https://api.brevo.com/v3/smtp/email', {
-                    method: 'POST',
-                    headers: {
-                        'api-key': BREVO_API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(datosCorreo)
-                })
-                .then(function(r) {
-                    if (r.status === 201 || r.status === 200) {
-                        console.log('Notificación enviada a nuevo suscriptor:', email);
-                    } else {
-                        return r.json().then(function(d) {
-                            console.error('Error Brevo transactional:', d);
-                        });
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error enviando a nuevo suscriptor:', email, error);
-                });
             }
             
             // ========================================================
