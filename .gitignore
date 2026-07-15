@@ -1,3 +1,7 @@
 # Archivos ocultos de macOS
 ._*
 .DS_Store
+
+# Python (script de actualizar_episodios.py)
+__pycache__/
+*.pyc
