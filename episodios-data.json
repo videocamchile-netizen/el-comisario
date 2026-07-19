@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 34,
+  "nextEpisode": 40,
   "episodios": [
-    {
-      "episodio": 25,
-      "videoId": "wMPRUsXoXkI",
-      "nombre": "Brenda Aguilar",
-      "bajada": "La desaparición, camino al hospital."
-    },
-    {
-      "episodio": 26,
-      "videoId": "SM5zxbEqmsw",
-      "nombre": "Edison Araya Dos Santos,",
-      "bajada": ""
-    },
-    {
-      "episodio": 27,
-      "videoId": "NheaMb_anpA",
-      "nombre": "¿Dónde está Loan Peña?",
-      "bajada": "El juicio que búsca la verdad."
-    },
-    {
-      "episodio": 28,
-      "videoId": "a9BivlfduBM",
-      "nombre": "Madeleine Barrera",
-      "bajada": "Murió sin saber porqué."
-    },
-    {
-      "episodio": 29,
-      "videoId": "89CQqKWXcNU",
-      "nombre": "Tomás Barraza",
-      "bajada": "\"Mamá me tiraron\". La caida del bus, sin respuesta."
-    },
-    {
-      "episodio": 30,
-      "videoId": "aMWYFc5yD9U",
-      "nombre": "Emilio Latorre",
-      "bajada": "Un tiro de Carabineros por la espalda, terminó con su vida."
-    },
     {
       "episodio": 31,
       "videoId": "9xKZ8aLVY_I",
@@ -54,6 +18,42 @@
       "videoId": "qYFP5SroFcQ",
       "nombre": "Hermanos Oviedo",
       "bajada": "El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 34,
+      "videoId": "vsGxkXGr7-E",
+      "nombre": "Mauricio Rojas",
+      "bajada": "Golpiza, abuso, un cuerpo en un canal y un enigma que crece."
+    },
+    {
+      "episodio": 35,
+      "videoId": "Gu_1aX2dpoI",
+      "nombre": "Raúl González Ulloa",
+      "bajada": "El crimen sin cuerpo. La trampa en Chicureo"
+    },
+    {
+      "episodio": 36,
+      "videoId": "Scns7X4LGsg",
+      "nombre": "Jonathan Teao Aguilar",
+      "bajada": "La verdad pendiente en Rapa Nui."
+    },
+    {
+      "episodio": 37,
+      "videoId": "se-HygWMvL0",
+      "nombre": "Pablo Luciano Rutz",
+      "bajada": "¿Verdad, manipuación o trauma?"
+    },
+    {
+      "episodio": 38,
+      "videoId": "4J3yy1T6rO8",
+      "nombre": "Javier Olivares",
+      "bajada": "Persiguió a quien le robó y terminó asesinado"
+    },
+    {
+      "episodio": 39,
+      "videoId": "PbuLasxSBJs",
+      "nombre": "Javier y Damian",
+      "bajada": "Dos casos y grandes novedades"
     }
   ]
 }
