@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 58,
+  "nextEpisode": 64,
   "episodios": [
-    {
-      "episodio": 49,
-      "videoId": "9xKZ8aLVY_I",
-      "nombre": "Daniela Zabalza Pérez",
-      "bajada": "Buscó protección y encontró la muerte."
-    },
-    {
-      "episodio": 50,
-      "videoId": "IaNmjEpsOLc",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 51,
-      "videoId": "qYFP5SroFcQ",
-      "nombre": "Hermanos Oviedo",
-      "bajada": "El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 52,
-      "videoId": "a9BivlfduBM",
-      "nombre": "Madeleine Barrera",
-      "bajada": "Murió sin saber porqué."
-    },
-    {
-      "episodio": 53,
-      "videoId": "89CQqKWXcNU",
-      "nombre": "Tomás Barraza",
-      "bajada": "\"Mamá me tiraron\". La caida del bus, sin respuesta."
-    },
-    {
-      "episodio": 54,
-      "videoId": "aMWYFc5yD9U",
-      "nombre": "Emilio Latorre",
-      "bajada": "Un tiro de Carabineros por la espalda, terminó con su vida."
-    },
     {
       "episodio": 55,
       "videoId": "se-HygWMvL0",
@@ -54,6 +18,42 @@
       "videoId": "PbuLasxSBJs",
       "nombre": "Javier y Damian",
       "bajada": "Dos casos y grandes novedades"
+    },
+    {
+      "episodio": 58,
+      "videoId": "vsGxkXGr7-E",
+      "nombre": "Mauricio Rojas",
+      "bajada": "Golpiza, abuso, un cuerpo en un canal y un enigma que crece."
+    },
+    {
+      "episodio": 59,
+      "videoId": "Gu_1aX2dpoI",
+      "nombre": "Raúl González Ulloa",
+      "bajada": "El crimen sin cuerpo. La trampa en Chicureo"
+    },
+    {
+      "episodio": 60,
+      "videoId": "Scns7X4LGsg",
+      "nombre": "Jonathan Teao Aguilar",
+      "bajada": "La verdad pendiente en Rapa Nui."
+    },
+    {
+      "episodio": 61,
+      "videoId": "wMPRUsXoXkI",
+      "nombre": "Brenda Aguilar",
+      "bajada": "La desaparición, camino al hospital."
+    },
+    {
+      "episodio": 62,
+      "videoId": "SM5zxbEqmsw",
+      "nombre": "Edison Araya Dos Santos,",
+      "bajada": ""
+    },
+    {
+      "episodio": 63,
+      "videoId": "NheaMb_anpA",
+      "nombre": "¿Dónde está Loan Peña?",
+      "bajada": "El juicio que búsca la verdad."
     }
   ]
 }
