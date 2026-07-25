@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 71,
+  "nextEpisode": 77,
   "episodios": [
-    {
-      "episodio": 62,
-      "videoId": "SM5zxbEqmsw",
-      "nombre": "Edison Araya Dos Santos,",
-      "bajada": ""
-    },
-    {
-      "episodio": 63,
-      "videoId": "NheaMb_anpA",
-      "nombre": "¿Dónde está Loan Peña?",
-      "bajada": "El juicio que búsca la verdad."
-    },
-    {
-      "episodio": 64,
-      "videoId": "a9BivlfduBM",
-      "nombre": "Madeleine Barrera",
-      "bajada": "Murió sin saber porqué."
-    },
-    {
-      "episodio": 65,
-      "videoId": "89CQqKWXcNU",
-      "nombre": "Tomás Barraza",
-      "bajada": "\"Mamá me tiraron\". La caida del bus, sin respuesta."
-    },
-    {
-      "episodio": 66,
-      "videoId": "aMWYFc5yD9U",
-      "nombre": "Emilio Latorre",
-      "bajada": "Un tiro de Carabineros por la espalda, terminó con su vida."
-    },
-    {
-      "episodio": 67,
-      "videoId": "9xKZ8aLVY_I",
-      "nombre": "Daniela Zabalza Pérez",
-      "bajada": "Buscó protección y encontró la muerte."
-    },
     {
       "episodio": 68,
       "videoId": "IaNmjEpsOLc",
@@ -54,6 +18,42 @@
       "videoId": "HCm7jUocfrY",
       "nombre": "Julio César Martínez Galindo",
       "bajada": "Salió de un McDonald’s... y lo asesinaron."
+    },
+    {
+      "episodio": 71,
+      "videoId": "Gu_1aX2dpoI",
+      "nombre": "Raúl González Ulloa",
+      "bajada": "El crimen sin cuerpo. La trampa en Chicureo"
+    },
+    {
+      "episodio": 72,
+      "videoId": "Scns7X4LGsg",
+      "nombre": "Jonathan Teao Aguilar",
+      "bajada": "La verdad pendiente en Rapa Nui."
+    },
+    {
+      "episodio": 73,
+      "videoId": "se-HygWMvL0",
+      "nombre": "Pablo Luciano Rutz",
+      "bajada": "¿Verdad, manipuación o trauma?"
+    },
+    {
+      "episodio": 74,
+      "videoId": "4J3yy1T6rO8",
+      "nombre": "Javier Olivares",
+      "bajada": "Persiguió a quien le robó y terminó asesinado"
+    },
+    {
+      "episodio": 75,
+      "videoId": "PbuLasxSBJs",
+      "nombre": "Javier y Damian",
+      "bajada": "Dos casos y grandes novedades"
+    },
+    {
+      "episodio": 76,
+      "videoId": "wMPRUsXoXkI",
+      "nombre": "Brenda Aguilar",
+      "bajada": "La desaparición, camino al hospital."
     }
   ]
 }
