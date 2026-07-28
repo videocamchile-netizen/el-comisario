@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 90,
+  "nextEpisode": 96,
   "episodios": [
-    {
-      "episodio": 81,
-      "videoId": "NheaMb_anpA",
-      "nombre": "¿Dónde está Loan Peña?",
-      "bajada": "El juicio que búsca la verdad."
-    },
-    {
-      "episodio": 82,
-      "videoId": "9xKZ8aLVY_I",
-      "nombre": "Daniela Zabalza Pérez",
-      "bajada": "Buscó protección y encontró la muerte."
-    },
-    {
-      "episodio": 83,
-      "videoId": "ZqsrVKMGlNo",
-      "nombre": "INVITACIÓN",
-      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
-    },
-    {
-      "episodio": 84,
-      "videoId": "Scns7X4LGsg",
-      "nombre": "Jonathan Teao Aguilar",
-      "bajada": "La verdad pendiente en Rapa Nui."
-    },
-    {
-      "episodio": 85,
-      "videoId": "se-HygWMvL0",
-      "nombre": "Pablo Luciano Rutz",
-      "bajada": "¿Verdad, manipuación o trauma?"
-    },
-    {
-      "episodio": 86,
-      "videoId": "4J3yy1T6rO8",
-      "nombre": "Javier Olivares",
-      "bajada": "Persiguió a quien le robó y terminó asesinado"
-    },
     {
       "episodio": 87,
       "videoId": "IaNmjEpsOLc",
@@ -54,6 +18,42 @@
       "videoId": "HCm7jUocfrY",
       "nombre": "Julio César Galindo Martinez",
       "bajada": "Salió de un McDonald’s... y lo asesinaron."
+    },
+    {
+      "episodio": 90,
+      "videoId": "a9BivlfduBM",
+      "nombre": "Madeleine Barrera",
+      "bajada": "Murió sin saber porqué."
+    },
+    {
+      "episodio": 91,
+      "videoId": "89CQqKWXcNU",
+      "nombre": "Tomás Barraza",
+      "bajada": "\"Mamá me tiraron\". La caida del bus, sin respuesta."
+    },
+    {
+      "episodio": 92,
+      "videoId": "aMWYFc5yD9U",
+      "nombre": "Emilio Latorre",
+      "bajada": "Un tiro de Carabineros por la espalda, terminó con su vida."
+    },
+    {
+      "episodio": 93,
+      "videoId": "PbuLasxSBJs",
+      "nombre": "Javier y Damian",
+      "bajada": "Dos casos y grandes novedades"
+    },
+    {
+      "episodio": 94,
+      "videoId": "wMPRUsXoXkI",
+      "nombre": "Brenda Aguilar",
+      "bajada": "La desaparición, camino al hospital."
+    },
+    {
+      "episodio": 95,
+      "videoId": "SM5zxbEqmsw",
+      "nombre": "Edison Araya Dos Santos,",
+      "bajada": ""
     }
   ]
 }
