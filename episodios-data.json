@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 105,
+  "nextEpisode": 111,
   "episodios": [
-    {
-      "episodio": 96,
-      "videoId": "NheaMb_anpA",
-      "nombre": "¿Dónde está Loan Peña?",
-      "bajada": "El juicio que búsca la verdad."
-    },
-    {
-      "episodio": 97,
-      "videoId": "9xKZ8aLVY_I",
-      "nombre": "Daniela Zabalza Pérez",
-      "bajada": "Buscó protección y encontró la muerte."
-    },
-    {
-      "episodio": 98,
-      "videoId": "ZqsrVKMGlNo",
-      "nombre": "INVITACIÓN",
-      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
-    },
-    {
-      "episodio": 99,
-      "videoId": "2a3qGZa75LE",
-      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
-      "bajada": ""
-    },
-    {
-      "episodio": 100,
-      "videoId": "4RYWEb5LP_Q",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 101,
-      "videoId": "9adfPF0u4Pg",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
-    },
     {
       "episodio": 102,
       "videoId": "iZoLm7xBRDw",
@@ -54,6 +18,42 @@
       "videoId": "qKgoVVt1dwo",
       "nombre": "Julio GalindoMartinez:Su graduación",
       "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
+    },
+    {
+      "episodio": 105,
+      "videoId": "wMPRUsXoXkI",
+      "nombre": "Brenda Aguilar",
+      "bajada": "La desaparición, camino al hospital."
+    },
+    {
+      "episodio": 106,
+      "videoId": "SM5zxbEqmsw",
+      "nombre": "Edison Araya Dos Santos,",
+      "bajada": ""
+    },
+    {
+      "episodio": 107,
+      "videoId": "IaNmjEpsOLc",
+      "nombre": "#INVITACIÓN",
+      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 108,
+      "videoId": "qYFP5SroFcQ",
+      "nombre": "Hermanos Oviedo",
+      "bajada": "El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 109,
+      "videoId": "HCm7jUocfrY",
+      "nombre": "Julio César Galindo Martinez",
+      "bajada": "Salió de un McDonald’s... y lo asesinaron."
+    },
+    {
+      "episodio": 110,
+      "videoId": "-X2UjdUo24k",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
     }
   ]
 }
