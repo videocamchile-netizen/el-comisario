@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 142,
+  "nextEpisode": 148,
   "episodios": [
-    {
-      "episodio": 133,
-      "videoId": "4RYWEb5LP_Q",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 134,
-      "videoId": "9adfPF0u4Pg",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
-    },
-    {
-      "episodio": 135,
-      "videoId": "iZoLm7xBRDw",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
-    },
-    {
-      "episodio": 136,
-      "videoId": "NheaMb_anpA",
-      "nombre": "¿Dónde está Loan Peña?",
-      "bajada": "El juicio que búsca la verdad."
-    },
-    {
-      "episodio": 137,
-      "videoId": "9xKZ8aLVY_I",
-      "nombre": "Daniela Zabalza Pérez",
-      "bajada": "Buscó protección y encontró la muerte."
-    },
-    {
-      "episodio": 138,
-      "videoId": "qYFP5SroFcQ",
-      "nombre": "Hermanos Oviedo",
-      "bajada": "El incendio provocado que apagó sus vidas."
-    },
     {
       "episodio": 139,
       "videoId": "ZqsrVKMGlNo",
@@ -54,6 +18,42 @@
       "videoId": "qKgoVVt1dwo",
       "nombre": "Julio GalindoMartinez:Su graduación",
       "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
+    },
+    {
+      "episodio": 142,
+      "videoId": "SM5zxbEqmsw",
+      "nombre": "Edison Araya Dos Santos,",
+      "bajada": ""
+    },
+    {
+      "episodio": 143,
+      "videoId": "IaNmjEpsOLc",
+      "nombre": "#INVITACIÓN",
+      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 144,
+      "videoId": "HCm7jUocfrY",
+      "nombre": "Julio César Galindo Martinez",
+      "bajada": "Salió de un McDonald’s... y lo asesinaron."
+    },
+    {
+      "episodio": 145,
+      "videoId": "2a3qGZa75LE",
+      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
+      "bajada": ""
+    },
+    {
+      "episodio": 146,
+      "videoId": "-X2UjdUo24k",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
+    },
+    {
+      "episodio": 147,
+      "videoId": "VQcoUIoH_4w",
+      "nombre": "Claudia Norambuena",
+      "bajada": "La negligencia que casi le costó la vida."
     }
   ]
 }
