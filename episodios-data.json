@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 148,
+  "nextEpisode": 154,
   "episodios": [
-    {
-      "episodio": 139,
-      "videoId": "ZqsrVKMGlNo",
-      "nombre": "INVITACIÓN",
-      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
-    },
-    {
-      "episodio": 140,
-      "videoId": "dwAbk9-ToO8",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
-    },
-    {
-      "episodio": 141,
-      "videoId": "qKgoVVt1dwo",
-      "nombre": "Julio GalindoMartinez:Su graduación",
-      "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 142,
-      "videoId": "SM5zxbEqmsw",
-      "nombre": "Edison Araya Dos Santos,",
-      "bajada": ""
-    },
-    {
-      "episodio": 143,
-      "videoId": "IaNmjEpsOLc",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 144,
-      "videoId": "HCm7jUocfrY",
-      "nombre": "Julio César Galindo Martinez",
-      "bajada": "Salió de un McDonald’s... y lo asesinaron."
-    },
     {
       "episodio": 145,
       "videoId": "2a3qGZa75LE",
@@ -54,6 +18,42 @@
       "videoId": "VQcoUIoH_4w",
       "nombre": "Claudia Norambuena",
       "bajada": "La negligencia que casi le costó la vida."
+    },
+    {
+      "episodio": 148,
+      "videoId": "NheaMb_anpA",
+      "nombre": "¿Dónde está Loan Peña?",
+      "bajada": "El juicio que búsca la verdad."
+    },
+    {
+      "episodio": 149,
+      "videoId": "9xKZ8aLVY_I",
+      "nombre": "Daniela Zabalza Pérez",
+      "bajada": "Buscó protección y encontró la muerte."
+    },
+    {
+      "episodio": 150,
+      "videoId": "qYFP5SroFcQ",
+      "nombre": "Hermanos Oviedo",
+      "bajada": "El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 151,
+      "videoId": "4RYWEb5LP_Q",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
+    },
+    {
+      "episodio": 152,
+      "videoId": "9adfPF0u4Pg",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
+    },
+    {
+      "episodio": 153,
+      "videoId": "iZoLm7xBRDw",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
     }
   ]
 }
