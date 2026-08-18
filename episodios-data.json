@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 221,
+  "nextEpisode": 227,
   "episodios": [
-    {
-      "episodio": 212,
-      "videoId": "dwAbk9-ToO8",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
-    },
-    {
-      "episodio": 213,
-      "videoId": "qKgoVVt1dwo",
-      "nombre": "Julio GalindoMartinez:Su graduación",
-      "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 214,
-      "videoId": "f9OxRQWRb5A",
-      "nombre": "Diego Medina Calfual",
-      "bajada": "Una muerte rodeada de preguntas."
-    },
-    {
-      "episodio": 215,
-      "videoId": "IaNmjEpsOLc",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 216,
-      "videoId": "ZqsrVKMGlNo",
-      "nombre": "INVITACIÓN",
-      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
-    },
-    {
-      "episodio": 217,
-      "videoId": "HCm7jUocfrY",
-      "nombre": "Julio César Galindo Martinez",
-      "bajada": "Salió de un McDonald’s... y lo asesinaron."
-    },
     {
       "episodio": 218,
       "videoId": "4RYWEb5LP_Q",
@@ -54,6 +18,42 @@
       "videoId": "VQcoUIoH_4w",
       "nombre": "Claudia Norambuena",
       "bajada": "La negligencia que casi le costó la vida."
+    },
+    {
+      "episodio": 221,
+      "videoId": "9xKZ8aLVY_I",
+      "nombre": "Daniela Zabalza Pérez",
+      "bajada": "Buscó protección y encontró la muerte."
+    },
+    {
+      "episodio": 222,
+      "videoId": "qYFP5SroFcQ",
+      "nombre": "Hermanos Oviedo",
+      "bajada": "El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 223,
+      "videoId": "2a3qGZa75LE",
+      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
+      "bajada": ""
+    },
+    {
+      "episodio": 224,
+      "videoId": "9adfPF0u4Pg",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
+    },
+    {
+      "episodio": 225,
+      "videoId": "iZoLm7xBRDw",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
+    },
+    {
+      "episodio": 226,
+      "videoId": "DJEUnx7Nc5M",
+      "nombre": "Giovanni Alarcón Rojas",
+      "bajada": "La violenta noche que Quilicura no olvida."
     }
   ]
 }
