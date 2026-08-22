@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 245,
+  "nextEpisode": 251,
   "episodios": [
-    {
-      "episodio": 236,
-      "videoId": "4RYWEb5LP_Q",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 237,
-      "videoId": "-X2UjdUo24k",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
-    },
-    {
-      "episodio": 238,
-      "videoId": "VQcoUIoH_4w",
-      "nombre": "Claudia Norambuena",
-      "bajada": "La negligencia que casi le costó la vida."
-    },
-    {
-      "episodio": 239,
-      "videoId": "IaNmjEpsOLc",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 240,
-      "videoId": "ZqsrVKMGlNo",
-      "nombre": "INVITACIÓN",
-      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
-    },
-    {
-      "episodio": 241,
-      "videoId": "HCm7jUocfrY",
-      "nombre": "Julio César Galindo Martinez",
-      "bajada": "Salió de un McDonald’s... y lo asesinaron."
-    },
     {
       "episodio": 242,
       "videoId": "9adfPF0u4Pg",
@@ -54,6 +18,42 @@
       "videoId": "DJEUnx7Nc5M",
       "nombre": "Giovanni Alarcón Rojas",
       "bajada": "La violenta noche que Quilicura no olvida."
+    },
+    {
+      "episodio": 245,
+      "videoId": "qYFP5SroFcQ",
+      "nombre": "Hermanos Oviedo",
+      "bajada": "El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 246,
+      "videoId": "2a3qGZa75LE",
+      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
+      "bajada": ""
+    },
+    {
+      "episodio": 247,
+      "videoId": "dwAbk9-ToO8",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
+    },
+    {
+      "episodio": 248,
+      "videoId": "qKgoVVt1dwo",
+      "nombre": "Julio GalindoMartinez:Su graduación",
+      "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
+    },
+    {
+      "episodio": 249,
+      "videoId": "f9OxRQWRb5A",
+      "nombre": "Diego Medina Calfual",
+      "bajada": "Una muerte rodeada de preguntas."
+    },
+    {
+      "episodio": 250,
+      "videoId": "qM52o0LASh8",
+      "nombre": "Benjamín Berríos y Benjamín Olea",
+      "bajada": "El atropello o fue un accidente."
     }
   ]
 }
