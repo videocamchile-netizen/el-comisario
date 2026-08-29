@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 287,
+  "nextEpisode": 293,
   "episodios": [
-    {
-      "episodio": 278,
-      "videoId": "iZoLm7xBRDw",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
-    },
-    {
-      "episodio": 279,
-      "videoId": "dwAbk9-ToO8",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
-    },
-    {
-      "episodio": 280,
-      "videoId": "DJEUnx7Nc5M",
-      "nombre": "Giovanni Alarcón Rojas",
-      "bajada": "La violenta noche que Quilicura no olvida."
-    },
-    {
-      "episodio": 281,
-      "videoId": "qYFP5SroFcQ",
-      "nombre": "Hermanos Oviedo",
-      "bajada": "El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 282,
-      "videoId": "2a3qGZa75LE",
-      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
-      "bajada": ""
-    },
-    {
-      "episodio": 283,
-      "videoId": "4RYWEb5LP_Q",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
     {
       "episodio": 284,
       "videoId": "qKgoVVt1dwo",
@@ -54,6 +18,42 @@
       "videoId": "qM52o0LASh8",
       "nombre": "Benjamín Berríos y Benjamín Olea",
       "bajada": "El atropello o fue un accidente."
+    },
+    {
+      "episodio": 287,
+      "videoId": "IaNmjEpsOLc",
+      "nombre": "#INVITACIÓN",
+      "bajada": "Hermanos Oviedos, El incendio provocado que apagó sus vidas."
+    },
+    {
+      "episodio": 288,
+      "videoId": "ZqsrVKMGlNo",
+      "nombre": "INVITACIÓN",
+      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
+    },
+    {
+      "episodio": 289,
+      "videoId": "HCm7jUocfrY",
+      "nombre": "Julio César Galindo Martinez",
+      "bajada": "Salió de un McDonald’s... y lo asesinaron."
+    },
+    {
+      "episodio": 290,
+      "videoId": "9adfPF0u4Pg",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
+    },
+    {
+      "episodio": 291,
+      "videoId": "-X2UjdUo24k",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
+    },
+    {
+      "episodio": 292,
+      "videoId": "VQcoUIoH_4w",
+      "nombre": "Claudia Norambuena",
+      "bajada": "La negligencia que casi le costó la vida."
     }
   ]
 }
