@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 359,
+  "nextEpisode": 365,
   "episodios": [
-    {
-      "episodio": 350,
-      "videoId": "dwAbk9-ToO8",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
-    },
-    {
-      "episodio": 351,
-      "videoId": "qKgoVVt1dwo",
-      "nombre": "Julio GalindoMartinez:Su graduación",
-      "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 352,
-      "videoId": "DJEUnx7Nc5M",
-      "nombre": "Giovanni Alarcón Rojas",
-      "bajada": "La violenta noche que Quilicura no olvida."
-    },
-    {
-      "episodio": 353,
-      "videoId": "qYFP5SroFcQ",
-      "nombre": "Hermanos Oviedo",
-      "bajada": "El incendio provocado que apagó sus vidas."
-    },
-    {
-      "episodio": 354,
-      "videoId": "2a3qGZa75LE",
-      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
-      "bajada": ""
-    },
-    {
-      "episodio": 355,
-      "videoId": "4RYWEb5LP_Q",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
     {
       "episodio": 356,
       "videoId": "f9OxRQWRb5A",
@@ -54,6 +18,42 @@
       "videoId": "X8Gp7DdC714",
       "nombre": "Carlos Muñiz Palma",
       "bajada": "Tres disparos, ningún testigo."
+    },
+    {
+      "episodio": 359,
+      "videoId": "ZqsrVKMGlNo",
+      "nombre": "INVITACIÓN",
+      "bajada": "Julio César Galindo Martinez. Salió de un McDonald's y lo asesinaron."
+    },
+    {
+      "episodio": 360,
+      "videoId": "HCm7jUocfrY",
+      "nombre": "Julio César Galindo Martinez",
+      "bajada": "Salió de un McDonald’s... y lo asesinaron."
+    },
+    {
+      "episodio": 361,
+      "videoId": "9adfPF0u4Pg",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
+    },
+    {
+      "episodio": 362,
+      "videoId": "iZoLm7xBRDw",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
+    },
+    {
+      "episodio": 363,
+      "videoId": "-X2UjdUo24k",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
+    },
+    {
+      "episodio": 364,
+      "videoId": "VQcoUIoH_4w",
+      "nombre": "Claudia Norambuena",
+      "bajada": "La negligencia que casi le costó la vida."
     }
   ]
 }
