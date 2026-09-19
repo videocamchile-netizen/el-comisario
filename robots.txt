@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://elcomisario.cl/sitemap.xml
