@@ -1,0 +1,23 @@
+# El Comisario
+
+> Canal chileno independiente de periodismo de investigación y denuncia ciudadana, fundado por Carlos Collao, Comisario (R) de la PDI. Investiga y visibiliza casos que el sistema ha dejado en el olvido, dando voz a víctimas silenciadas.
+
+## Datos clave
+
+- Nombre: El Comisario
+- Fundador: Carlos Collao, Comisario (R) PDI (Policía de Investigaciones de Chile)
+- Formato: transmisión en vivo por YouTube, domingos en la noche, con episodios grabados disponibles de inmediato
+- Sitio web: https://elcomisario.cl
+- Enfoque: periodismo de investigación, denuncia ciudadana, cobertura en vivo de casos policiales
+
+## Cómo participar
+
+- Denuncia anónima, testimonio, información sobre un caso, propuesta de colaboración o contacto de prensa: a través del formulario en https://elcomisario.cl/contacto.html
+
+## Páginas
+
+- [Inicio](https://elcomisario.cl/): presentación del canal y últimos episodios.
+- [Episodios](https://elcomisario.cl/episodios.html): últimos programas emitidos, actualizados automáticamente.
+- [Quiénes Somos](https://elcomisario.cl/quienes-somos.html): historia y fundador del proyecto.
+- [Preguntas Frecuentes](https://elcomisario.cl/faq.html): respuestas directas sobre el canal y cómo enviar una denuncia.
+- [Contacto](https://elcomisario.cl/contacto.html): formulario de denuncias, testimonios y prensa.
