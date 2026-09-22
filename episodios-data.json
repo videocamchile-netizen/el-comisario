@@ -1,48 +1,6 @@
 {
-  "nextEpisode": 432,
+  "nextEpisode": 439,
   "episodios": [
-    {
-      "episodio": 423,
-      "videoId": "f9OxRQWRb5A",
-      "nombre": "Diego Medina Calfual",
-      "bajada": "Una muerte rodeada de preguntas."
-    },
-    {
-      "episodio": 424,
-      "videoId": "DJEUnx7Nc5M",
-      "nombre": "Giovanni Alarcón Rojas",
-      "bajada": "La violenta noche que Quilicura no olvida."
-    },
-    {
-      "episodio": 425,
-      "videoId": "5Qoc6DJJiAE",
-      "nombre": "Mariana Loreto Sepúlveda León",
-      "bajada": "18 años despúes. La confesión que cambió todo."
-    },
-    {
-      "episodio": 426,
-      "videoId": "2a3qGZa75LE",
-      "nombre": "Julio Galindo Martinez:Salió de un McDonald´s y lo mataron #audienciacriminal #casospolicialesreales",
-      "bajada": ""
-    },
-    {
-      "episodio": 427,
-      "videoId": "4RYWEb5LP_Q",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "El ataque  #casospolicialesreales #audienciacriminal #crímenessinresolver"
-    },
-    {
-      "episodio": 428,
-      "videoId": "iZoLm7xBRDw",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
-    },
-    {
-      "episodio": 429,
-      "videoId": "dwAbk9-ToO8",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
-    },
     {
       "episodio": 430,
       "videoId": "qM52o0LASh8",
@@ -54,6 +12,48 @@
       "videoId": "X8Gp7DdC714",
       "nombre": "Carlos Muñiz Palma",
       "bajada": "Tres disparos, ningún testigo."
+    },
+    {
+      "episodio": 432,
+      "videoId": "9adfPF0u4Pg",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "Los amigos se hicieron cargo. #casospolicialesreales #audienciacriminal"
+    },
+    {
+      "episodio": 433,
+      "videoId": "qKgoVVt1dwo",
+      "nombre": "Julio GalindoMartinez:Su graduación",
+      "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
+    },
+    {
+      "episodio": 434,
+      "videoId": "-X2UjdUo24k",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
+    },
+    {
+      "episodio": 435,
+      "videoId": "VQcoUIoH_4w",
+      "nombre": "Claudia Norambuena",
+      "bajada": "La negligencia que casi le costó la vida."
+    },
+    {
+      "episodio": 436,
+      "videoId": "95g980QzKuQ",
+      "nombre": "Verónica Bangueses.18 años, una relación y un crimen que nadie esperaba.",
+      "bajada": ""
+    },
+    {
+      "episodio": 437,
+      "videoId": "ytGmiWsBzhQ",
+      "nombre": "#INVITACIÓN",
+      "bajada": "Mariana Loreto Sepúlveda León. Nuevos antecedentes relacionados con su desaparición."
+    },
+    {
+      "episodio": 438,
+      "videoId": "s5Qckig2MMU",
+      "nombre": "Mariana Loreto Sepúlveda León",
+      "bajada": "Nueva Información."
     }
   ]
 }
