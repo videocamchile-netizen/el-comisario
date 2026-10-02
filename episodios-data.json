@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 493,
+  "nextEpisode": 499,
   "episodios": [
-    {
-      "episodio": 484,
-      "videoId": "X8Gp7DdC714",
-      "nombre": "Carlos Muñiz Palma",
-      "bajada": "Tres disparos, ningún testigo."
-    },
-    {
-      "episodio": 485,
-      "videoId": "95g980QzKuQ",
-      "nombre": "Verónica Bangueses.18 años, una relación y un crimen que nadie esperaba.",
-      "bajada": ""
-    },
-    {
-      "episodio": 486,
-      "videoId": "uXt4pd_ZgWk",
-      "nombre": "Paulina Fuentes",
-      "bajada": "61 días por su muerte.  Atropelló y volverá a conducir"
-    },
-    {
-      "episodio": 487,
-      "videoId": "iZoLm7xBRDw",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Van a Carab. c/orden de detención. #audienciacriminal #casospolicialesreales"
-    },
-    {
-      "episodio": 488,
-      "videoId": "dwAbk9-ToO8",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "Dos años sin justicia. #casospolicialesreales #audienciacriminal #policia"
-    },
-    {
-      "episodio": 489,
-      "videoId": "VQcoUIoH_4w",
-      "nombre": "Claudia Norambuena",
-      "bajada": "La negligencia que casi le costó la vida."
-    },
     {
       "episodio": 490,
       "videoId": "ytGmiWsBzhQ",
@@ -54,6 +18,42 @@
       "videoId": "373T7xnHsMc",
       "nombre": "Jonathan Teao y Gregorio Gómez",
       "bajada": "Dos casos, dos ausentes."
+    },
+    {
+      "episodio": 493,
+      "videoId": "qKgoVVt1dwo",
+      "nombre": "Julio GalindoMartinez:Su graduación",
+      "bajada": "#casospolicialesreales #audienciacriminal #crímenessinresolver"
+    },
+    {
+      "episodio": 494,
+      "videoId": "-X2UjdUo24k",
+      "nombre": "Julio Galindo Martinez",
+      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
+    },
+    {
+      "episodio": 495,
+      "videoId": "f9OxRQWRb5A",
+      "nombre": "Diego Medina Calfual",
+      "bajada": "Una muerte rodeada de preguntas."
+    },
+    {
+      "episodio": 496,
+      "videoId": "DJEUnx7Nc5M",
+      "nombre": "Giovanni Alarcón Rojas",
+      "bajada": "La violenta noche que Quilicura no olvida."
+    },
+    {
+      "episodio": 497,
+      "videoId": "qM52o0LASh8",
+      "nombre": "Benjamín Berríos y Benjamín Olea",
+      "bajada": "El atropello o fue un accidente."
+    },
+    {
+      "episodio": 498,
+      "videoId": "5Qoc6DJJiAE",
+      "nombre": "Mariana Loreto Sepúlveda León",
+      "bajada": "18 años despúes. La confesión que cambió todo."
     }
   ]
 }
