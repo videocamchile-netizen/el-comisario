@@ -1,0 +1,33 @@
+name: Generar páginas de casos
+
+# Workflow aparte del de episodios: si este falla, la grilla de episodios
+# sigue funcionando igual. Corre 30 min después del otro.
+on:
+  schedule:
+    - cron: "30 9 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generar páginas de casos
+        run: python3 scripts/generar_casos.py
+
+      - name: Commitear y pushear si hubo cambios
+        run: |
+          git config user.name "el-comisario-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add casos-archivo.json casos.html caso sitemap.xml
+          if git diff --cached --quiet; then
+            echo "Sin cambios, no se commitea nada."
+            exit 0
+          fi
+          git commit -m "Actualizar páginas de casos automáticamente"
+          git pull --rebase
+          git push

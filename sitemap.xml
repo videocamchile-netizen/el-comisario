@@ -5,4 +5,16 @@
   <url><loc>https://elcomisario.cl/quienes-somos.html</loc><priority>0.8</priority></url>
   <url><loc>https://elcomisario.cl/faq.html</loc><priority>0.7</priority></url>
   <url><loc>https://elcomisario.cl/contacto.html</loc><priority>0.7</priority></url>
+  <!-- INICIO-CASOS-AUTO -->
+  <url><loc>https://elcomisario.cl/casos.html</loc><priority>0.6</priority></url>
+  <url><loc>https://elcomisario.cl/caso/504-paulina-fuentes.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/503-veronica-bangueses-18-anos-una-relacion-y-un.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/502-carlos-muniz-palma.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/501-claudia-norambuena.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/500-julio-galindo-martinez.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/499-julio-galindo-martinez.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/498-mariana-loreto-sepulveda-leon.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/497-benjamin-berrios-y-benjamin-olea.html</loc><priority>0.5</priority></url>
+  <url><loc>https://elcomisario.cl/caso/496-giovanni-alarcon-rojas.html</loc><priority>0.5</priority></url>
+  <!-- FIN-CASOS-AUTO -->
 </urlset>
