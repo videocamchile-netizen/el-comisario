@@ -7,6 +7,7 @@
   <url><loc>https://elcomisario.cl/contacto.html</loc><priority>0.7</priority></url>
   <!-- INICIO-CASOS-AUTO -->
   <url><loc>https://elcomisario.cl/casos.html</loc><priority>0.6</priority></url>
+  <url><loc>https://elcomisario.cl/caso/530-kimberly-moya.html</loc><priority>0.5</priority></url>
   <url><loc>https://elcomisario.cl/caso/517-poky-tane-haoa-y-darlin-oyarzun.html</loc><priority>0.5</priority></url>
   <url><loc>https://elcomisario.cl/caso/511-washington-tapia.html</loc><priority>0.5</priority></url>
   <url><loc>https://elcomisario.cl/caso/510-jonathan-teao-y-gregorio-gomez.html</loc><priority>0.5</priority></url>
