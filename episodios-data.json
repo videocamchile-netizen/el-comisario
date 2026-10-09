@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 537,
+  "nextEpisode": 543,
   "episodios": [
-    {
-      "episodio": 528,
-      "videoId": "373T7xnHsMc",
-      "nombre": "Jonathan Teao y Gregorio Gómez",
-      "bajada": "Dos casos, dos ausentes."
-    },
-    {
-      "episodio": 529,
-      "videoId": "cn36P4c0Q7E",
-      "nombre": "Washington Tapia",
-      "bajada": "Murió atropellado por un bus, en un acto consciente e infame."
-    },
-    {
-      "episodio": 530,
-      "videoId": "-NoI4dcKcZY",
-      "nombre": "Kimberly  Moya",
-      "bajada": "Dos detenidos, ninguna respuesta."
-    },
-    {
-      "episodio": 531,
-      "videoId": "-X2UjdUo24k",
-      "nombre": "Julio Galindo Martinez",
-      "bajada": "\"Lucharé hasta el final\" #casospolicialesreales #audienciacriminal #noticias"
-    },
-    {
-      "episodio": 532,
-      "videoId": "f9OxRQWRb5A",
-      "nombre": "Diego Medina Calfual",
-      "bajada": "Una muerte rodeada de preguntas."
-    },
-    {
-      "episodio": 533,
-      "videoId": "X8Gp7DdC714",
-      "nombre": "Carlos Muñiz Palma",
-      "bajada": "Tres disparos, ningún testigo."
-    },
     {
       "episodio": 534,
       "videoId": "5Qoc6DJJiAE",
@@ -54,6 +18,42 @@
       "videoId": "2OFKdXYL5rA",
       "nombre": "Poky Tane Haoa y Darlin Oyarzún",
       "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 537,
+      "videoId": "VQcoUIoH_4w",
+      "nombre": "Claudia Norambuena",
+      "bajada": "La negligencia que casi le costó la vida."
+    },
+    {
+      "episodio": 538,
+      "videoId": "DJEUnx7Nc5M",
+      "nombre": "Giovanni Alarcón Rojas",
+      "bajada": "La violenta noche que Quilicura no olvida."
+    },
+    {
+      "episodio": 539,
+      "videoId": "qM52o0LASh8",
+      "nombre": "Benjamín Berríos y Benjamín Olea",
+      "bajada": "El atropello o fue un accidente."
+    },
+    {
+      "episodio": 540,
+      "videoId": "ytGmiWsBzhQ",
+      "nombre": "#INVITACIÓN",
+      "bajada": "Mariana Loreto Sepúlveda León. Nuevos antecedentes relacionados con su desaparición."
+    },
+    {
+      "episodio": 541,
+      "videoId": "s5Qckig2MMU",
+      "nombre": "Mariana Loreto Sepúlveda León",
+      "bajada": "Nueva Información."
+    },
+    {
+      "episodio": 542,
+      "videoId": "uXt4pd_ZgWk",
+      "nombre": "Paulina Fuentes",
+      "bajada": "61 días por su muerte.  Atropelló y volverá a conducir"
     }
   ]
 }
