@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 677,
+  "nextEpisode": 683,
   "episodios": [
-    {
-      "episodio": 668,
-      "videoId": "rMnX2z51klc",
-      "nombre": "María Soledad Baasch y Marco Opazo",
-      "bajada": "¿Donde están?"
-    },
-    {
-      "episodio": 669,
-      "videoId": "ZgKxSws4-Tw",
-      "nombre": "Isabel Contreras",
-      "bajada": "Un robo que terminó en horror."
-    },
-    {
-      "episodio": 670,
-      "videoId": "X8Gp7DdC714",
-      "nombre": "Carlos Muñiz Palma",
-      "bajada": "Tres disparos, ningún testigo."
-    },
-    {
-      "episodio": 671,
-      "videoId": "5Qoc6DJJiAE",
-      "nombre": "Mariana Loreto Sepúlveda León",
-      "bajada": "18 años despúes. La confesión que cambió todo."
-    },
-    {
-      "episodio": 672,
-      "videoId": "ytGmiWsBzhQ",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Mariana Loreto Sepúlveda León. Nuevos antecedentes relacionados con su desaparición."
-    },
-    {
-      "episodio": 673,
-      "videoId": "cn36P4c0Q7E",
-      "nombre": "Washington Tapia",
-      "bajada": "Murió atropellado por un bus, en un acto consciente e infame."
-    },
     {
       "episodio": 674,
       "videoId": "-NoI4dcKcZY",
@@ -54,6 +18,42 @@
       "videoId": "J5HzNI5VeMs",
       "nombre": "Cynthia González",
       "bajada": "\"Perdóname, porque no te he podido encontrar\""
+    },
+    {
+      "episodio": 677,
+      "videoId": "95g980QzKuQ",
+      "nombre": "Verónica Bangueses.18 años, una relación y un crimen que nadie esperaba.",
+      "bajada": ""
+    },
+    {
+      "episodio": 678,
+      "videoId": "s5Qckig2MMU",
+      "nombre": "Mariana Loreto Sepúlveda León",
+      "bajada": "Nueva Información."
+    },
+    {
+      "episodio": 679,
+      "videoId": "uXt4pd_ZgWk",
+      "nombre": "Paulina Fuentes",
+      "bajada": "61 días por su muerte.  Atropelló y volverá a conducir"
+    },
+    {
+      "episodio": 680,
+      "videoId": "373T7xnHsMc",
+      "nombre": "Jonathan Teao y Gregorio Gómez",
+      "bajada": "Dos casos, dos ausentes."
+    },
+    {
+      "episodio": 681,
+      "videoId": "2OFKdXYL5rA",
+      "nombre": "Poky Tane Haoa y Darlin Oyarzún",
+      "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 682,
+      "videoId": "xZblbA91z78",
+      "nombre": "Kimberly Moya y Hugo Melgarejo",
+      "bajada": "¿Dónde están?"
     }
   ]
 }
