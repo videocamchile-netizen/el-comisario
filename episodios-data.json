@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 701,
+  "nextEpisode": 707,
   "episodios": [
-    {
-      "episodio": 692,
-      "videoId": "-NoI4dcKcZY",
-      "nombre": "Kimberly  Moya",
-      "bajada": "Dos detenidos, ninguna respuesta."
-    },
-    {
-      "episodio": 693,
-      "videoId": "ssO6O7bLr7s",
-      "nombre": "Benjamín Galdámez y Alejandro Caracuel",
-      "bajada": "¿Donde están?"
-    },
-    {
-      "episodio": 694,
-      "videoId": "J5HzNI5VeMs",
-      "nombre": "Desde Noviembre",
-      "bajada": "El Comisario 3 veces por semana!!!!"
-    },
-    {
-      "episodio": 695,
-      "videoId": "5Qoc6DJJiAE",
-      "nombre": "Mariana Loreto Sepúlveda León",
-      "bajada": "18 años despúes. La confesión que cambió todo."
-    },
-    {
-      "episodio": 696,
-      "videoId": "ytGmiWsBzhQ",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Mariana Loreto Sepúlveda León. Nuevos antecedentes relacionados con su desaparición."
-    },
-    {
-      "episodio": 697,
-      "videoId": "373T7xnHsMc",
-      "nombre": "Jonathan Teao y Gregorio Gómez",
-      "bajada": "Dos casos, dos ausentes."
-    },
     {
       "episodio": 698,
       "videoId": "2OFKdXYL5rA",
@@ -54,6 +18,42 @@
       "videoId": "FZnLLiSQqNM",
       "nombre": "Daisy Jaramillo y Jodi Huisentruit",
       "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 701,
+      "videoId": "95g980QzKuQ",
+      "nombre": "Verónica Bangueses.18 años, una relación y un crimen que nadie esperaba.",
+      "bajada": ""
+    },
+    {
+      "episodio": 702,
+      "videoId": "s5Qckig2MMU",
+      "nombre": "Mariana Loreto Sepúlveda León",
+      "bajada": "Nueva Información."
+    },
+    {
+      "episodio": 703,
+      "videoId": "uXt4pd_ZgWk",
+      "nombre": "Paulina Fuentes",
+      "bajada": "61 días por su muerte.  Atropelló y volverá a conducir"
+    },
+    {
+      "episodio": 704,
+      "videoId": "cn36P4c0Q7E",
+      "nombre": "Washington Tapia",
+      "bajada": "Murió atropellado por un bus, en un acto consciente e infame."
+    },
+    {
+      "episodio": 705,
+      "videoId": "rMnX2z51klc",
+      "nombre": "María Soledad Baasch y Marco Opazo",
+      "bajada": "¿Donde están?"
+    },
+    {
+      "episodio": 706,
+      "videoId": "ZgKxSws4-Tw",
+      "nombre": "Isabel Contreras",
+      "bajada": "Un robo que terminó en horror."
     }
   ]
 }
