@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 725,
+  "nextEpisode": 731,
   "episodios": [
-    {
-      "episodio": 716,
-      "videoId": "xZblbA91z78",
-      "nombre": "Kimberly Moya y Hugo Melgarejo",
-      "bajada": "¿Dónde están?"
-    },
-    {
-      "episodio": 717,
-      "videoId": "FZnLLiSQqNM",
-      "nombre": "Daisy Jaramillo y Jodi Huisentruit",
-      "bajada": "¿Dónde están?"
-    },
-    {
-      "episodio": 718,
-      "videoId": "ILUSsBjSi9w",
-      "nombre": "Mariella Baca",
-      "bajada": "Celos, amenazas y una madre que exige justicia."
-    },
-    {
-      "episodio": 719,
-      "videoId": "ytGmiWsBzhQ",
-      "nombre": "#INVITACIÓN",
-      "bajada": "Mariana Loreto Sepúlveda León. Nuevos antecedentes relacionados con su desaparición."
-    },
-    {
-      "episodio": 720,
-      "videoId": "373T7xnHsMc",
-      "nombre": "Jonathan Teao y Gregorio Gómez",
-      "bajada": "Dos casos, dos ausentes."
-    },
-    {
-      "episodio": 721,
-      "videoId": "cn36P4c0Q7E",
-      "nombre": "Washington Tapia",
-      "bajada": "Murió atropellado por un bus, en un acto consciente e infame."
-    },
     {
       "episodio": 722,
       "videoId": "-NoI4dcKcZY",
@@ -54,6 +18,42 @@
       "videoId": "ZgKxSws4-Tw",
       "nombre": "Isabel Contreras",
       "bajada": "Un robo que terminó en horror."
+    },
+    {
+      "episodio": 725,
+      "videoId": "s5Qckig2MMU",
+      "nombre": "Mariana Loreto Sepúlveda León",
+      "bajada": "Nueva Información."
+    },
+    {
+      "episodio": 726,
+      "videoId": "uXt4pd_ZgWk",
+      "nombre": "Paulina Fuentes",
+      "bajada": "61 días por su muerte.  Atropelló y volverá a conducir"
+    },
+    {
+      "episodio": 727,
+      "videoId": "2OFKdXYL5rA",
+      "nombre": "Poky Tane Haoa y Darlin Oyarzún",
+      "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 728,
+      "videoId": "ssO6O7bLr7s",
+      "nombre": "Benjamín Galdámez y Alejandro Caracuel",
+      "bajada": "¿Donde están?"
+    },
+    {
+      "episodio": 729,
+      "videoId": "J5HzNI5VeMs",
+      "nombre": "Desde Noviembre",
+      "bajada": "El Comisario 3 veces por semana!!!!"
+    },
+    {
+      "episodio": 730,
+      "videoId": "l1bfJIpdgA0",
+      "nombre": "El método ELM",
+      "bajada": "Escuchar-Leer-Mirar de Emilia Leiva"
     }
   ]
 }
