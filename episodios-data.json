@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 751,
+  "nextEpisode": 757,
   "episodios": [
-    {
-      "episodio": 742,
-      "videoId": "ZgKxSws4-Tw",
-      "nombre": "Isabel Contreras",
-      "bajada": "Un robo que terminó en horror."
-    },
-    {
-      "episodio": 743,
-      "videoId": "Z3MlwJQTjvA",
-      "nombre": "Simón Chirinos y Emanuela Orlandi",
-      "bajada": "¿Dónde están?"
-    },
-    {
-      "episodio": 744,
-      "videoId": "373T7xnHsMc",
-      "nombre": "Jonathan Teao y Gregorio Gómez",
-      "bajada": "Dos casos, dos ausentes."
-    },
-    {
-      "episodio": 745,
-      "videoId": "cn36P4c0Q7E",
-      "nombre": "Washington Tapia",
-      "bajada": "Murió atropellado por un bus, en un acto consciente e infame."
-    },
-    {
-      "episodio": 746,
-      "videoId": "xZblbA91z78",
-      "nombre": "Kimberly Moya y Hugo Melgarejo",
-      "bajada": "¿Dónde están?"
-    },
-    {
-      "episodio": 747,
-      "videoId": "ssO6O7bLr7s",
-      "nombre": "Benjamín Galdámez y Alejandro Caracuel",
-      "bajada": "¿Donde están?"
-    },
     {
       "episodio": 748,
       "videoId": "J5HzNI5VeMs",
@@ -54,6 +18,42 @@
       "videoId": "UHZ0-s9gjps",
       "nombre": "Don José Miguel Carrera",
       "bajada": "Fundación \"Voy por ti.\""
+    },
+    {
+      "episodio": 751,
+      "videoId": "uXt4pd_ZgWk",
+      "nombre": "Paulina Fuentes",
+      "bajada": "61 días por su muerte.  Atropelló y volverá a conducir"
+    },
+    {
+      "episodio": 752,
+      "videoId": "2OFKdXYL5rA",
+      "nombre": "Poky Tane Haoa y Darlin Oyarzún",
+      "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 753,
+      "videoId": "-NoI4dcKcZY",
+      "nombre": "Kimberly  Moya",
+      "bajada": "Dos detenidos, ninguna respuesta."
+    },
+    {
+      "episodio": 754,
+      "videoId": "rMnX2z51klc",
+      "nombre": "María Soledad Baasch y Marco Opazo",
+      "bajada": "¿Donde están?"
+    },
+    {
+      "episodio": 755,
+      "videoId": "FZnLLiSQqNM",
+      "nombre": "Daisy Jaramillo y Jodi Huisentruit",
+      "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 756,
+      "videoId": "ILUSsBjSi9w",
+      "nombre": "Mariella Baca",
+      "bajada": "Celos, amenazas y una madre que exige justicia."
     }
   ]
 }
