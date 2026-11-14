@@ -1,42 +1,6 @@
 {
-  "nextEpisode": 763,
+  "nextEpisode": 769,
   "episodios": [
-    {
-      "episodio": 754,
-      "videoId": "rMnX2z51klc",
-      "nombre": "María Soledad Baasch y Marco Opazo",
-      "bajada": "¿Donde están?"
-    },
-    {
-      "episodio": 755,
-      "videoId": "FZnLLiSQqNM",
-      "nombre": "Daisy Jaramillo y Jodi Huisentruit",
-      "bajada": "¿Dónde están?"
-    },
-    {
-      "episodio": 756,
-      "videoId": "ILUSsBjSi9w",
-      "nombre": "Mariella Baca",
-      "bajada": "Celos, amenazas y una madre que exige justicia."
-    },
-    {
-      "episodio": 757,
-      "videoId": "373T7xnHsMc",
-      "nombre": "Jonathan Teao y Gregorio Gómez",
-      "bajada": "Dos casos, dos ausentes."
-    },
-    {
-      "episodio": 758,
-      "videoId": "cn36P4c0Q7E",
-      "nombre": "Washington Tapia",
-      "bajada": "Murió atropellado por un bus, en un acto consciente e infame."
-    },
-    {
-      "episodio": 759,
-      "videoId": "xZblbA91z78",
-      "nombre": "Kimberly Moya y Hugo Melgarejo",
-      "bajada": "¿Dónde están?"
-    },
     {
       "episodio": 760,
       "videoId": "ZgKxSws4-Tw",
@@ -54,6 +18,42 @@
       "videoId": "Z3MlwJQTjvA",
       "nombre": "Simón Chirinos y Emanuela Orlandi",
       "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 763,
+      "videoId": "2OFKdXYL5rA",
+      "nombre": "Poky Tane Haoa y Darlin Oyarzún",
+      "bajada": "¿Dónde están?"
+    },
+    {
+      "episodio": 764,
+      "videoId": "-NoI4dcKcZY",
+      "nombre": "Kimberly  Moya",
+      "bajada": "Dos detenidos, ninguna respuesta."
+    },
+    {
+      "episodio": 765,
+      "videoId": "J5HzNI5VeMs",
+      "nombre": "Desde Noviembre",
+      "bajada": "El Comisario 3 veces por semana!!!!"
+    },
+    {
+      "episodio": 766,
+      "videoId": "l1bfJIpdgA0",
+      "nombre": "El método ELM",
+      "bajada": "Escuchar-Leer-Mirar de Emilia Leiva"
+    },
+    {
+      "episodio": 767,
+      "videoId": "UHZ0-s9gjps",
+      "nombre": "Don José Miguel Carrera",
+      "bajada": "Fundación \"Voy por ti.\""
+    },
+    {
+      "episodio": 768,
+      "videoId": "c1v2BjmQjS0",
+      "nombre": "Cynthia González",
+      "bajada": "Dos años sin respuestas"
     }
   ]
 }
