@@ -165,6 +165,7 @@ def pagina_caso(c, otros):
         <div class="links">
             <a href="/index.html">INICIO</a>
             <a href="/episodios.html">EPISODIOS</a>
+            <a href="/casos.html">CASOS</a>
             <a href="/quienes-somos.html">QUIÉNES SOMOS</a>
             <a href="/faq.html">PREGUNTAS</a>
             <a href="/contacto.html">CONTACTO</a>
