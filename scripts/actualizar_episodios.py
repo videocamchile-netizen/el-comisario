@@ -122,6 +122,15 @@ def actualizar_html(episodios):
 def main():
     datos = cargar_datos()
     ids_existentes = {ep["videoId"] for ep in datos["episodios"]}
+    # El feed trae 15 videos pero la grilla solo guarda 9: los que ya salieron de la
+    # grilla NO son nuevos. Sin esto se volvían a agregar cada día con número nuevo
+    # y desplazaban a los episodios realmente nuevos. casos-archivo.json recuerda
+    # todos los videos que alguna vez estuvieron en la grilla.
+    try:
+        arch = json.loads((REPO_ROOT / "casos-archivo.json").read_text(encoding="utf-8"))
+        ids_existentes |= {c["videoId"] for c in arch.get("casos", [])}
+    except Exception:
+        pass
 
     try:
         entradas = parsear_entradas(obtener_feed())
