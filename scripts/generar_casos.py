@@ -276,6 +276,7 @@ def main():
         if c is None:
             c = {"episodio": ep["episodio"], "videoId": ep["videoId"]}
             por_id[ep["videoId"]] = c
+        c["episodio"] = ep["episodio"]  # el número de la parrilla manda (así coincide en todo el sitio)
         c["nombre"], c["bajada"] = ep["nombre"].strip(), ep["bajada"].strip()
         c["archivo"] = c.get("archivo") or f"{c['episodio']}-{slug(c['nombre'])}.html"  # URL fija una vez creada
         x = extras.get(ep["videoId"])
