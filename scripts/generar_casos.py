@@ -19,6 +19,7 @@ import html
 import json
 import re
 import unicodedata
+import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -51,6 +52,21 @@ def slug(texto):
 
 def e(s):
     return html.escape(s or "", quote=True)
+
+
+def video_disponible(video_id):
+    """False solo si YouTube confirma que el video ya no existe o no se puede incrustar
+    (404/401/403). Ante cualquier otro fallo (red, timeout) asumimos que sigue
+    disponible, para no ocultar videos por un error pasajero."""
+    url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={video_id}&format=json"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=20):
+            return True
+    except urllib.error.HTTPError as err:
+        return err.code not in (401, 403, 404)
+    except Exception:
+        return True
 
 
 def extras_del_feed():
@@ -93,7 +109,7 @@ def cargar_archivo():
     return {"casos": []}
 
 
-def pagina_caso(c, otros):
+def pagina_caso(c, otros, disponible=True):
     titulo = f"{c['nombre']}: {c['bajada']}".strip(": ")
     titulo_pag = f"Caso {c['nombre']} — El Comisario, Episodio {c['episodio']}"
     desc_meta = (c["bajada"] or f"Caso {c['nombre']}") + f" — Episodio {c['episodio']} de El Comisario, periodismo de investigación y denuncia en Chile."
@@ -115,6 +131,18 @@ def pagina_caso(c, otros):
     if c.get("descripcion"):
         parrafos = "".join(f"<p>{e(p)}</p>" for p in c["descripcion"].split("\n"))
         desc_html = f'<section class="texto"><h2>Sobre este episodio</h2>{parrafos}</section>'
+    if disponible:
+        video_html = (
+            '<div class="video">'
+            f'<iframe src="https://www.youtube-nocookie.com/embed/{c["videoId"]}" title="{e(titulo)}" loading="lazy" '
+            'allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
+        )
+    else:
+        video_html = (
+            '<div class="cta" style="margin:24px 0;">Este episodio ya no está disponible en el canal. '
+            'Puedes leer el resumen de abajo, ver <a href="/casos.html">otros casos</a> o los '
+            '<a href="/episodios.html">últimos episodios</a>.</div>'
+        )
     otros_html = "".join(
         f'<li><a href="/caso/{o["archivo"]}">Ep. {o["episodio"]} · {e(o["nombre"])}</a></li>' for o in otros
     )
@@ -131,7 +159,7 @@ def pagina_caso(c, otros):
     <meta property="og:description" content="{e(desc_meta)}">
     <meta property="og:url" content="{url}">
     <meta property="og:image" content="{thumb}">
-    <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
+    {('<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>') if disponible else ''}
     <style>
         * {{ box-sizing: border-box; }}
         body {{ margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: #050a14; color: white; }}
@@ -176,9 +204,7 @@ def pagina_caso(c, otros):
         <div class="ep">El Comisario · Episodio {c['episodio']}</div>
         <h1>{e(c['nombre'])}</h1>
         <p class="bajada">{e(c['bajada'])}</p>
-        <div class="video">
-            <iframe src="https://www.youtube-nocookie.com/embed/{c['videoId']}" title="{e(titulo)}" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-        </div>
+        {video_html}
         {desc_html}
         <div class="cta">¿Tienes información sobre este caso o quieres compartir tu testimonio? Escríbenos desde <a href="/contacto.html">Contacto</a>. Mira todos los casos en <a href="/casos.html">el archivo de casos</a>.</div>
         <section class="mas"><h2>Otros casos</h2><ul>{otros_html}</ul></section>
@@ -263,7 +289,10 @@ def main():
     CASOS_DIR.mkdir(exist_ok=True)
     for c in casos:
         otros = [o for o in casos if o is not c][:6]
-        (CASOS_DIR / c["archivo"]).write_text(pagina_caso(c, otros), encoding="utf-8")
+        ok = video_disponible(c["videoId"])
+        if not ok:
+            print(f"AVISO: video no disponible en YouTube, ep. {c['episodio']} ({c['videoId']})")
+        (CASOS_DIR / c["archivo"]).write_text(pagina_caso(c, otros, ok), encoding="utf-8")
     INDICE.write_text(pagina_indice(casos), encoding="utf-8")
     actualizar_sitemap(casos)
     print(f"OK: {len(casos)} casos en el archivo.")
